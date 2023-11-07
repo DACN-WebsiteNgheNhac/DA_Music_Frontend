@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+   --primary-color: #ffffff;
+   --secondary-color: #ffffff80;
+   --alpha-color: #ffffff1a;
+   --purple-color: #ed2b91;
+   --border-color: #ffffff1a;
+
+   --header-color: #ffffffcc;
+   --header-shadow-color: rgba(0, 0, 0, 0.08);
+
+   --sidebar-color: rgba(0, 0, 0, 0.05);
+   --sidebar-popup-color: #572f90;
+}
+
+/* Common */
+@layer utilities {
+   .f-center {
+      @apply flex items-center justify-center;
+   }
+
+   .fx-center {
+      @apply flex justify-center;
+   }
+   .fy-center {
+      @apply flex items-center;
+   }
+   .fx-between {
+      @apply flex justify-between;
+   }
+}
