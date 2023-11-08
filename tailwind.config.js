@@ -15,13 +15,22 @@ export default {
             'header-color': 'var(--header-color)',
             'sidebar-color': 'var(--sidebar-color)',
             'sidebar-popup-color': 'var(--sidebar-popup-color)',
+            'playingbar-color': 'var(--playingbar-color)',
+         },
+         textColor: {
+            'search-color': 'var(--search-color)',
+            'navigation-color': 'var(--navigation-color)',
          },
          boxShadow: {
             header: '0 3px 5px var(--header-shadow-color)',
          },
          spacing: {
             header: '70px',
+            playingbar: '90px',
             sidebar: '240px',
+         },
+         padding: {
+            section: '60px',
          },
       },
    },
