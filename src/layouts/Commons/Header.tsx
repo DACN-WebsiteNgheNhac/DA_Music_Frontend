@@ -3,25 +3,50 @@ import { ArrowLeft, ArrowRight, Setting2 } from 'iconsax-react';
 import SearchBox from '../../components/SearchBox/SearchBox';
 import { CircleButton } from '~/components/Commons';
 import cx from 'classnames';
+import { useHistoryStack } from '~/hooks';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
    isSticky: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({ isSticky }) => {
+   const navigate = useNavigate();
+   const { stack, active, setActive } = useHistoryStack();
+
+   const handleGoBack = () => {
+      if (active > 0) {
+         navigate(-1);
+         setActive(active - 1);
+      }
+   };
+   const handleGoForward = () => {
+      if (active < stack.length) {
+         navigate(1);
+         setActive(active + 1);
+      }
+   };
    return (
       <section
          className={cx(
             'h-header sticky top-0 inset-x-0 px-section fy-center',
-            isSticky && 'bg-header-color shadow-header z-30',
+            isSticky && 'bg-header-color shadow-header z-30 backdrop-blur-[50px]',
          )}
       >
          <div className="flex w-full">
-            <button className="w-10 h-10 disabled:opacity-30 disabled:cursor-not-allowed" disabled>
+            <button
+               onClick={handleGoBack}
+               className="w-10 h-10 disabled:opacity-30 disabled:cursor-not-allowed"
+               disabled={active === 0}
+            >
                <ArrowLeft size="22" />
             </button>
 
-            <button className="w-10 h-10 disabled:opacity-30 disabled:cursor-not-allowed">
+            <button
+               onClick={handleGoForward}
+               className="w-10 h-10 disabled:opacity-30 disabled:cursor-not-allowed"
+               disabled={active === stack.length}
+            >
                <ArrowRight size="22" />
             </button>
 

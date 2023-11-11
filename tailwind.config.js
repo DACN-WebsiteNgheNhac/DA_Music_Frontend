@@ -16,13 +16,17 @@ export default {
             'sidebar-color': 'var(--sidebar-color)',
             'sidebar-popup-color': 'var(--sidebar-popup-color)',
             'playingbar-color': 'var(--playingbar-color)',
+            'overlay-color': 'var(--overlay-color)',
+            'icon-hover-color': 'var(--icon-hover-color)',
          },
          textColor: {
             'search-color': 'var(--search-color)',
             'navigation-color': 'var(--navigation-color)',
+            'hover-color': 'var(--hover-color)',
          },
          boxShadow: {
             header: '0 3px 5px var(--header-shadow-color)',
+            primary: 'var(--header-shadow-color) 0px 5px 15px',
          },
          spacing: {
             header: '70px',
@@ -34,5 +38,5 @@ export default {
          },
       },
    },
-   plugins: [],
+   plugins: [import('@tailwindcss/line-clamp')],
 };

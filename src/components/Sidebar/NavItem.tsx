@@ -17,10 +17,10 @@ const NavItem: React.FC<NavItemProps> = ({ children, to, Icon }) => {
             to={to}
             className={({ isActive }: { isActive: boolean }): string =>
                cx(
-                  'fy-center w-full h-12 px-5 cursor-pointer text-sm font-medium border-l-4 transition ease-in-out capitalize',
+                  'fy-center w-full h-12 pr-5 pl-4 cursor-pointer text-sm font-medium border-l-4 transition ease-in-out capitalize',
                   isActive
                      ? 'border-purple-color bg-alpha-color text-purple-color'
-                     : 'hover:text-purple-color',
+                     : 'hover:text-hover-color',
                )
             }
          >
