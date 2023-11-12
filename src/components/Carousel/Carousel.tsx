@@ -13,9 +13,11 @@ import ArtistCard from './ArtistCard';
 
 interface CarouselProps {
    type?: 'album' | 'artist';
+   title?: string;
+   albumsData: IAlbum[];
 }
 
-const Carousel: React.FC<CarouselProps> = ({ type = 'album' }) => {
+const Carousel: React.FC<CarouselProps> = ({ type = 'album', title, albumsData }) => {
    const swiperRef = useRef<any>(null);
 
    const handlePrev = useCallback(() => {
@@ -31,7 +33,7 @@ const Carousel: React.FC<CarouselProps> = ({ type = 'album' }) => {
    return (
       <div className="mt-12">
          <h3 className="mb-5 fx-between text-xl font-bold capitalize">
-            Có Thể Bạn Muốn Nghe
+            {title}
             <Link
                to="/"
                className="fy-center text-xs font-medium uppercase text-navigation-color hover:text-hover-color"
@@ -43,30 +45,17 @@ const Carousel: React.FC<CarouselProps> = ({ type = 'album' }) => {
             <Swiper
                slidesPerView={5}
                spaceBetween={28}
-               loop={true}
+               loop={albumsData.length > 5}
                modules={[Navigation]}
                ref={swiperRef}
             >
                {type === 'album' ? (
                   <>
-                     <SwiperSlide>
-                        <AlbumCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <AlbumCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <AlbumCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <AlbumCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <AlbumCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <AlbumCard />
-                     </SwiperSlide>
+                     {albumsData?.map((album) => (
+                        <SwiperSlide key={album.id}>
+                           <AlbumCard data={album} />
+                        </SwiperSlide>
+                     ))}
                   </>
                ) : (
                   <>
@@ -79,21 +68,34 @@ const Carousel: React.FC<CarouselProps> = ({ type = 'album' }) => {
                      <SwiperSlide>
                         <ArtistCard />
                      </SwiperSlide>
+                     <SwiperSlide>
+                        <ArtistCard />
+                     </SwiperSlide>
+                     <SwiperSlide>
+                        <ArtistCard />
+                     </SwiperSlide>
+                     <SwiperSlide>
+                        <ArtistCard />
+                     </SwiperSlide>
                   </>
                )}
             </Swiper>
-            <Button
-               onClick={handlePrev}
-               className="next absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 rounded-full bg-primary-color shadow-primary z-10"
-            >
-               <ArrowRight2 size="22" />
-            </Button>
-            <Button
-               onClick={handleNext}
-               className="prev absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 rounded-full bg-primary-color shadow-primary z-10"
-            >
-               <ArrowLeft2 size="22" />
-            </Button>
+            {albumsData.length > 5 && (
+               <>
+                  <Button
+                     onClick={handlePrev}
+                     className="next absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 rounded-full bg-primary-color shadow-primary z-10"
+                  >
+                     <ArrowRight2 size="22" />
+                  </Button>
+                  <Button
+                     onClick={handleNext}
+                     className="prev absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 rounded-full bg-primary-color shadow-primary z-10"
+                  >
+                     <ArrowLeft2 size="22" />
+                  </Button>
+               </>
+            )}
          </div>
       </div>
    );

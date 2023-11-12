@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import CustomScrollbar from '~/components/Commons/CustomScrollbar';
+import Audio from '~/components/PlayingBar/Audio';
 import { Header, PlayingBar, Sidebar } from '~/layouts/Commons';
 
 const MainLayout = () => {
@@ -29,6 +30,7 @@ const MainLayout = () => {
             </div>
          </div>
          <PlayingBar />
+         <Audio />
       </div>
    );
 };

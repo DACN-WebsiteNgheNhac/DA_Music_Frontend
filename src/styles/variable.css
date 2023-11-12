@@ -14,8 +14,12 @@
 
    --search-color: #757575;
    --navigation-color: #32323d;
+   --subtitle-color: #00000099;
 
    --border-color: #0000001a;
    --hover-color: var(--purple-color);
    --icon-hover-color: rgba(255, 255, 255, 0.3);
+
+   --progressbar-active: #8d22c3;
+   --progressbar-player: #0000001a;
 }

@@ -18,11 +18,15 @@ export default {
             'playingbar-color': 'var(--playingbar-color)',
             'overlay-color': 'var(--overlay-color)',
             'icon-hover-color': 'var(--icon-hover-color)',
+
+            'progressbar-active': 'var(--progressbar-active)',
+            'progressbar-player': 'var(--progressbar-player)',
          },
          textColor: {
             'search-color': 'var(--search-color)',
             'navigation-color': 'var(--navigation-color)',
             'hover-color': 'var(--hover-color)',
+            'subtitle-color': 'var(--subtitle-color)',
          },
          boxShadow: {
             header: '0 3px 5px var(--header-shadow-color)',
@@ -35,6 +39,9 @@ export default {
          },
          padding: {
             section: '60px',
+         },
+         lineHeight: {
+            normal: 'normal',
          },
       },
    },

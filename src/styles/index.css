@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+button,
+input {
+   outline: none;
+}
+
+ul,
+li {
+   list-style: none;
+   outline: none;
+}
+a {
+   outline: none;
+}
+
 /* Common */
 @layer utilities {
    .f-center {
@@ -17,14 +31,4 @@
    .fx-between {
       @apply flex items-center justify-between;
    }
-}
-
-button,
-input {
-   outline: none;
-}
-
-ul,
-li {
-   list-style: none;
 }

@@ -1,9 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Image } from '~/components/Commons';
-import Button from '../Commons/Button/Button';
-import { playIcon } from '~/assets';
 import cx from 'classnames';
+import { Link } from 'react-router-dom';
+import { Image, Button } from '~/components/Commons';
 import { Shuffle } from 'iconsax-react';
 
 interface ArtistCardProps {

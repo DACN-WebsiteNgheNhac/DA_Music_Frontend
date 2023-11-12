@@ -6,7 +6,8 @@ interface ButtonProps {
    tippyContent?: string;
    className?: string;
    children?: React.ReactNode;
-   [index: string]: any;
+   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+   // [index: string]: any;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -28,11 +29,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
       return (
          <TippyComponent {...tippySetting}>
-            <button
-               ref={ref}
-               {...props}
-               className={cx('f-center rounded-full w-[30px] h-[30px]', className)}
-            >
+            <button ref={ref} {...props} className={cx('f-center rounded-full w-8 h-8', className)}>
                {children}
             </button>
          </TippyComponent>
