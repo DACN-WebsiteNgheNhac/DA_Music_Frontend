@@ -14,10 +14,10 @@ import ArtistCard from './ArtistCard';
 interface CarouselProps {
    type?: 'album' | 'artist';
    title?: string;
-   albumsData: IAlbum[];
+   carouselData: IAlbum[] | IArtist[];
 }
 
-const Carousel: React.FC<CarouselProps> = ({ type = 'album', title, albumsData }) => {
+const Carousel: React.FC<CarouselProps> = ({ type = 'album', title, carouselData }) => {
    const swiperRef = useRef<any>(null);
 
    const handlePrev = useCallback(() => {
@@ -45,13 +45,13 @@ const Carousel: React.FC<CarouselProps> = ({ type = 'album', title, albumsData }
             <Swiper
                slidesPerView={5}
                spaceBetween={28}
-               loop={albumsData.length > 5}
+               loop={carouselData.length > 5}
                modules={[Navigation]}
                ref={swiperRef}
             >
                {type === 'album' ? (
                   <>
-                     {albumsData?.map((album) => (
+                     {(carouselData as IAlbum[])?.map((album: IAlbum) => (
                         <SwiperSlide key={album.id}>
                            <AlbumCard data={album} />
                         </SwiperSlide>
@@ -59,40 +59,27 @@ const Carousel: React.FC<CarouselProps> = ({ type = 'album', title, albumsData }
                   </>
                ) : (
                   <>
-                     <SwiperSlide>
-                        <ArtistCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <ArtistCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <ArtistCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <ArtistCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <ArtistCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <ArtistCard />
-                     </SwiperSlide>
+                     {(carouselData as IArtist[])?.map((artist: IArtist) => (
+                        <SwiperSlide key={artist.id}>
+                           <ArtistCard data={artist} />
+                        </SwiperSlide>
+                     ))}
                   </>
                )}
             </Swiper>
-            {albumsData.length > 5 && (
+            {carouselData.length > 5 && (
                <>
                   <Button
                      onClick={handlePrev}
-                     className="next absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 rounded-full bg-primary-color shadow-primary z-10"
-                  >
-                     <ArrowRight2 size="22" />
-                  </Button>
-                  <Button
-                     onClick={handleNext}
                      className="prev absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 rounded-full bg-primary-color shadow-primary z-10"
                   >
                      <ArrowLeft2 size="22" />
+                  </Button>
+                  <Button
+                     onClick={handleNext}
+                     className="next absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 rounded-full bg-primary-color shadow-primary z-10"
+                  >
+                     <ArrowRight2 size="22" />
                   </Button>
                </>
             )}

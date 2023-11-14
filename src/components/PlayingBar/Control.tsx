@@ -1,71 +1,108 @@
-import React, { useRef } from 'react';
-import { Button } from '../Commons';
+import React, { useEffect, useRef } from 'react';
+import cx from 'classnames';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { audioSelector, musicSelector } from '~/redux/selector';
+import { setCurrentTime, setSeek } from '~/redux/slices/audioSlice';
+import { nextSong, prevSong, setLoop, setPlayPause, setShuffle } from '~/redux/slices/musicSlice';
+
 import { Next, Previous, Repeat, Shuffle } from 'iconsax-react';
 import { RiPlayMiniFill } from 'react-icons/ri';
+import { MdOutlinePause } from 'react-icons/md';
+import { LoadingIcon } from '~/assets';
+
 import InputRange from './InputRange';
-import { useSelector } from 'react-redux';
-import { audioSelector } from '~/redux/selector';
-import { useDispatch } from 'react-redux';
-import { setCurrentTime, setSeek } from '~/redux/slices/audioSlice';
+import { Button } from '../Commons';
+import { durationTime, percentToSecond, secondToPercent } from '~/helpers';
 
 const Control: React.FC = () => {
    const dispatch = useDispatch();
+   const audioRef = useRef<HTMLAudioElement | any>(null);
    const { currentTime, duration } = useSelector(audioSelector);
+   const { isPlaying, loading, isShuffle, isLoop } = useSelector(musicSelector);
 
-   const secondToPercent = Number.isNaN((currentTime / duration) * 100)
-      ? 0
-      : (currentTime / duration) * 100;
+   // Find and binding
+   useEffect(() => {
+      const audioElement: HTMLAudioElement = document.getElementById(
+         'audioPlayer',
+      ) as HTMLAudioElement;
 
-   const percentToSecond = (values: number): number => {
-      return (values * duration) / 100;
+      audioRef.current = audioElement;
+   }, []);
+
+   const handlePlayPause = () => {
+      dispatch(setPlayPause());
    };
 
    const handleProgressChange = (values: number) => {
-      const second = percentToSecond(values);
-      console.log(second);
-
+      dispatch(setSeek(true));
+      const second = percentToSecond(values, duration);
       dispatch(setCurrentTime(second));
    };
 
    const handleProgressFinalChange = (values: number) => {
-      // console.log(values);
+      dispatch(setSeek(false));
+      if (audioRef) {
+         audioRef.current.currentTime = percentToSecond(values, duration);
+      }
    };
 
    return (
       <div className="flex-grow max-w-[40vw]">
          <div className="f-center">
-            <Button tippyContent="Bật phát ngẫu nhiên" className="mx-[7px] hover:bg-alpha-color">
+            <Button
+               onClick={() => dispatch(setShuffle())}
+               tippyContent="Bật phát ngẫu nhiên"
+               className={cx('mx-[7px] hover:bg-alpha-color', isShuffle && 'text-purple-color')}
+            >
                <Shuffle size={16} />
             </Button>
-            <Button className="mx-[7px] hover:bg-alpha-color">
+            <Button onClick={() => dispatch(prevSong())} className="mx-[7px] hover:bg-alpha-color">
                <Previous size={18} variant="Bold" />
             </Button>
 
-            <Button className="w-[40px] h-[40px] mx-[17px] border border-black hover:border-purple-color hover:text-purple-color">
-               <RiPlayMiniFill size={24} className="translate-x-[1px]" />
-            </Button>
+            {loading ? (
+               <Button className="w-[40px] h-[40px] mx-[17px] border border-black hover:border-purple-color hover:text-purple-color">
+                  <LoadingIcon />
+               </Button>
+            ) : (
+               <Button
+                  onClick={handlePlayPause}
+                  className="w-[40px] h-[40px] mx-[17px] border border-black hover:border-purple-color hover:text-purple-color"
+               >
+                  {isPlaying ? (
+                     <MdOutlinePause size={22} />
+                  ) : (
+                     <RiPlayMiniFill size={24} className="translate-x-[1px]" />
+                  )}
+               </Button>
+            )}
 
-            <Button className="mx-[7px] hover:bg-alpha-color">
+            <Button onClick={() => dispatch(nextSong())} className="mx-[7px] hover:bg-alpha-color">
                <Next size={18} variant="Bold" />
             </Button>
-            <Button tippyContent="Bật phát lại tất cả" className="mx-[7px] hover:bg-alpha-color">
+            <Button
+               onClick={() => dispatch(setLoop())}
+               tippyContent="Bật phát lại tất cả"
+               className={cx('mx-[7px] hover:bg-alpha-color', isLoop && 'text-purple-color')}
+            >
                <Repeat size={16} variant="Bold" />
             </Button>
          </div>
 
          <div className="flex items-center mb-[5px] select-none">
             <span className="min-w-[45px] text-xs text-subtitle-color font-medium mr-[10px] opacity-50 text-right">
-               00:13
+               {durationTime(currentTime)}
             </span>
 
             <InputRange
-               value={secondToPercent}
+               value={secondToPercent(currentTime, duration)}
                onChange={handleProgressChange}
                onFinalChange={handleProgressFinalChange}
             />
 
             <span className="min-w-[45px] text-xs text-subtitle-color font-medium ml-[10px]">
-               04:13
+               {durationTime(duration)}
             </span>
          </div>
       </div>

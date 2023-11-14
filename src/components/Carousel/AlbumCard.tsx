@@ -1,9 +1,11 @@
 import React from 'react';
+import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import { Image, Button } from '~/components/Commons';
 import { Heart, More } from 'iconsax-react';
 import { playIcon } from '~/assets';
-import cx from 'classnames';
+import { setPlaylistSongs } from '~/redux/slices/musicSlice';
+import { useDispatch } from 'react-redux';
 
 interface AlbumCardProps {
    className?: string;
@@ -11,8 +13,16 @@ interface AlbumCardProps {
 }
 
 const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
+   const dispatch = useDispatch();
+
    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
+   };
+
+   const handlePlay = (e: React.MouseEvent<HTMLElement>) => {
+      e.preventDefault();
+      dispatch(setPlaylistSongs(data));
+      console.log(data.id);
    };
 
    return (
@@ -27,7 +37,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
                   <Heart size={18} />
                </Button>
                <Button
-                  onClick={handleClick}
+                  onClick={handlePlay}
                   className="w-[45px] h-[45px] rounded-full border-primary-color border f-center hover:brightness-90"
                >
                   <img src={playIcon} alt="playIcon" className="w-full h-full object-cover" />

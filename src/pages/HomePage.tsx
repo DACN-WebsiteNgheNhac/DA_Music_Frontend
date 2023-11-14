@@ -3,7 +3,7 @@ import { musicApi } from '~/axios';
 import Carousel from '~/components/Carousel/Carousel';
 
 const HomePage = () => {
-   const [homeData, setHomeData] = useState<IHomeData[]>([]);
+   const [homeData, setHomeData] = useState<ISection[]>([]);
 
    const fetchHomeData = async () => {
       try {
@@ -20,13 +20,29 @@ const HomePage = () => {
 
    return (
       <div className="h-[200vh]">
-         {homeData.map((item: IHomeData, index) => {
-            if (item.sectionType === 'album')
-               return <Carousel title={item.search} albumsData={item.items} key={index} />;
-
-            return null;
+         {homeData.map((item: ISection, index) => {
+            switch (item.sectionType) {
+               case 'album':
+                  return (
+                     <Carousel
+                        title={item.search}
+                        carouselData={item.items as IAlbum[]}
+                        key={index}
+                     />
+                  );
+               case 'artist':
+                  return (
+                     <Carousel
+                        title={item.search}
+                        carouselData={item.items as IArtist[]}
+                        key={index}
+                        type="artist"
+                     />
+                  );
+               default:
+                  return null;
+            }
          })}
-         {/* <Carousel type="artist" /> */}
       </div>
    );
 };

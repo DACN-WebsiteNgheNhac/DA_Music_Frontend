@@ -1,21 +1,26 @@
 import React from 'react';
-import { Button, Image } from '../Commons';
 import { Heart, More } from 'iconsax-react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { currentSongSelector } from '~/redux/selector';
+
+import { Button, Image } from '../Commons';
 
 const Media: React.FC = () => {
+   const currentSong = useSelector(currentSongSelector);
+
    return (
       <div className="w-[30%] fy-center">
          <Link to="/">
-            <Image className="w-16 h-16" />
+            <Image src={currentSong.image} className="w-16 h-16" />
          </Link>
 
          <div className="ml-[10px] pr-[10px]">
             <h3 className="text-sm leading-[1.36] font-medium line-clamp-1 hover:text-purple-color">
-               <Link to="/">Standing Next to You</Link>
+               <Link to="/">{currentSong.name}</Link>
             </h3>
             <span className="text-xs leading-normal text-subtitle-color mt-[1px] line-clamp-1">
-               Jung Kook
+               {currentSong.description}
             </span>
          </div>
 

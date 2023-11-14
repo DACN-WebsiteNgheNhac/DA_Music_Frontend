@@ -1,14 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
+interface IAudioSlice {
+   isSeek: boolean;
+   duration: number;
+   currentTime: number;
+   volume: number;
+   volumeBefore: number;
+}
+
+const initialState: IAudioSlice = {
+   isSeek: false,
+   duration: 0,
+   currentTime: 0,
+   volume: 50,
+   volumeBefore: 0,
+};
 
 const audioSlice = createSlice({
    name: 'audio',
-   initialState: {
-      isSeek: false,
-      duration: 0,
-      currentTime: 0,
-      volume: 50,
-      volumeBefore: 0,
-   },
+   initialState,
    reducers: {
       toggleVolume: (state) => {
          if (state.volume > 0) {
@@ -22,16 +32,16 @@ const audioSlice = createSlice({
             state.volumeBefore = 0;
          }
       },
-      setVolume: (state, actions) => {
+      setVolume: (state, actions: PayloadAction<number>) => {
          state.volume = actions.payload;
       },
-      setDuration: (state, actions) => {
+      setDuration: (state, actions: PayloadAction<number>) => {
          state.duration = actions.payload;
       },
-      setCurrentTime: (state, actions) => {
+      setCurrentTime: (state, actions: PayloadAction<number>) => {
          state.currentTime = actions.payload;
       },
-      setSeek: (state, actions) => {
+      setSeek: (state, actions: PayloadAction<boolean>) => {
          state.isSeek = actions.payload;
       },
       resetAudio: (state) => {

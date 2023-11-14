@@ -29,8 +29,8 @@ const Header: React.FC<HeaderProps> = ({ isSticky }) => {
    return (
       <section
          className={cx(
-            'h-header sticky top-0 inset-x-0 px-section fy-center',
-            isSticky && 'bg-header-color shadow-header z-30 backdrop-blur-[50px]',
+            'h-header sticky top-0 inset-x-0 px-section fy-center z-30',
+            isSticky && 'bg-header-color shadow-header backdrop-blur-[50px]',
          )}
       >
          <div className="flex w-full">

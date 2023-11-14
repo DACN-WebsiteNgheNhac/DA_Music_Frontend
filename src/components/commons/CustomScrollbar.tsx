@@ -3,17 +3,17 @@ import Scrollbars from 'react-custom-scrollbars-2';
 
 interface CustomScrollbarProps {
    children: React.ReactNode;
-   onScroll: (e: React.MouseEvent<HTMLElement>) => void;
+   onScroll?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ onScroll, children }) => {
+const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ onScroll = () => {}, children }) => {
    return (
       <Scrollbars
          autoHide
          autoHideTimeout={1000}
          autoHideDuration={200}
          onScroll={onScroll}
-         renderThumbHorizontal={() => <div />}
+         renderTrackHorizontal={() => <div />}
          renderTrackVertical={({ style, ...props }) => (
             <div
                {...props}

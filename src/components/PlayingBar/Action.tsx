@@ -6,11 +6,11 @@ import { audioSelector, musicSelector } from '~/redux/selector';
 import { Button } from '../Commons';
 import InputRange from './InputRange';
 import { setVolume } from '~/redux/slices/audioSlice';
-import { setShowAlbum } from '~/redux/slices/musicSlice';
+import { setShowPlaylist } from '~/redux/slices/musicSlice';
 
 const Action: React.FC = () => {
    const dispatch = useDispatch();
-   const { showAlbum } = useSelector(musicSelector);
+   const { showPlaylist } = useSelector(musicSelector);
    const { volume } = useSelector(audioSelector);
 
    const handleChangeVolume = (values: number) => {
@@ -19,7 +19,7 @@ const Action: React.FC = () => {
    };
 
    const handleToggleShowAlbum = () => {
-      dispatch(setShowAlbum());
+      dispatch(setShowPlaylist());
    };
 
    return (
@@ -36,7 +36,7 @@ const Action: React.FC = () => {
                step={0.01}
                value={volume}
                onChange={handleChangeVolume}
-               className="w-[70px]"
+               className="!w-[70px]"
             />
          </div>
 
@@ -48,8 +48,8 @@ const Action: React.FC = () => {
             onClick={handleToggleShowAlbum}
             tippyContent="Danh sách bài hát"
             className={cx(
-               'w-7 h-[30px] !rounded',
-               showAlbum ? 'bg-progressbar-active text-primary-color' : 'hover:bg-alpha-color',
+               '!w-7 h-[30px] !rounded',
+               showPlaylist ? 'bg-progressbar-active text-primary-color' : 'hover:bg-alpha-color',
             )}
          >
             <MusicFilter size={16} />

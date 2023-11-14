@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import CustomScrollbar from '~/components/Commons/CustomScrollbar';
-import Audio from '~/components/PlayingBar/Audio';
-import { Header, PlayingBar, Sidebar } from '~/layouts/Commons';
+
+import { CustomScrollbar } from '~/components/Commons';
+import { Header, PlayingBar, Sidebar, Audio } from '~/layouts/Commons';
+import { useSelector } from 'react-redux';
+import { musicSelector } from '~/redux/selector';
 
 const MainLayout = () => {
+   const { playlistSongs } = useSelector(musicSelector);
    const [isSticky, setIsSticky] = useState<boolean>(false);
 
    const handleScroll = (e: React.MouseEvent<HTMLElement>) => {
@@ -29,8 +32,12 @@ const MainLayout = () => {
                </CustomScrollbar>
             </div>
          </div>
-         <PlayingBar />
-         <Audio />
+         {playlistSongs.length > 0 && (
+            <>
+               <PlayingBar />
+               <Audio />
+            </>
+         )}
       </div>
    );
 };

@@ -1,5 +1,5 @@
 // src/api/axios-instance.ts
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
 const instance: AxiosInstance = axios.create({
    baseURL: 'https://localhost:7201/api',

@@ -6,16 +6,17 @@ import { Shuffle } from 'iconsax-react';
 
 interface ArtistCardProps {
    className?: string;
+   data: IArtist;
 }
 
-const ArtistCard: React.FC<ArtistCardProps> = ({ className }) => {
+const ArtistCard: React.FC<ArtistCardProps> = ({ className, data }) => {
    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
    };
    return (
       <div className={cx('flex-shrink-0 min-w-[160px]', className)}>
-         <Link to="/artist" className="relative">
-            <Image className="rounded-full">
+         <Link to={`/artist/${data.id}`} className="relative">
+            <Image className="rounded-full" src={data.image}>
                <Button
                   onClick={handleClick}
                   className="w-[45px] h-[45px] rounded-full border-primary-color border f-center hover:brightness-90"
@@ -26,10 +27,10 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ className }) => {
          </Link>
          <div className="mt-3 text-sm leading-[1.33] text-center">
             <Link
-               to="/"
+               to={`/artist/${data.id}`}
                className="line-clamp-1 leading-[1.36] text-primary font-medium mb-1 hover:text-hover-color"
             >
-               Nhạc của tui
+               {data.artistName}
             </Link>
          </div>
       </div>

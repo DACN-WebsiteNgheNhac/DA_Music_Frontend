@@ -31,6 +31,8 @@ export default {
          boxShadow: {
             header: '0 3px 5px var(--header-shadow-color)',
             primary: 'var(--header-shadow-color) 0px 5px 15px',
+            'search-bottom': '0 4px 6px 0 rgba(32,33,36,.28)',
+            'search-top': '0 1px 5px 0 rgba(0,0,0,.2);',
          },
          spacing: {
             header: '70px',
@@ -42,6 +44,9 @@ export default {
          },
          lineHeight: {
             normal: 'normal',
+         },
+         maxHeight: {
+            'search-list': 'calc(100vh - 180px)',
          },
       },
    },

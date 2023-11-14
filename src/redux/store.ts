@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { audioReducer, musicReducer } from './slices';
+import { audioReducer, musicReducer, searchReducer } from './slices';
 
 const store = configureStore({
    reducer: {
       audio: audioReducer,
       music: musicReducer,
+      search: searchReducer,
    },
 });
 
