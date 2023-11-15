@@ -1,5 +1,5 @@
 import React from 'react';
-import { MediaItem, MediaArtistItem } from '../Media';
+import { MediaItem, MediaArtistItem, MediaAlbumItem } from '../Media';
 import { Line } from '../Commons';
 import { useSelector } from 'react-redux';
 import { searchSelector } from '~/redux/selector';
@@ -20,12 +20,22 @@ const SearchList: React.FC<ISearchList> = () => {
                      </div>
                      {result.map((section, index) => {
                         switch (section.sectionType) {
+                           case 'song':
+                              return (
+                                 <React.Fragment key={index}>
+                                    {(section.items as ISong[]).map((song) => (
+                                       <li key={song.id}>
+                                          <MediaItem data={song} />
+                                       </li>
+                                    ))}
+                                 </React.Fragment>
+                              );
                            case 'album':
                               return (
                                  <React.Fragment key={index}>
                                     {(section.items as IAlbum[]).map((album) => (
                                        <li key={album.id}>
-                                          <MediaItem data={album} />
+                                          <MediaAlbumItem data={album} />
                                        </li>
                                     ))}
                                  </React.Fragment>

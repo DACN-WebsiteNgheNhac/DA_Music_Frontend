@@ -33,20 +33,24 @@ export default {
             primary: 'var(--header-shadow-color) 0px 5px 15px',
             'search-bottom': '0 4px 6px 0 rgba(32,33,36,.28)',
             'search-top': '0 1px 5px 0 rgba(0,0,0,.2);',
+            drawer:
+               '0 1px 0 rgba(0,0,0,0.3),0 1px 6px rgba(0,0,0,0.3),inset 0 1px 1px hsla(0,0%,100%,0.3)',
+            tab: '0 1px 3px 0 rgba(0,0,0,.07)',
          },
          spacing: {
             header: '70px',
             playingbar: '90px',
             sidebar: '240px',
+            drawer: 'calc(100vh - 90px)',
+         },
+         maxHeight: {
+            'search-list': 'calc(100vh - 180px)',
          },
          padding: {
             section: '60px',
          },
          lineHeight: {
             normal: 'normal',
-         },
-         maxHeight: {
-            'search-list': 'calc(100vh - 180px)',
          },
       },
    },

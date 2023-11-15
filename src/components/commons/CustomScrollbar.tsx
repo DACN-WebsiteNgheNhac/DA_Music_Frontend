@@ -17,11 +17,14 @@ const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ onScroll = () => {}, 
          renderTrackVertical={({ style, ...props }) => (
             <div
                {...props}
-               className="absolute w-1 inset-y-[2px] right-[2px] z-[100] transition-opacity ease-linear"
+               className="absolute w-1 inset-y-[2px] right-[2px] z-30 transition-opacity ease-linear"
             ></div>
          )}
          renderThumbVertical={({ style, ...props }) => (
-            <div {...props} className="relative rounded-lg bg-[rgba(0,0,0,0.2)] z-40" />
+            <div {...props} className="relative rounded-lg bg-[rgba(0,0,0,0.2)] z-30" />
+         )}
+         renderView={({ style, ...props }) => (
+            <div {...props} style={{ ...style, overflowX: 'hidden' }} />
          )}
       >
          {children}

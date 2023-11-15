@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ isSticky }) => {
    return (
       <section
          className={cx(
-            'h-header sticky top-0 inset-x-0 px-section fy-center z-30',
+            'h-header sticky top-0 inset-x-0 px-section fy-center z-10',
             isSticky && 'bg-header-color shadow-header backdrop-blur-[50px]',
          )}
       >

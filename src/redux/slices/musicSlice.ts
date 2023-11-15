@@ -71,6 +71,11 @@ const musicSlice = createSlice({
          state.playlistId = action.payload.id;
          state.playlistSongs = action.payload.songs;
       },
+      setSingleSong: (state, action: PayloadAction<ISong>) => {
+         state.isPlaying = true;
+         state.playlistId = '';
+         state.playlistSongs = [action.payload];
+      },
       clearPlaylistSongs: (state) => {},
    },
 });
@@ -85,6 +90,7 @@ export const {
    setShowPlaylist,
    setPlaylistSongs,
    setPlaySongWithId,
+   setSingleSong,
    clearPlaylistSongs,
 } = musicSlice.actions;
 

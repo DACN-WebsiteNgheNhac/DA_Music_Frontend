@@ -27,7 +27,7 @@ interface ISection {
    sectionType: SectionType;
    viewType: string;
    search: string;
-   items: IAlbum[] | IArtist[];
+   items: IAlbum[] | IArtist[] | ISong[];
 }
 // album type
 interface IAlbum {
@@ -50,6 +50,7 @@ interface ISong {
    songTime: number;
    createdAt: Data;
    tag: string;
+   artistNames: string;
 }
 
 // artist type
