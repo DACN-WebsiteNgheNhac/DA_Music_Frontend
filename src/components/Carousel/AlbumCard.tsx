@@ -39,7 +39,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
                   <Heart size={18} />
                </Button>
                {loading && playlistId == data.id ? (
-                  <Button className="w-[40px] h-[40px] mx-[17px] border border-black hover:border-purple-color hover:text-purple-color">
+                  <Button className="w-[40px] h-[40px] mx-[17px] border border-primary-color hover:border-purple-color hover:text-purple-color">
                      <LoadingIcon fill="white" />
                   </Button>
                ) : (

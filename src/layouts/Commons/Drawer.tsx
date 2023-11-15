@@ -8,7 +8,6 @@ const Drawer: React.FC = () => {
    const { showPlaylist } = useSelector(musicSelector);
 
    const variants = {
-      enter: { display: 'none' },
       open: { x: 0, display: 'block' },
       closed: {
          x: '100%',
@@ -19,9 +18,8 @@ const Drawer: React.FC = () => {
    };
 
    return (
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
          <motion.div
-            initial={'enter'}
             animate={showPlaylist ? 'open' : 'closed'}
             variants={variants}
             transition={{ ease: 'easeInOut', duration: 0.5 }}
