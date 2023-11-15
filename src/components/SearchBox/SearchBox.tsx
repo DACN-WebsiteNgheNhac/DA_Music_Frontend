@@ -1,24 +1,27 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import cx from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { searchSelector } from '~/redux/selector';
 import { useOutSide } from '~/hooks';
-import { clearSearch, setValue } from '~/redux/slices/searchSlice';
+import { clearSearch, fetchSearch, setValue } from '~/redux/slices/searchSlice';
 
 import { SearchNormal1 } from 'iconsax-react';
 import { IoCloseOutline } from 'react-icons/io5';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import SearchList from './SearchList';
+import useDebounce from '~/hooks/useDebounce';
+import { AppThunkDispatch } from '~/redux/store';
 
 interface SearchBoxProps {}
 
 const SearchBox: React.FC<SearchBoxProps> = () => {
+   const dispatch = useDispatch<AppThunkDispatch>();
+   const { value, loading } = useSelector(searchSelector);
+   const debounceValue = useDebounce(value, 500);
+
    const focusRef = useRef<HTMLDivElement>(null);
    const [isFocus, setIsFocus] = useState<boolean>(false);
-
-   const dispatch = useDispatch();
-   const { value, loading } = useSelector(searchSelector);
 
    useOutSide(focusRef, (e: MouseEvent) => {
       // if menu profile && profile not containt e.target => close profile
@@ -30,6 +33,15 @@ const SearchBox: React.FC<SearchBoxProps> = () => {
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
    };
+
+   useEffect(() => {
+      if (!debounceValue.trim()) {
+         dispatch(clearSearch());
+         return;
+      }
+
+      dispatch(fetchSearch(debounceValue));
+   }, [debounceValue, dispatch]);
 
    return (
       <div
@@ -57,7 +69,7 @@ const SearchBox: React.FC<SearchBoxProps> = () => {
             />
             {value.length > 0 && (
                <>
-                  {loading ? (
+                  {loading === true ? (
                      <div className="f-center h-10 w-10 cursor-pointer animate-spin">
                         <AiOutlineLoading3Quarters size={16} />
                      </div>

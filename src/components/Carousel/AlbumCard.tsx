@@ -3,9 +3,10 @@ import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import { Image, Button } from '~/components/Commons';
 import { Heart, More } from 'iconsax-react';
-import { playIcon } from '~/assets';
-import { setPlaylistSongs } from '~/redux/slices/musicSlice';
-import { useDispatch } from 'react-redux';
+import { playIcon, musicWaveIcon, LoadingIcon } from '~/assets';
+import { setPlayPause, setPlaylistSongs } from '~/redux/slices/musicSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { musicSelector } from '~/redux/selector';
 
 interface AlbumCardProps {
    className?: string;
@@ -14,6 +15,7 @@ interface AlbumCardProps {
 
 const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
    const dispatch = useDispatch();
+   const { playlistId, isPlaying, loading } = useSelector(musicSelector);
 
    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
@@ -21,14 +23,14 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
 
    const handlePlay = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
-      dispatch(setPlaylistSongs(data));
-      console.log(data.id);
+      if (isPlaying && playlistId == data.id) dispatch(setPlayPause());
+      else dispatch(setPlaylistSongs(data));
    };
 
    return (
       <div className={cx('flex-shrink-0 min-w-[160px]', className)}>
          <Link to={`/album/${data.id}`} className="relative">
-            <Image src={data.image}>
+            <Image src={data.image} active={isPlaying && playlistId == data.id}>
                <Button
                   onClick={handleClick}
                   className="w-[30px] h-[30px] hover:bg-icon-hover-color"
@@ -36,12 +38,27 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
                >
                   <Heart size={18} />
                </Button>
-               <Button
-                  onClick={handlePlay}
-                  className="w-[45px] h-[45px] rounded-full border-primary-color border f-center hover:brightness-90"
-               >
-                  <img src={playIcon} alt="playIcon" className="w-full h-full object-cover" />
-               </Button>
+               {loading && playlistId == data.id ? (
+                  <Button className="w-[40px] h-[40px] mx-[17px] border border-black hover:border-purple-color hover:text-purple-color">
+                     <LoadingIcon fill="white" />
+                  </Button>
+               ) : (
+                  <Button
+                     onClick={handlePlay}
+                     className="w-[45px] h-[45px] rounded-full border-primary-color border f-center hover:brightness-90"
+                  >
+                     {isPlaying && playlistId == data.id ? (
+                        <img
+                           src={musicWaveIcon}
+                           alt="playIcon"
+                           className="w-2/5 h-2/5 object-cover"
+                        />
+                     ) : (
+                        <img src={playIcon} alt="playIcon" className="w-full h-full object-cover" />
+                     )}
+                  </Button>
+               )}
+
                <Button
                   onClick={handleClick}
                   className="w-[30px] h-[30px] hover:bg-icon-hover-color"

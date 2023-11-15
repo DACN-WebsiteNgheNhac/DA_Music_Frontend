@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { AnyAction, ThunkDispatch, configureStore } from '@reduxjs/toolkit';
 import { audioReducer, musicReducer, searchReducer } from './slices';
 
 const store = configureStore({
@@ -7,9 +7,11 @@ const store = configureStore({
       music: musicReducer,
       search: searchReducer,
    },
+   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export type AppThunkDispatch = ThunkDispatch<RootState, any, AnyAction>;
 
 export default store;

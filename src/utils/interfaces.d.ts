@@ -24,7 +24,7 @@ interface IResponseData<T = any> {
 
 // home type
 interface ISection {
-   sectionType: string;
+   sectionType: SectionType;
    viewType: string;
    search: string;
    items: IAlbum[] | IArtist[];
@@ -37,6 +37,7 @@ interface IAlbum {
    image: string;
    tag: string | null;
    songs: ISong[];
+   artistNames: string;
 }
 
 // song type
