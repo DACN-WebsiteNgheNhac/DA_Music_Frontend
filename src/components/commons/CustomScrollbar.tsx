@@ -24,7 +24,7 @@ const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ onScroll = () => {}, 
             <div {...props} className="relative rounded-lg bg-[rgba(0,0,0,0.2)] z-30" />
          )}
          renderView={({ style, ...props }) => (
-            <div {...props} style={{ ...style, overflowX: 'hidden' }} />
+            <div {...props} style={{ ...style, marginBottom: 0, overflowX: 'hidden' }} />
          )}
       >
          {children}

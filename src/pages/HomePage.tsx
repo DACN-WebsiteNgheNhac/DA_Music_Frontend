@@ -19,7 +19,7 @@ const HomePage = () => {
    }, []);
 
    return (
-      <div className="h-[200vh]">
+      <div className="pb-10">
          {homeData.map((item: ISection, index) => {
             switch (item.sectionType) {
                case 'album':

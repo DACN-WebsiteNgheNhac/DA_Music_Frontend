@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cx from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { searchSelector } from '~/redux/selector';
 import { useOutSide } from '~/hooks';
@@ -16,6 +17,7 @@ import { AppThunkDispatch } from '~/redux/store';
 interface SearchBoxProps {}
 
 const SearchBox: React.FC<SearchBoxProps> = () => {
+   const navigate = useNavigate();
    const dispatch = useDispatch<AppThunkDispatch>();
    const { value, loading } = useSelector(searchSelector);
    const debounceValue = useDebounce(value, 500);
@@ -32,6 +34,8 @@ const SearchBox: React.FC<SearchBoxProps> = () => {
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      if (value.trim().length <= 0) return;
+      navigate(`/search/all?query=${value}`);
    };
 
    useEffect(() => {

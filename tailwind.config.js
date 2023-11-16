@@ -26,6 +26,7 @@ export default {
             'search-color': 'var(--search-color)',
             'navigation-color': 'var(--navigation-color)',
             'hover-color': 'var(--hover-color)',
+            'title-color': 'var(--title-color)',
             'subtitle-color': 'var(--subtitle-color)',
          },
          boxShadow: {
@@ -42,12 +43,10 @@ export default {
             playingbar: '90px',
             sidebar: '240px',
             drawer: 'calc(100vh - 90px)',
+            section: '60px',
          },
          maxHeight: {
             'search-list': 'calc(100vh - 180px)',
-         },
-         padding: {
-            section: '60px',
          },
          lineHeight: {
             normal: 'normal',

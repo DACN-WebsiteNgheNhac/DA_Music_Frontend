@@ -10,6 +10,7 @@ export interface IMusicSlice {
    playlistId: string | null;
    playlistSongs: ISong[];
    playlistSongsBefore: ISong[];
+   title: string;
 }
 
 const initialState: IMusicSlice = {
@@ -22,6 +23,7 @@ const initialState: IMusicSlice = {
    playlistId: '',
    playlistSongs: [],
    playlistSongsBefore: [],
+   title: '',
 };
 
 const musicSlice = createSlice({
@@ -65,18 +67,26 @@ const musicSlice = createSlice({
       setShowPlaylist: (state) => {
          state.showPlaylist = !state.showPlaylist;
       },
-      setPlaySongWithId: (state, action) => {},
+      setPlaySongWithId: (state, action: PayloadAction<string>) => {
+         state.currentIndex = state.playlistSongs.findIndex(
+            (item: ISong) => item.id === action.payload,
+         );
+         state.isPlaying = true;
+      },
       setPlaylistSongs: (state, action: PayloadAction<IAlbum>) => {
          state.isPlaying = true;
          state.playlistId = action.payload.id;
          state.playlistSongs = action.payload.songs;
+         state.title = action.payload.name;
       },
       setSingleSong: (state, action: PayloadAction<ISong>) => {
          state.isPlaying = true;
          state.playlistId = '';
          state.playlistSongs = [action.payload];
       },
-      clearPlaylistSongs: (state) => {},
+      clearPlaylistSongs: (state) => {
+         state = initialState;
+      },
    },
 });
 

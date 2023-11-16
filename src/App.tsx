@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { HomePage, LoginPage, RegisterPage } from '~/pages';
+import { HomePage, LoginPage, RegisterPage, SearchPage } from '~/pages';
 import { MainLayout } from '~/layouts';
 import 'tippy.js/dist/tippy.css';
 
@@ -8,6 +8,7 @@ const App = () => {
       <Routes>
          <Route path="/" element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/search/:slug" element={<SearchPage />} />
             <Route path="/artist" element={<HomePage />} />
             <Route path="/album" element={<HomePage />} />
             <Route path="/radio" element={<HomePage />} />
