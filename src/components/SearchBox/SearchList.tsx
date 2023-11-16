@@ -3,6 +3,7 @@ import { MediaItem, MediaArtistItem, MediaAlbumItem } from '../Media';
 import { Line } from '../Commons';
 import { useSelector } from 'react-redux';
 import { searchSelector } from '~/redux/selector';
+import { Link } from 'react-router-dom';
 
 interface ISearchList {}
 
@@ -25,7 +26,9 @@ const SearchList: React.FC<ISearchList> = () => {
                                  <React.Fragment key={index}>
                                     {(section.items as ISong[]).map((song) => (
                                        <li key={song.id}>
-                                          <MediaItem data={song} />
+                                          <Link to={`/song/${song.id}`}>
+                                             <MediaItem data={song} />
+                                          </Link>
                                        </li>
                                     ))}
                                  </React.Fragment>

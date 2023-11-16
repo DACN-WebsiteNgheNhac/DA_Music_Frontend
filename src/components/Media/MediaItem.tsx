@@ -6,14 +6,15 @@ import { Heart, More } from 'iconsax-react';
 
 import { Button, Image } from '../Commons';
 import { LoadingIcon, musicWaveIcon, playIcon } from '~/assets';
-import { setPlayPause, setSingleSong } from '~/redux/slices/musicSlice';
+import { setPlayPause, setNewReleaseSongs, setSingleSong } from '~/redux/slices/musicSlice';
 import { currentSongSelector, musicSelector } from '~/redux/selector';
 
 interface MediaItemProps {
    data: ISong;
+   albumData?: IAlbum;
 }
 
-const MediaItem: React.FC<MediaItemProps> = ({ data }) => {
+const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
    const dispatch = useDispatch();
    const { isPlaying, loading } = useSelector(musicSelector);
    const currentSong = useSelector(currentSongSelector);
@@ -21,22 +22,23 @@ const MediaItem: React.FC<MediaItemProps> = ({ data }) => {
    const handlePlay = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
       if (isPlaying && currentSong?.id === data.id) dispatch(setPlayPause());
-      else {
+      else if (albumData) {
+         dispatch(setNewReleaseSongs(albumData));
+      } else {
          dispatch(setSingleSong(data));
       }
    };
 
    return (
-      <Link
-         to={`/song/${data.id}`}
+      <div
          className={cx(
             'fy-center px-[10px] py-2 group/image hover:bg-alpha-color rounded-md',
-            isPlaying && currentSong?.id == data.id && 'bg-alpha-color',
+            currentSong?.id == data.id && 'bg-alpha-color',
          )}
       >
          <Image
             scale={false}
-            active={isPlaying && currentSong?.id == data.id}
+            active={currentSong?.id == data.id}
             className="w-[52px] h-[52px] mr-[10px]"
             src={data.image}
          >
@@ -68,7 +70,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data }) => {
                <More size={15} />
             </Button>
          </div>
-      </Link>
+      </div>
    );
 };
 

@@ -6,7 +6,7 @@ import MediaItem from './MediaItem';
 import NextSong from './NextSong';
 
 const Playlist: React.FC = () => {
-   const { playlistSongs, title } = useSelector(musicSelector);
+   const { playlistSongs, title, currentIndex } = useSelector(musicSelector);
    const currentSong = useSelector(currentSongSelector);
    return (
       <div className="flex-1">
@@ -14,7 +14,7 @@ const Playlist: React.FC = () => {
             <div className="px-2">
                {playlistSongs.map((song, index) => (
                   <React.Fragment key={song.id}>
-                     <MediaItem data={song} />
+                     <MediaItem data={song} isListening={index < currentIndex} />
                      {index < playlistSongs.length - 1 && title && currentSong.id === song.id && (
                         <NextSong />
                      )}

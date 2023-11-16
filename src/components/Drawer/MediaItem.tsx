@@ -10,9 +10,10 @@ import { setPlayPause, setPlaySongWithId } from '~/redux/slices/musicSlice';
 
 interface MediaItemProps {
    data: ISong;
+   isListening: boolean;
 }
 
-const MediaItem: React.FC<MediaItemProps> = ({ data }) => {
+const MediaItem: React.FC<MediaItemProps> = ({ data, isListening }) => {
    const dispatch = useDispatch();
    const { isPlaying, loading } = useSelector(musicSelector);
    const currentSong = useSelector(currentSongSelector);
@@ -45,6 +46,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data }) => {
             currentSong?.id == data.id
                ? 'bg-progressbar-active text-primary-color'
                : 'hover:bg-alpha-color',
+            isListening && 'opacity-50 hover:opacity-100',
          )}
       >
          <Image

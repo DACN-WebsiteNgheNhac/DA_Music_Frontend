@@ -79,6 +79,14 @@ const musicSlice = createSlice({
          state.playlistSongs = action.payload.songs;
          state.title = action.payload.name;
       },
+      setNewReleaseSongs: (state, action: PayloadAction<IAlbum>) => {
+         state.isPlaying = true;
+         state.playlistId = '';
+         state.playlistSongs = action.payload.songs;
+         state.title = action.payload.name;
+         state.currentIndex =
+            state.playlistSongs.findIndex((item) => item.id === action.payload.id) || 0;
+      },
       setSingleSong: (state, action: PayloadAction<ISong>) => {
          state.isPlaying = true;
          state.playlistId = '';
@@ -102,6 +110,7 @@ export const {
    setPlaySongWithId,
    setSingleSong,
    clearPlaylistSongs,
+   setNewReleaseSongs,
 } = musicSlice.actions;
 
 export default musicSlice.reducer;

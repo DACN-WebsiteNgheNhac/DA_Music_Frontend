@@ -27,7 +27,7 @@ interface ISection {
    sectionType: SectionType;
    viewType: string;
    search: string;
-   items: IAlbum[] | IArtist[] | ISong[];
+   items: IAlbum[] | IArtist[] | ISong[] | INewRelease;
 }
 // album type
 interface IAlbum {
@@ -66,4 +66,11 @@ interface IArtist {
    national: string;
    tag: string;
    createdAt: Date;
+}
+
+// release type
+interface INewRelease {
+   all: ISong[];
+   vpop: ISong[];
+   other: ISong[];
 }

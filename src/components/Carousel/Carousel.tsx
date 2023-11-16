@@ -1,15 +1,15 @@
 import React, { useCallback, useRef } from 'react';
 import { ArrowLeft2, ArrowRight2 } from 'iconsax-react';
-import { Link } from 'react-router-dom';
-import AlbumCard from './AlbumCard';
-import { Button } from '../Commons';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+
+import AlbumCard from './AlbumCard';
 import ArtistCard from './ArtistCard';
+import { Button, SectionTitle } from '../Commons';
 
 interface CarouselProps {
    type?: 'album' | 'artist';
@@ -32,15 +32,7 @@ const Carousel: React.FC<CarouselProps> = ({ type = 'album', title, carouselData
 
    return (
       <div className="mt-12">
-         <h3 className="mb-5 fx-between text-xl font-bold capitalize">
-            {title}
-            <Link
-               to="/"
-               className="fy-center text-xs font-medium uppercase text-navigation-color hover:text-hover-color"
-            >
-               Tất cả <ArrowRight2 size={16} className="ml-[6px]" />
-            </Link>
-         </h3>
+         <SectionTitle title={title} />
          <div className="relative">
             <Swiper
                slidesPerView={5}
