@@ -25,7 +25,7 @@ const Image: React.FC<ImageProps> = ({
          <img
             className={cx(
                'w-full h-full object-cover transition-all ease-[ease] duration-700',
-               scale && 'group-hover/image:scale-110 ',
+               scale && 'group-hover/image:scale-110',
             )}
             src={src}
             alt=""
@@ -34,7 +34,7 @@ const Image: React.FC<ImageProps> = ({
             <div
                className={cx(
                   'absolute inset-0 bg-overlay-color',
-                  active ? 'block' : 'hidden group-hover/image:block ',
+                  active ? 'block' : 'hidden group-hover/image:block',
                )}
             />
          )}

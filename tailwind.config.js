@@ -33,7 +33,8 @@ export default {
             header: '0 3px 5px var(--header-shadow-color)',
             primary: 'var(--header-shadow-color) 0px 5px 15px',
             'search-bottom': '0 4px 6px 0 rgba(32,33,36,.28)',
-            'search-top': '0 1px 5px 0 rgba(0,0,0,.2);',
+            'search-top': '0 1px 5px 0 rgba(0,0,0,.2)',
+            media: '0 5px 8px 0 rgba(0,0,0,.2)',
             drawer:
                '0 1px 0 rgba(0,0,0,0.3),0 1px 6px rgba(0,0,0,0.3),inset 0 1px 1px hsla(0,0%,100%,0.3)',
             tab: '0 1px 3px 0 rgba(0,0,0,.07)',

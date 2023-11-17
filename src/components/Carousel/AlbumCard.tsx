@@ -1,12 +1,15 @@
 import React from 'react';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Image, Button } from '~/components/Commons';
+import { setPlayPause, setPlaylistSongs } from '~/redux/slices/musicSlice';
+import { musicSelector } from '~/redux/selector';
+import { resizeImage } from '~/helpers';
+
 import { Heart, More } from 'iconsax-react';
 import { playIcon, musicWaveIcon, LoadingIcon } from '~/assets';
-import { setPlayPause, setPlaylistSongs } from '~/redux/slices/musicSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { musicSelector } from '~/redux/selector';
 
 interface AlbumCardProps {
    className?: string;
@@ -30,7 +33,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
    return (
       <div className={cx('flex-shrink-0 min-w-[160px]', className)}>
          <Link to={`/album/${data.id}`} className="relative">
-            <Image src={data.image} active={isPlaying && playlistId == data.id}>
+            <Image src={resizeImage(data.image)} active={isPlaying && playlistId == data.id}>
                <Button
                   onClick={handleClick}
                   className="w-[30px] h-[30px] hover:bg-icon-hover-color"

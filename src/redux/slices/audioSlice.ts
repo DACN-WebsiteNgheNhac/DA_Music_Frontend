@@ -28,7 +28,7 @@ const audioSlice = createSlice({
             state.volume = state.volumeBefore;
             state.volumeBefore = 0;
          } else {
-            state.volume = 20;
+            state.volume = 50;
             state.volumeBefore = 0;
          }
       },

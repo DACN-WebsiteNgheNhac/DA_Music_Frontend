@@ -28,6 +28,9 @@ const musicApi = {
          params,
       });
    },
+   fetchAlbumById: (albumId: string): Promise<AxiosResponse<IResponseData<IAlbum>>> => {
+      return axiosInstance.get<IResponseData>(`/album/${albumId}`);
+   },
 };
 
 export default musicApi;

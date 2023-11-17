@@ -51,6 +51,8 @@ interface ISong {
    createdAt: Data;
    tag: string;
    artistNames: string;
+   listens: number;
+   comments: [];
 }
 
 // artist type
