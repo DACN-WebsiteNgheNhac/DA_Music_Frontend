@@ -5,11 +5,11 @@ import cx from 'classnames';
 interface ImageProps {
    className?: string;
    children?: React.ReactNode;
-   src?: string;
+   src: string;
    active?: boolean;
 }
 
-const Image: React.FC<ImageProps> = ({ children, active = false }) => {
+const Image: React.FC<ImageProps> = ({ children, active = false, src }) => {
    const variantBorderRadius: Variants = {
       start: {
          borderRadius: [8, 200],
@@ -48,13 +48,13 @@ const Image: React.FC<ImageProps> = ({ children, active = false }) => {
    };
 
    return (
-      <div className="relative bg-transparent group/image">
+      <div className="relative bg-transparent group/image w-full h-0 pb-[100%] ">
          <AnimatePresence>
             <motion.div
                initial={false}
                animate={active ? 'start' : 'end'}
                variants={variantBorderRadius}
-               className={cx('overflow-hidden shadow-media')}
+               className={cx('absolute inset-0 overflow-hidden shadow-media bg-alpha-color')}
             >
                <motion.div
                   initial={false}
@@ -65,7 +65,7 @@ const Image: React.FC<ImageProps> = ({ children, active = false }) => {
                      className={cx(
                         'w-full h-full object-cover transition-all ease-[ease] duration-700 group-hover/image:scale-110',
                      )}
-                     src="https://photo-resize-zmp3.zmdcdn.me/w600_r1x1_jpeg/cover/2/a/a/5/2aa5bf6f46271e1e753cae5fa9760926.jpg"
+                     src={src}
                      alt=""
                   />
                </motion.div>
