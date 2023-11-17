@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { audioSelector, musicSelector } from '~/redux/selector';
 import { Button } from '../Commons';
 import InputRange from './InputRange';
-import { setVolume } from '~/redux/slices/audioSlice';
+import { setVolume, toggleVolume } from '~/redux/slices/audioSlice';
 import { setShowPlaylist } from '~/redux/slices/musicSlice';
 
 const Action: React.FC = () => {
@@ -29,7 +29,10 @@ const Action: React.FC = () => {
          </Button>
 
          <div className="fy-center group">
-            <Button className="flex-shrink-0 mx-[2px] group-hover:bg-alpha-color">
+            <Button
+               onClick={() => dispatch(toggleVolume())}
+               className="flex-shrink-0 mx-[2px] group-hover:bg-alpha-color"
+            >
                {volume === 0 ? <VolumeCross size={16} /> : <VolumeHigh size={16} />}
             </Button>
             <InputRange

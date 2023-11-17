@@ -1,6 +1,5 @@
 import React from 'react';
 import cx from 'classnames';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Heart, More } from 'iconsax-react';
 
@@ -8,13 +7,23 @@ import { Button, Image } from '../Commons';
 import { LoadingIcon, musicWaveIcon, playIcon } from '~/assets';
 import { setPlayPause, setNewReleaseSongs, setSingleSong } from '~/redux/slices/musicSlice';
 import { currentSongSelector, musicSelector } from '~/redux/selector';
+import { durationTime } from '~/helpers';
 
 interface MediaItemProps {
    data: ISong;
    albumData?: IAlbum;
+   imageClasName?: string;
+   className?: string;
+   songTime?: number;
 }
 
-const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
+const MediaItem: React.FC<MediaItemProps> = ({
+   data,
+   albumData,
+   songTime,
+   imageClasName,
+   className,
+}) => {
    const dispatch = useDispatch();
    const { isPlaying, loading } = useSelector(musicSelector);
    const currentSong = useSelector(currentSongSelector);
@@ -34,12 +43,13 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
          className={cx(
             'fy-center px-[10px] py-2 group/image hover:bg-alpha-color rounded-md',
             currentSong?.id == data.id && 'bg-alpha-color',
+            className,
          )}
       >
          <Image
             scale={false}
             active={currentSong?.id == data.id}
-            className="w-[52px] h-[52px] mr-[10px]"
+            className={cx('mr-[10px]', imageClasName ? imageClasName : 'w-[52px] h-[52px]')}
             src={data.image}
          >
             {loading && currentSong?.id == data.id ? (
@@ -62,6 +72,11 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
                {data.artistNames || data.description}
             </span>
          </div>
+         {songTime && (
+            <span className="group-hover/image:hidden text-subtitle-color text-xs w-11 f-center">
+               {durationTime(songTime)}
+            </span>
+         )}
          <div className="items-center ml-[10px] hidden group-hover/image:flex">
             <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Thêm vào thư viện">
                <Heart size={15} />

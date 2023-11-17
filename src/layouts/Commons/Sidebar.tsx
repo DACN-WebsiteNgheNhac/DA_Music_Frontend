@@ -7,8 +7,10 @@ const Sidebar: React.FC = () => {
    return (
       <aside className="w-sidebar h-full bg-sidebar-color flex flex-col">
          <Link to="/" className="h-header fy-center pl-5">
-            <img src="/vite.svg" alt="" />
-            <span className="ml-2 font-bold text-sidebar-popup-color">Vitemusic</span>
+            <div className="w-10 h-10">
+               <img src="/images/electron-vite.animate.svg" alt="" className="w-full h-full" />
+            </div>
+            <span className="ml-2 font-bold text-sidebar-popup-color">VMusic</span>
          </Link>
          <div className="flex-1">
             <div className="w-full mb-[15px]">

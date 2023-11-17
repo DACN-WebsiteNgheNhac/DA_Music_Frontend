@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { CustomScrollbar } from '~/components/Commons';
-import { Header, PlayingBar, Sidebar, Audio, Drawer } from '~/layouts/Commons';
+import { Header, PlayingBar, Sidebar, Audio, Drawer } from '~/layouts/commons';
 import { useSelector } from 'react-redux';
 import { musicSelector } from '~/redux/selector';
 

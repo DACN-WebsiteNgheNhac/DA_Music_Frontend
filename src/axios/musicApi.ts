@@ -6,8 +6,6 @@ const musicApi = {
       return axiosInstance.get<IResponseData>('/home');
    },
    fetchSearchSuggestion: (query: string): Promise<AxiosResponse<IResponseData<ISection[]>>> => {
-      console.log(query);
-
       return axiosInstance.get<IResponseData>('/search', {
          params: { query, pageNumber: 1, pageSize: 10 },
       });
@@ -16,10 +14,18 @@ const musicApi = {
       query: string | null,
       type: string | null,
    ): Promise<AxiosResponse<IResponseData<ISection[]>>> => {
-      console.log(query);
+      const params: any = {
+         query,
+         type,
+      };
+
+      if (!type) {
+         params.pageNumber = 1;
+         params.pageSize = 12;
+      }
 
       return axiosInstance.get<IResponseData>('/search', {
-         params: { query, type },
+         params,
       });
    },
 };

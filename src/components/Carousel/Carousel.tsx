@@ -40,6 +40,7 @@ const Carousel: React.FC<CarouselProps> = ({ type = 'album', title, carouselData
                loop={carouselData.length > 5}
                modules={[Navigation]}
                ref={swiperRef}
+               simulateTouch={false}
             >
                {type === 'album' ? (
                   <>

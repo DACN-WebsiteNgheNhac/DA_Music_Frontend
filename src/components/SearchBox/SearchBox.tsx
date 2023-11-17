@@ -4,14 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { searchSelector } from '~/redux/selector';
-import { useOutSide } from '~/hooks';
+import { useOutSide, useDebounce } from '~/hooks';
 import { clearSearch, fetchSearch, setValue } from '~/redux/slices/searchSlice';
 
 import { SearchNormal1 } from 'iconsax-react';
 import { IoCloseOutline } from 'react-icons/io5';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import SearchList from './SearchList';
-import useDebounce from '~/hooks/useDebounce';
 import { AppThunkDispatch } from '~/redux/store';
 
 interface SearchBoxProps {}
@@ -25,17 +24,13 @@ const SearchBox: React.FC<SearchBoxProps> = () => {
    const focusRef = useRef<HTMLDivElement>(null);
    const [isFocus, setIsFocus] = useState<boolean>(false);
 
-   useOutSide(focusRef, (e: MouseEvent) => {
-      // if menu profile && profile not containt e.target => close profile
-      if (focusRef && focusRef.current && !focusRef.current.contains(e.target as Node)) {
-         setIsFocus(false);
-      }
-   });
+   useOutSide(focusRef, () => setIsFocus(false));
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (value.trim().length <= 0) return;
       navigate(`/search/all?query=${value}`);
+      setIsFocus(false);
    };
 
    useEffect(() => {

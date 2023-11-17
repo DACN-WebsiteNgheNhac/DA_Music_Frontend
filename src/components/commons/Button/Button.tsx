@@ -7,7 +7,6 @@ interface ButtonProps {
    className?: string;
    children?: React.ReactNode;
    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
-   // [index: string]: any;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(

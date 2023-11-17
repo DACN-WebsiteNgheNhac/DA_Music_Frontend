@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { musicApi } from '~/axios';
 import Carousel from '~/components/Carousel/Carousel';
+import { TableSearchSong } from '~/components/TableSong';
 import { TabItem, Tabs } from '~/components/Tabs';
 
 const SearchPage: React.FC = () => {
@@ -59,6 +60,10 @@ const SearchPage: React.FC = () => {
                         key={index}
                         type="artist"
                      />
+                  );
+               case 'song':
+                  return (
+                     <TableSearchSong key={index} title="Bài hát" data={item.items as ISong[]} />
                   );
                default:
                   return null;

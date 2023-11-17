@@ -1,17 +1,17 @@
-import { useEffect, RefObject } from 'react';
+import { RefObject, useEffect } from 'react';
 
-const useOutSide = <T extends HTMLElement>(ref: RefObject<T>, cb: (event: MouseEvent) => void) => {
+const useOutSide = (ref: RefObject<HTMLElement>, cb: () => void) => {
    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-         if (ref.current && !ref.current.contains(event.target as Node)) {
-            cb(event);
+      const handleClickOutSide = (e: MouseEvent) => {
+         if (ref && ref.current && !ref.current.contains(e.target as Node)) {
+            cb();
          }
       };
 
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutSide);
 
       return () => {
-         document.removeEventListener('mousedown', handleClickOutside);
+         document.removeEventListener('mousedown', handleClickOutSide);
       };
    }, [ref, cb]);
 };
