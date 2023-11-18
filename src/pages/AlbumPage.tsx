@@ -22,8 +22,8 @@ const AlbumPage: React.FC = () => {
             dispatch(setStartLoading());
             const resAlbum = await musicApi.fetchAlbumById(id!);
             const resSuggestion = await musicApi.fetchAlbumSuggestion(id!);
-            setAlbumData(resAlbum.data.metadata);
-            setSuggestionData(resSuggestion.data.metadata);
+            setAlbumData(resAlbum.data?.metadata);
+            setSuggestionData(resSuggestion.data?.metadata);
             dispatch(setEndLoading());
          } catch (error) {
             console.log(error);

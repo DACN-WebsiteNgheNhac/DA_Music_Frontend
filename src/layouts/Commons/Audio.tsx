@@ -57,8 +57,6 @@ const Audio: React.FC = () => {
       audioRef.current.volume = volume / 100;
    }, [volume]);
 
-   if (!currentSong) return null;
-
    return (
       <div className="hidden">
          <audio

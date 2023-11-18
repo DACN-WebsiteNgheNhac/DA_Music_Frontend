@@ -48,7 +48,7 @@ const searchSlice = createSlice({
 
 export const fetchSearch = createAsyncThunk('search/fetchSearch', async (payload: string) => {
    const res = await musicApi.fetchSearchSuggestion(payload);
-   return res.data.metadata;
+   return res.data?.metadata;
 });
 
 export const { setValue, clearSearch } = searchSlice.actions;

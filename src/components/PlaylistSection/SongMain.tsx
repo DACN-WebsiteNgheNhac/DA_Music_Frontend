@@ -36,7 +36,7 @@ const SongMain: React.FC<SongMainProps> = ({ data }) => {
 
          <h4 className="text-xs text-subtitle-color leading-normal">
             <span className="mr-2">1 bài hát</span>•
-            <span className="ml-2">{durationLongTime(data.songTime)}</span>
+            <span className="ml-2">{durationLongTime(data?.songTime)}</span>
          </h4>
       </div>
    );

@@ -39,7 +39,7 @@ const PlaylistHeader: React.FC<AlbumCardProps> = ({ data }) => {
                <Image
                   className="rounded-lg shadow-media"
                   active={isPlayingSong}
-                  src={resizeImage(data.image)}
+                  src={resizeImage(data?.image)}
                >
                   {isLoadingSong ? (
                      <Button className="w-[40px] h-[40px] mx-[17px] border border-primary-color hover:border-purple-color hover:text-purple-color">
@@ -71,7 +71,7 @@ const PlaylistHeader: React.FC<AlbumCardProps> = ({ data }) => {
             {/* detail */}
             <div className="flex flex-col mt-3">
                <div className="text-center">
-                  <h3 className="text-xl font-bold leading-[1.5] break-words">{data.name}</h3>
+                  <h3 className="text-xl font-bold leading-[1.5] break-words">{data?.name}</h3>
                   <span className="text-subtitle-color text-xs leading-[1.75]">
                      {data?.artistNames || data?.description}
                   </span>
@@ -82,7 +82,7 @@ const PlaylistHeader: React.FC<AlbumCardProps> = ({ data }) => {
                      onClick={handlePlay}
                      className="f-center uppercase text-primary-color text-sm font-normal leading-normal py-[8.5px] px-[23.5px] rounded-full bg-purple-color border border-pubg-purple-color hover:brightness-90"
                   >
-                     {playlistId !== data.id ? (
+                     {playlistId !== data?.id ? (
                         <>
                            <IoPlay size={18} />
                            <span className="ml-[4px]">Phát tất cả</span>

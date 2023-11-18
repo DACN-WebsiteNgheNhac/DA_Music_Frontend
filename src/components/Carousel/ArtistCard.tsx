@@ -15,8 +15,8 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ className, data }) => {
    };
    return (
       <div className={cx('flex-shrink-0 min-w-[160px]', className)}>
-         <Link to={`/artist/${data.id}`} className="relative">
-            <Image className="rounded-full" src={data.image}>
+         <Link to={`/artist/${data?.id}`} className="relative">
+            <Image className="rounded-full" src={data?.image}>
                <Button
                   onClick={handleClick}
                   className="w-[45px] h-[45px] rounded-full border-primary-color border f-center hover:brightness-90"
@@ -27,10 +27,10 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ className, data }) => {
          </Link>
          <div className="mt-3 text-sm leading-[1.33] text-center">
             <Link
-               to={`/artist/${data.id}`}
+               to={`/artist/${data?.id}`}
                className="line-clamp-1 leading-[1.36] text-primary font-medium mb-1 hover:text-hover-color"
             >
-               {data.artistName}
+               {data?.artistName}
             </Link>
          </div>
       </div>

@@ -23,7 +23,7 @@ const SearchPage: React.FC = () => {
          try {
             dispatch(setStartLoading());
             const res = await musicApi.fetchSearch(searchQuery, typeQuery);
-            setSearchData(res.data.metadata);
+            setSearchData(res.data?.metadata);
             dispatch(setEndLoading());
          } catch (error) {
             console.log(error);

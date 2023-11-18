@@ -9,14 +9,14 @@ interface PlaylistMainProps {
 }
 const PlaylistMain: React.FC<PlaylistMainProps> = ({ data }) => {
    const totalDuration = useMemo(
-      () => data.songs.reduce((pre, curr) => pre + curr.songTime, 0),
-      [data.songs],
+      () => data?.songs.reduce((pre, curr) => pre + curr.songTime, 0),
+      [data?.songs],
    );
 
    return (
       <div className="w-full">
          <h3 className="text-subtitle-color text-sm mb-[10px] line-clamp-3 leading-normal">
-            Lời tựa <span className="text-title-color font-medium">{data.description}</span>
+            Lời tựa <span className="text-title-color font-medium">{data?.description}</span>
          </h3>
 
          <div className="mb-[10px]">
@@ -35,14 +35,14 @@ const PlaylistMain: React.FC<PlaylistMainProps> = ({ data }) => {
             </div>
             {/* listSong */}
             <div>
-               {data.songs.map((song) => (
+               {data?.songs.map((song) => (
                   <MediaItem data={song} albumData={data} key={song.id} />
                ))}
             </div>
          </div>
 
          <h4 className="text-xs text-subtitle-color leading-normal">
-            <span className="mr-2">{data.songs.length} bài hát</span>•
+            <span className="mr-2">{data?.songs.length} bài hát</span>•
             <span className="ml-2">{durationLongTime(totalDuration)}</span>
          </h4>
       </div>

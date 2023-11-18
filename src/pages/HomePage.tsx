@@ -16,7 +16,7 @@ const HomePage = () => {
          try {
             dispatch(setStartLoading());
             const res = await musicApi.fetchHome();
-            setHomeData(res.data.metadata);
+            setHomeData(res.data?.metadata);
             dispatch(setEndLoading());
          } catch (error) {
             console.log(error);

@@ -18,7 +18,7 @@ const SongPage: React.FC = () => {
          try {
             dispatch(setStartLoading());
             const res = await musicApi.fetchSongById(id!);
-            setsongData(res.data.metadata);
+            setsongData(res.data?.metadata);
             dispatch(setEndLoading());
          } catch (error) {
             console.log(error);

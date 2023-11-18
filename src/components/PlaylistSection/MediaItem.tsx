@@ -27,10 +27,10 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
 
    const handlePlay = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
-      if (isPlaying && currentSong?.id === data.id) dispatch(setPlayPause());
+      if (isPlaying && currentSong?.id === data?.id) dispatch(setPlayPause());
       else if (albumData) {
          dispatch(
-            setPlaySongAndPlayCurrentSong({ songId: data.id, ...albumData } as IReduxAlbumProps),
+            setPlaySongAndPlayCurrentSong({ songId: data?.id, ...albumData } as IReduxAlbumProps),
          );
       } else {
          dispatch(setSingleSong(data));
@@ -41,7 +41,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
       <div
          className={cx(
             'fy-center px-[10px] py-2 group/image hover:bg-alpha-color rounded-md border-b border-border-color',
-            currentSong?.id == data.id && 'bg-alpha-color',
+            currentSong?.id == data?.id && 'bg-alpha-color',
          )}
       >
          <div className="fy-center w-1/2 mr-[10px]">
@@ -51,17 +51,17 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
 
             <Image
                scale={false}
-               active={currentSong?.id == data.id}
+               active={currentSong?.id == data?.id}
                className={cx('mr-[10px] w-10 h-10')}
-               src={data.image}
+               src={data?.image}
             >
-               {loading && currentSong?.id == data.id ? (
+               {loading && currentSong?.id == data?.id ? (
                   <Button className="w-10 h-10 mx-[17px]">
                      <LoadingIcon fill="white" />
                   </Button>
                ) : (
                   <Button onClick={handlePlay} className="w-10 h-10 f-center hover:brightness-90">
-                     {isPlaying && currentSong?.id == data.id ? (
+                     {isPlaying && currentSong?.id == data?.id ? (
                         <img
                            src={musicWaveIcon}
                            alt="playIcon"
@@ -74,17 +74,17 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
                )}
             </Image>
             <div className="flex-1">
-               <h4 className="line-clamp-1 text-sm font-medium leading-normal">{data.name}</h4>
+               <h4 className="line-clamp-1 text-sm font-medium leading-normal">{data?.name}</h4>
                <span className="line-clamp-1 text-subtitle-color text-xs mt-[3px] leading-normal">
-                  {data.artistNames || data.description}
+                  {data?.artistNames || data?.description}
                </span>
             </div>
          </div>
          <h4 className="flex-1 line-clamp-1 text-xs leading-normal text-subtitle-color">
-            {data.description}
+            {data?.description}
          </h4>
          <span className="group-hover/image:hidden text-subtitle-color text-xs w-11 f-center">
-            {durationTime(data.songTime)}
+            {durationTime(data?.songTime)}
          </span>
          <div className="items-center ml-[10px] hidden group-hover/image:flex">
             <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Thêm vào thư viện">

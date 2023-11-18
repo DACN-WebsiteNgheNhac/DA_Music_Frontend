@@ -15,7 +15,7 @@ const TableSearchSong: React.FC<TableSearchSongProps> = ({ title, data }) => {
       <div className="mt-12">
          <SectionTitle title={title} link={`/search/song?type=1&query=${searchQuery}`} />
          <ul className="grid grid-cols-2 gap-x-6">
-            {data.map((song) => (
+            {data?.map((song) => (
                <li key={song.id} className="border-b border-[rgb(0 0 0 / 5%)]">
                   <MediaItem
                      data={song}

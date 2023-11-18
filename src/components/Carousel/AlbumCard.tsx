@@ -27,17 +27,17 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
 
    const handlePlay = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
-      if (playlistId == data.id) dispatch(setPlayPause());
+      if (playlistId == data?.id) dispatch(setPlayPause());
       else {
          dispatch(setPlaylistSongs(data));
-         navigate(`/album/${data.id}`);
+         navigate(`/album/${data?.id}`);
       }
    };
 
    return (
       <div className={cx('flex-shrink-0 min-w-[160px]', className)}>
-         <Link to={`/album/${data.id}`} className="relative">
-            <Image src={resizeImage(data.image)} active={isPlaying && playlistId == data.id}>
+         <Link to={`/album/${data?.id}`} className="relative">
+            <Image src={resizeImage(data?.image)} active={isPlaying && playlistId == data?.id}>
                <Button
                   onClick={handleClick}
                   className="w-[30px] h-[30px] hover:bg-icon-hover-color"
@@ -45,7 +45,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
                >
                   <Heart size={18} />
                </Button>
-               {loading && playlistId == data.id ? (
+               {loading && playlistId == data?.id ? (
                   <Button className="w-[40px] h-[40px] mx-[17px] border border-primary-color hover:border-purple-color hover:text-purple-color">
                      <LoadingIcon fill="white" />
                   </Button>
@@ -54,7 +54,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
                      onClick={handlePlay}
                      className="w-[45px] h-[45px] rounded-full border-primary-color border f-center hover:brightness-90"
                   >
-                     {isPlaying && playlistId == data.id ? (
+                     {isPlaying && playlistId == data?.id ? (
                         <img
                            src={musicWaveIcon}
                            alt="playIcon"
@@ -77,12 +77,12 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
          </Link>
          <div className="mt-3 text-sm leading-[1.33]">
             <Link
-               to={`/album/${data.id}`}
+               to={`/album/${data?.id}`}
                className="line-clamp-1 leading-[1.36] text-primary font-bold mb-1 hover:text-hover-color"
             >
-               {data.name}
+               {data?.name}
             </Link>
-            <h3 className="line-clamp-2 text-gray-600 cursor-default">{data.description}</h3>
+            <h3 className="line-clamp-2 text-gray-600 cursor-default">{data?.description}</h3>
          </div>
       </div>
    );

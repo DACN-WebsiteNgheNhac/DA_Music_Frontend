@@ -22,8 +22,8 @@ const SongHeader: React.FC<AlbumCardProps> = ({ data }) => {
    const { loading, isPlaying } = useSelector(musicSelector);
    const currentSong = useSelector(currentSongSelector);
 
-   const isPlayingSong = !loading && isPlaying && currentSong.id === id;
-   const isLoadingSong = loading && currentSong.id === id;
+   const isPlayingSong = !loading && isPlaying && currentSong?.id === id;
+   const isLoadingSong = loading && currentSong?.id === id;
 
    const handlePlay = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
