@@ -48,7 +48,7 @@ const Audio: React.FC = () => {
    // Binding audio
    useEffect(() => {
       if (!audioRef || !audioRef.current) return;
-      isPlaying ? audioRef.current.play() : audioRef.current.pause();
+      isPlaying ? audioRef?.current?.play() : audioRef?.current?.pause();
    }, [isPlaying, currentSong?.id]);
 
    // Binding volume
