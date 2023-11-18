@@ -87,13 +87,29 @@ const musicSlice = createSlice({
          state.currentIndex =
             state.playlistSongs.findIndex((item) => item.id === action.payload.id) || 0;
       },
+      setPlaySongAndPlayCurrentSong: (state, action: PayloadAction<IReduxAlbumProps>) => {
+         state.isPlaying = true;
+         state.playlistId = action.payload.id;
+         state.playlistSongs = action.payload.songs;
+         state.title = action.payload.name;
+         state.currentIndex =
+            state.playlistSongs.findIndex((item) => item.id === action.payload.songId) || 0;
+      },
+      setPlaylsitSongs: (state, action: PayloadAction<IAlbum>) => {
+         state.isPlaying = true;
+         state.playlistId = '';
+         state.playlistSongs = action.payload.songs;
+         state.title = action.payload.name;
+         state.currentIndex =
+            state.playlistSongs.findIndex((item) => item.id === action.payload.id) || 0;
+      },
       setSingleSong: (state, action: PayloadAction<ISong>) => {
          state.isPlaying = true;
          state.playlistId = '';
          state.playlistSongs = [action.payload];
       },
-      clearPlaylistSongs: (state) => {
-         state = initialState;
+      clearPlaylistSongs: () => {
+         return initialState;
       },
    },
 });
@@ -111,6 +127,7 @@ export const {
    setSingleSong,
    clearPlaylistSongs,
    setNewReleaseSongs,
+   setPlaySongAndPlayCurrentSong,
 } = musicSlice.actions;
 
 export default musicSlice.reducer;

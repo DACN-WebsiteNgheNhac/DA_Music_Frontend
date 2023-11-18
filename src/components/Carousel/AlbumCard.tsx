@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Image, Button } from '~/components/Commons';
@@ -18,6 +18,7 @@ interface AlbumCardProps {
 
 const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
    const dispatch = useDispatch();
+   const navigate = useNavigate();
    const { playlistId, isPlaying, loading } = useSelector(musicSelector);
 
    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -26,8 +27,11 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
 
    const handlePlay = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
-      if (isPlaying && playlistId == data.id) dispatch(setPlayPause());
-      else dispatch(setPlaylistSongs(data));
+      if (playlistId == data.id) dispatch(setPlayPause());
+      else {
+         dispatch(setPlaylistSongs(data));
+         navigate(`/album/${data.id}`);
+      }
    };
 
    return (

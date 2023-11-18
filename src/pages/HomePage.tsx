@@ -1,23 +1,38 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { musicApi } from '~/axios';
 import { Carousel } from '~/components/Carousel';
 import { NewRelease } from '~/components/NewRelease';
+import { appSelector } from '~/redux/selector';
+import { setEndLoading, setError, setStartLoading } from '~/redux/slices/appSlice';
 
 const HomePage = () => {
+   const dispatch = useDispatch();
+   const { loading, error } = useSelector(appSelector);
    const [homeData, setHomeData] = useState<ISection[]>([]);
 
-   const fetchHomeData = async () => {
-      try {
-         const res = await musicApi.fetchHome();
-         setHomeData(res.data.metadata);
-      } catch (error) {
-         console.log(error);
-      }
-   };
-
    useEffect(() => {
+      const fetchHomeData = async () => {
+         try {
+            dispatch(setStartLoading());
+            const res = await musicApi.fetchHome();
+            setHomeData(res.data.metadata);
+            dispatch(setEndLoading());
+         } catch (error) {
+            console.log(error);
+            dispatch(setError());
+         }
+      };
       fetchHomeData();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
+
+   if (homeData.length <= 0 || loading) {
+      return 'Loading...';
+   }
+   if (error) {
+      return 'Error...';
+   }
 
    return (
       <div className="pb-10">

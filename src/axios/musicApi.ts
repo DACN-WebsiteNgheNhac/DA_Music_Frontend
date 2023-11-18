@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import axiosInstance from './axiosInstance';
 
 const musicApi = {
@@ -30,6 +30,12 @@ const musicApi = {
    },
    fetchAlbumById: (albumId: string): Promise<AxiosResponse<IResponseData<IAlbum>>> => {
       return axiosInstance.get<IResponseData>(`/album/${albumId}`);
+   },
+   fetchAlbumSuggestion: (albumId: string): Promise<AxiosResponse<IResponseData<ISection[]>>> => {
+      return axiosInstance.get<IResponseData>(`/album/suggestion/${albumId}`);
+   },
+   fetchSongById: (songId: string): Promise<AxiosResponse<IResponseData<ISong>>> => {
+      return axiosInstance.get<IResponseData>(`/song/${songId}`);
    },
 };
 

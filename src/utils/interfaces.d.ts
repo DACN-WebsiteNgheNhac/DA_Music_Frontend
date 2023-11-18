@@ -40,6 +40,10 @@ interface IAlbum {
    artistNames: string;
 }
 
+interface IReduxAlbumProps extends IAlbum {
+   songId: string;
+}
+
 // song type
 interface ISong {
    id: string;

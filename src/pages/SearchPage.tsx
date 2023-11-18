@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { musicApi } from '~/axios';
 import Carousel from '~/components/Carousel/Carousel';
 import { TableSearchSong } from '~/components/TableSong';
 import { TabItem, Tabs } from '~/components/Tabs';
+import { appSelector } from '~/redux/selector';
+import { setEndLoading, setError, setStartLoading } from '~/redux/slices/appSlice';
 
 const SearchPage: React.FC = () => {
+   const dispatch = useDispatch();
+   const { loading, error } = useSelector(appSelector);
+
    const location = useLocation();
    const searchQuery = new URLSearchParams(location.search).get('query');
    const typeQuery = new URLSearchParams(location.search).get('type');
@@ -15,14 +21,25 @@ const SearchPage: React.FC = () => {
    useEffect(() => {
       const fetchSearchData = async () => {
          try {
+            dispatch(setStartLoading());
             const res = await musicApi.fetchSearch(searchQuery, typeQuery);
             setSearchData(res.data.metadata);
+            dispatch(setEndLoading());
          } catch (error) {
             console.log(error);
+            dispatch(setError());
          }
       };
       fetchSearchData();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [searchQuery, typeQuery]);
+
+   if (loading) {
+      return 'Loading...';
+   }
+   if (error) {
+      return 'Error...';
+   }
 
    return (
       <div className="pb-10">

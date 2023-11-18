@@ -22,7 +22,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, isListening }) => {
 
    const handlePlay = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
-      if (currentSong.id === data.id) {
+      if (currentSong?.id === data.id) {
          dispatch(setPlayPause());
       } else {
          dispatch(setPlaySongWithId(data.id));

@@ -49,13 +49,15 @@ const Audio: React.FC = () => {
    useEffect(() => {
       if (!audioRef || !audioRef.current) return;
       isPlaying ? audioRef.current.play() : audioRef.current.pause();
-   }, [isPlaying, currentSong.id]);
+   }, [isPlaying, currentSong?.id]);
 
    // Binding volume
    useEffect(() => {
       if (!audioRef || !audioRef.current) return;
       audioRef.current.volume = volume / 100;
    }, [volume]);
+
+   if (!currentSong) return null;
 
    return (
       <div className="hidden">
@@ -67,7 +69,7 @@ const Audio: React.FC = () => {
             onLoadedMetadata={handleLoadedMetadata}
             onEnded={handleEnded}
             onError={handleError}
-            src={`http://api.mp3.zing.vn/api/streaming/audio/${currentSong.tag}/320`}
+            src={`http://api.mp3.zing.vn/api/streaming/audio/${currentSong?.tag}/320`}
             loop={isLoop}
          />
       </div>

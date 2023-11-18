@@ -48,7 +48,10 @@ const Control: React.FC = () => {
    };
 
    return (
-      <div className="flex-grow max-w-[40vw]">
+      <div
+         className="flex-grow max-w-[40vw]"
+         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+      >
          <div className="f-center">
             <Button
                onClick={() => dispatch(setShuffle())}

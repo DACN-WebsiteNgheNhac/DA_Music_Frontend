@@ -57,7 +57,7 @@ const Image: React.FC<ImageProps> = ({ children, active = false, src }) => {
                className={cx('absolute inset-0 overflow-hidden shadow-media bg-alpha-color')}
             >
                <motion.div
-                  initial={false}
+                  initial={active}
                   animate={active ? 'start' : 'end'}
                   variants={variantRotate}
                >

@@ -15,7 +15,7 @@ const Playlist: React.FC = () => {
                {playlistSongs.map((song, index) => (
                   <React.Fragment key={song.id}>
                      <MediaItem data={song} isListening={index < currentIndex} />
-                     {index < playlistSongs.length - 1 && title && currentSong.id === song.id && (
+                     {index < playlistSongs.length - 1 && title && currentSong?.id === song.id && (
                         <NextSong />
                      )}
                   </React.Fragment>

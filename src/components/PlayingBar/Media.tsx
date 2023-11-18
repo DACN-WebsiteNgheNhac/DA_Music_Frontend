@@ -10,17 +10,20 @@ const Media: React.FC = () => {
    const currentSong = useSelector(currentSongSelector);
 
    return (
-      <div className="w-[30%] fy-center">
+      <div
+         className="w-[30%] fy-center"
+         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+      >
          <Link to="/">
-            <Image src={currentSong.image} className="w-16 h-16" />
+            <Image src={currentSong?.image} className="w-16 h-16" />
          </Link>
 
          <div className="ml-[10px] pr-[10px]">
             <h3 className="text-sm leading-[1.36] font-medium line-clamp-1 hover:text-purple-color">
-               <Link to="/">{currentSong.name}</Link>
+               <Link to="/">{currentSong?.name}</Link>
             </h3>
             <span className="text-xs leading-normal text-subtitle-color mt-[1px] line-clamp-1">
-               {currentSong.description}
+               {currentSong?.description}
             </span>
          </div>
 

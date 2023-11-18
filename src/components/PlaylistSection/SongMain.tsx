@@ -1,22 +1,17 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { durationLongTime } from '~/helpers';
 
 import { HiSortDescending } from 'react-icons/hi';
 import MediaItem from './MediaItem';
 
-interface PlaylistMainProps {
-   data: IAlbum;
+interface SongMainProps {
+   data: ISong;
 }
-const PlaylistMain: React.FC<PlaylistMainProps> = ({ data }) => {
-   const totalDuration = useMemo(
-      () => data.songs.reduce((pre, curr) => pre + curr.songTime, 0),
-      [data.songs],
-   );
-
+const SongMain: React.FC<SongMainProps> = ({ data }) => {
    return (
       <div className="w-full">
          <h3 className="text-subtitle-color text-sm mb-[10px] line-clamp-3 leading-normal">
-            Lời tựa <span className="text-title-color font-medium">{data.description}</span>
+            Lời tựa <span className="text-title-color font-medium">{data?.description}</span>
          </h3>
 
          <div className="mb-[10px]">
@@ -35,18 +30,16 @@ const PlaylistMain: React.FC<PlaylistMainProps> = ({ data }) => {
             </div>
             {/* listSong */}
             <div>
-               {data.songs.map((song) => (
-                  <MediaItem data={song} albumData={data} key={song.id} />
-               ))}
+               <MediaItem data={data} key={data?.id} />
             </div>
          </div>
 
          <h4 className="text-xs text-subtitle-color leading-normal">
-            <span className="mr-2">{data.songs.length} bài hát</span>•
-            <span className="ml-2">{durationLongTime(totalDuration)}</span>
+            <span className="mr-2">1 bài hát</span>•
+            <span className="ml-2">{durationLongTime(data.songTime)}</span>
          </h4>
       </div>
    );
 };
 
-export default PlaylistMain;
+export default SongMain;
