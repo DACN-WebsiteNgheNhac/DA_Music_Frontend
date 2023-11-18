@@ -19,7 +19,7 @@ interface AlbumCardProps {
 const SongHeader: React.FC<AlbumCardProps> = ({ data }) => {
    const dispatch = useDispatch();
    const { id } = useParams();
-   const { loading, isPlaying, playlistId } = useSelector(musicSelector);
+   const { loading, isPlaying } = useSelector(musicSelector);
    const currentSong = useSelector(currentSongSelector);
 
    const isPlayingSong = !loading && isPlaying && currentSong.id === id;
@@ -74,7 +74,7 @@ const SongHeader: React.FC<AlbumCardProps> = ({ data }) => {
                <div className="text-center">
                   <h3 className="text-xl font-bold leading-[1.5] break-words">{data?.name}</h3>
                   <span className="text-subtitle-color text-xs leading-[1.75]">
-                     {data?.description}
+                     {data?.artistNames || data?.description}
                   </span>
                </div>
                <div className="mt-4 f-center">
@@ -83,7 +83,7 @@ const SongHeader: React.FC<AlbumCardProps> = ({ data }) => {
                      onClick={handlePlay}
                      className="f-center uppercase text-primary-color text-sm font-normal leading-normal py-[8.5px] px-[23.5px] rounded-full bg-purple-color border border-pubg-purple-color hover:brightness-90"
                   >
-                     {playlistId !== data?.id ? (
+                     {currentSong?.id !== data?.id ? (
                         <>
                            <IoPlay size={18} />
                            <span className="ml-[4px]">Phát tất cả</span>

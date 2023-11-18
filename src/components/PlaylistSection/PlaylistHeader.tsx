@@ -73,7 +73,7 @@ const PlaylistHeader: React.FC<AlbumCardProps> = ({ data }) => {
                <div className="text-center">
                   <h3 className="text-xl font-bold leading-[1.5] break-words">{data.name}</h3>
                   <span className="text-subtitle-color text-xs leading-[1.75]">
-                     {data.description}
+                     {data?.artistNames || data?.description}
                   </span>
                </div>
                <div className="mt-4 f-center">
