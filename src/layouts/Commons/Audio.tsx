@@ -67,7 +67,11 @@ const Audio: React.FC = () => {
             onLoadedMetadata={handleLoadedMetadata}
             onEnded={handleEnded}
             onError={handleError}
-            src={`http://api.mp3.zing.vn/api/streaming/audio/${currentSong?.tag}/320`}
+            src={
+               currentSong?.tag === null
+                  ? currentSong?.songUrl
+                  : `http://api.mp3.zing.vn/api/streaming/audio/${currentSong?.tag}/320`
+            }
             loop={isLoop}
          />
       </div>

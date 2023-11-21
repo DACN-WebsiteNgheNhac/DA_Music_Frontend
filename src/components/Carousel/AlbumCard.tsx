@@ -8,7 +8,7 @@ import { setPlayPause, setPlaylistSongs } from '~/redux/slices/musicSlice';
 import { musicSelector } from '~/redux/selector';
 import { resizeImage } from '~/helpers';
 
-import { Heart, More } from 'iconsax-react';
+// import { Heart, More } from 'iconsax-react';
 import { playIcon, musicWaveIcon, LoadingIcon } from '~/assets';
 
 interface AlbumCardProps {
@@ -21,9 +21,9 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
    const navigate = useNavigate();
    const { playlistId, isPlaying, loading } = useSelector(musicSelector);
 
-   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-      e.preventDefault();
-   };
+   // const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+   //    e.preventDefault();
+   // };
 
    const handlePlay = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
@@ -38,13 +38,13 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
       <div className={cx('flex-shrink-0 min-w-[160px]', className)}>
          <Link to={`/album/${data?.id}`} className="relative">
             <Image src={resizeImage(data?.image)} active={isPlaying && playlistId == data?.id}>
-               <Button
+               {/* <Button
                   onClick={handleClick}
                   className="w-[30px] h-[30px] hover:bg-icon-hover-color"
                   tippyContent="Thêm vào thư viện"
                >
                   <Heart size={18} />
-               </Button>
+               </Button> */}
                {loading && playlistId == data?.id ? (
                   <Button className="w-[40px] h-[40px] mx-[17px] border border-primary-color hover:border-purple-color hover:text-purple-color">
                      <LoadingIcon fill="white" />
@@ -66,13 +66,13 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ className, data }) => {
                   </Button>
                )}
 
-               <Button
+               {/* <Button
                   onClick={handleClick}
                   className="w-[30px] h-[30px] hover:bg-icon-hover-color"
                   tippyContent="Xem thêm"
                >
                   <More size={18} />
-               </Button>
+               </Button> */}
             </Image>
          </Link>
          <div className="mt-3 text-sm leading-[1.33]">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Button } from '../Commons';
 import { Clock, More } from 'iconsax-react';
 
@@ -9,7 +9,7 @@ interface ITab {
    label: string;
 }
 
-const tabs: ITab[] = [
+const TAGS: ITab[] = [
    {
       id: 1,
       label: 'Danh sách phát',
@@ -21,12 +21,12 @@ const tabs: ITab[] = [
 ];
 
 const Header: React.FC = () => {
-   const [activeTab, setActiveTab] = useState<number>(tabs[0].id);
+   const [activeTab, setActiveTab] = useState<number>(TAGS[0].id);
 
    return (
       <div className="fx-between py-[14px] px-2">
          <motion.div className="flex flex-1 w-fit p-[3px] bg-alpha-color rounded-full">
-            {tabs.map((tab) => (
+            {TAGS.map((tab) => (
                <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}

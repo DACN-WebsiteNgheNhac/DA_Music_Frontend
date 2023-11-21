@@ -1,6 +1,7 @@
 import React from 'react';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 import cx from 'classnames';
+import { resizeImage } from '~/helpers';
 
 interface ImageProps {
    className?: string;
@@ -65,7 +66,7 @@ const Image: React.FC<ImageProps> = ({ children, active = false, src }) => {
                      className={cx(
                         'w-full h-full object-cover transition-all ease-[ease] duration-700 group-hover/image:scale-110',
                      )}
-                     src={src}
+                     src={resizeImage(src, 'w240_r1x1_jpeg')}
                      alt=""
                   />
                </motion.div>

@@ -106,6 +106,7 @@ const musicSlice = createSlice({
       setSingleSong: (state, action: PayloadAction<ISong>) => {
          state.isPlaying = true;
          state.playlistId = '';
+         state.currentIndex = 0;
          state.playlistSongs = [action.payload];
       },
       clearPlaylistSongs: () => {
