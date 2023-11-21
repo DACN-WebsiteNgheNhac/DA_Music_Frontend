@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentSongSelector, musicSelector } from '~/redux/selector';
@@ -12,6 +12,7 @@ import {
    setSingleSong,
 } from '~/redux/slices/musicSlice';
 import { SlMusicToneAlt } from 'react-icons/sl';
+import { ContextMenu } from '../ContextMenu';
 
 interface MediaItemProps {
    data: ISong;
@@ -24,6 +25,8 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
    const dispatch = useDispatch();
    const { isPlaying, loading } = useSelector(musicSelector);
    const currentSong = useSelector(currentSongSelector);
+
+   const [showPopper, setShowPopper] = useState<boolean>(false);
 
    const handlePlay = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
@@ -42,6 +45,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
          className={cx(
             'fy-center px-[10px] py-2 group/image hover:bg-alpha-color rounded-md border-b border-border-color',
             currentSong?.id == data?.id && 'bg-alpha-color',
+            showPopper && 'bg-alpha-color',
          )}
       >
          <div className="fy-center w-1/2 mr-[10px]">
@@ -83,16 +87,25 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
          <h4 className="flex-1 line-clamp-1 text-xs leading-normal text-subtitle-color">
             {data?.description}
          </h4>
-         <span className="group-hover/image:hidden text-subtitle-color text-xs w-11 f-center">
-            {durationTime(data?.songTime)}
-         </span>
-         <div className="items-center ml-[10px] hidden group-hover/image:flex">
+         {!showPopper && (
+            <span className="group-hover/image:hidden text-subtitle-color text-xs w-11 f-center">
+               {durationTime(data?.songTime)}
+            </span>
+         )}
+         <div
+            className={cx(
+               'items-center ml-[10px]',
+               showPopper === true ? 'flex' : 'hidden group-hover/image:flex',
+            )}
+         >
             <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Thêm vào thư viện">
                <Heart size={15} />
             </Button>
-            <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Khác">
-               <More size={15} />
-            </Button>
+            <ContextMenu setShowPopper={setShowPopper} songData={currentSong}>
+               <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Khác">
+                  <More size={15} />
+               </Button>
+            </ContextMenu>
          </div>
       </div>
    );

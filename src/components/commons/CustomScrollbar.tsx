@@ -9,6 +9,7 @@ interface CustomScrollbarProps {
 const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ onScroll = () => {}, children }) => {
    return (
       <Scrollbars
+         key="main-scroll"
          autoHide
          autoHideTimeout={1000}
          autoHideDuration={200}

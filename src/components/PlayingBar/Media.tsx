@@ -1,13 +1,16 @@
-import React from 'react';
-import { Heart, More } from 'iconsax-react';
+import React, { useState } from 'react';
+import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { currentSongSelector } from '~/redux/selector';
 
+import { Heart, More } from 'iconsax-react';
 import { Button, Image } from '../Commons';
+import { ContextMenu } from '../ContextMenu';
 
 const Media: React.FC = () => {
    const currentSong = useSelector(currentSongSelector);
+   const [showPopper, setShowPopper] = useState<boolean>(false);
 
    return (
       <div
@@ -31,9 +34,14 @@ const Media: React.FC = () => {
             <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Thêm vào thư viện">
                <Heart size={15} />
             </Button>
-            <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Xem thêm">
-               <More size={15} />
-            </Button>
+            <ContextMenu offsetBar setShowPopper={setShowPopper} songData={currentSong}>
+               <Button
+                  className={cx('mx-[2px] hover:bg-alpha-color', showPopper && 'bg-alpha-color')}
+                  tippyContent="Xem thêm"
+               >
+                  <More size={15} />
+               </Button>
+            </ContextMenu>
          </div>
       </div>
    );

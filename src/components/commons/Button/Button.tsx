@@ -11,7 +11,7 @@ interface ButtonProps {
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
    (
-      { children, tippyContent, className, ...props }: ButtonProps,
+      { children, tippyContent, className, onClick = () => {} }: ButtonProps,
       ref: React.Ref<HTMLButtonElement>,
    ) => {
       let TippyComponent: any = React.Fragment;
@@ -28,7 +28,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
       return (
          <TippyComponent {...tippySetting}>
-            <button ref={ref} {...props} className={cx('f-center rounded-full w-8 h-8', className)}>
+            <button
+               ref={ref}
+               onClick={onClick}
+               className={cx('f-center rounded-full w-8 h-8', className)}
+            >
                {children}
             </button>
          </TippyComponent>

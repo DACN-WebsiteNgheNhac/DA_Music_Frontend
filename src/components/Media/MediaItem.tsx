@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { Heart, More } from 'iconsax-react';
@@ -8,6 +8,7 @@ import { LoadingIcon, musicWaveIcon, playIcon } from '~/assets';
 import { setPlayPause, setNewReleaseSongs, setSingleSong } from '~/redux/slices/musicSlice';
 import { currentSongSelector, musicSelector } from '~/redux/selector';
 import { durationTime } from '~/helpers';
+import { ContextMenu } from '../ContextMenu';
 
 interface MediaItemProps {
    data: ISong;
@@ -28,6 +29,8 @@ const MediaItem: React.FC<MediaItemProps> = ({
    const { isPlaying, loading } = useSelector(musicSelector);
    const currentSong = useSelector(currentSongSelector);
 
+   const [showPopper, setShowPopper] = useState<boolean>(false);
+
    const handlePlay = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
       if (isPlaying && currentSong?.id === data?.id) dispatch(setPlayPause());
@@ -43,12 +46,13 @@ const MediaItem: React.FC<MediaItemProps> = ({
          className={cx(
             'fy-center px-[10px] py-2 group/image hover:bg-alpha-color rounded-md',
             currentSong?.id == data?.id && 'bg-alpha-color',
+            showPopper && 'bg-alpha-color',
             className,
          )}
       >
          <Image
             scale={false}
-            active={currentSong?.id == data?.id}
+            active={showPopper || currentSong?.id == data?.id}
             className={cx('mr-[10px]', imageClasName ? imageClasName : 'w-[52px] h-[52px]')}
             src={data?.image}
          >
@@ -72,18 +76,26 @@ const MediaItem: React.FC<MediaItemProps> = ({
                {data?.artistNames || data?.description}
             </span>
          </div>
-         {songTime && (
+         {songTime && !showPopper && (
             <span className="group-hover/image:hidden text-subtitle-color text-xs w-11 f-center">
                {durationTime(songTime)}
             </span>
          )}
-         <div className="items-center ml-[10px] hidden group-hover/image:flex">
+         <div
+            onClick={(e: React.MouseEvent<HTMLDivElement>) => e.preventDefault()}
+            className={cx(
+               'items-center ml-[10px]',
+               showPopper === true ? 'flex' : 'hidden group-hover/image:flex',
+            )}
+         >
             <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Thêm vào thư viện">
                <Heart size={15} />
             </Button>
-            <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Khác">
-               <More size={15} />
-            </Button>
+            <ContextMenu setShowPopper={setShowPopper} songData={data}>
+               <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Khác">
+                  <More size={15} />
+               </Button>
+            </ContextMenu>
          </div>
       </div>
    );
