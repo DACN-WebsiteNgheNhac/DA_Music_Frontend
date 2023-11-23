@@ -31,7 +31,7 @@ interface ISection {
 }
 // album type
 interface IAlbum {
-   id: string;
+   id?: string;
    name: string;
    description: string;
    image: string;
@@ -80,3 +80,5 @@ interface INewRelease {
    vpop: ISong[];
    other: ISong[];
 }
+// user type
+interface IUser {}

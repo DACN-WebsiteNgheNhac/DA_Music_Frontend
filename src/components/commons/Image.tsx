@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import { albumDefaultImage } from '~/assets';
 
 interface ImageProps {
    className?: string;
@@ -28,6 +29,9 @@ const Image: React.FC<ImageProps> = ({
                scale && 'group-hover/image:scale-110',
             )}
             src={src}
+            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+               e.currentTarget.src = albumDefaultImage;
+            }}
             alt=""
          />
          {overlay && (

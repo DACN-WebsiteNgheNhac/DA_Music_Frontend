@@ -1,9 +1,13 @@
 import React from 'react';
-import NavItem from '~/components/Sidebar/NavItem';
-import { AddSquare, Home } from 'iconsax-react';
+import { NavItem } from '~/components/Sidebar';
 import { Link } from 'react-router-dom';
+import usePortal from 'react-cool-portal';
+import { AddSquare, Home } from 'iconsax-react';
+import { PlaylistModal } from '~/components/Playlist';
 
 const Sidebar: React.FC = () => {
+   const { Portal, toggle, hide } = usePortal({ defaultShow: false });
+
    return (
       <aside className="w-sidebar h-full bg-sidebar-color flex flex-col">
          <Link to="/" className="h-header fy-center pl-5">
@@ -26,17 +30,25 @@ const Sidebar: React.FC = () => {
                <NavItem to="/radio" Icon={Home}>
                   Radio
                </NavItem>
-               <NavItem to="/postcast" Icon={Home}>
-                  Postcast
+               <NavItem to="/library" Icon={Home}>
+                  Thư viện
                </NavItem>
             </div>
          </div>
-         <button className="h-[54px] fy-center px-5 border-t border-border-color text-navigation-color text-sm font-medium hover:text-hover-color">
+
+         <button
+            onClick={toggle}
+            className="h-[54px] fy-center px-5 border-t border-border-color text-navigation-color text-sm font-medium hover:text-hover-color"
+         >
             <span className="w-[36px] text-[#c6c6c6]">
                <AddSquare size={24} variant="Bold" />
             </span>
             <span>Tạo playlist mới</span>
          </button>
+
+         <Portal>
+            <PlaylistModal hide={hide} />
+         </Portal>
       </aside>
    );
 };

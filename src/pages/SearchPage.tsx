@@ -43,8 +43,8 @@ const SearchPage: React.FC = () => {
 
    return (
       <div className="pb-10">
-         <nav className="mb-7 -mx-section px-section">
-            <div className="fy-center border-b border-border-color">
+         <nav className="mb-7 -mx-section">
+            <div className="fy-center px-section border-b border-border-color">
                <h3 className="text-2xl pr-5 border-r border-border-color text-title-color font-bold leading-normal">
                   Kết Quả Tìm Kiếm
                </h3>
@@ -62,6 +62,7 @@ const SearchPage: React.FC = () => {
          {searchData.map((item: ISection, index) => {
             switch (item.sectionType) {
                case 'album':
+                  if ((item.items as IAlbum[]).length <= 0) return null;
                   return (
                      <Carousel
                         title="Playlist/Album"
@@ -70,6 +71,7 @@ const SearchPage: React.FC = () => {
                      />
                   );
                case 'artist':
+                  if ((item.items as IArtist[]).length <= 0) return null;
                   return (
                      <Carousel
                         title="Nghệ Sĩ/OA"
@@ -79,6 +81,7 @@ const SearchPage: React.FC = () => {
                      />
                   );
                case 'song':
+                  if ((item.items as ISong[]).length <= 0) return null;
                   return (
                      <TableSearchSong key={index} title="Bài hát" data={item.items as ISong[]} />
                   );

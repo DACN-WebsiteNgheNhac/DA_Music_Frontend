@@ -1,7 +1,12 @@
 import { AnyAction, ThunkDispatch, combineReducers, configureStore } from '@reduxjs/toolkit';
-import { appReducer, audioReducer, musicReducer, searchReducer } from './slices';
+import { appReducer, audioReducer, musicReducer, searchReducer, userReducer } from './slices';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
+
+const userPersistConfig = {
+   key: 'user',
+   storage,
+};
 
 const musicPersistConfig = {
    key: 'music',
@@ -18,6 +23,7 @@ const audioPersistConfig = {
 const rootReducer = combineReducers({
    app: appReducer,
    search: searchReducer,
+   user: persistReducer(userPersistConfig, userReducer),
    audio: persistReducer(audioPersistConfig, audioReducer),
    music: persistReducer(musicPersistConfig, musicReducer),
 });

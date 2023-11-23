@@ -1,4 +1,10 @@
-import { createSlice, createAsyncThunk, isAnyOf, Action, PayloadAction } from '@reduxjs/toolkit';
+import {
+   createSlice,
+   createAsyncThunk,
+   ActionReducerMapBuilder,
+   PayloadAction,
+} from '@reduxjs/toolkit';
+import { musicApi } from '~/axios';
 
 export interface IMusicSlice {
    loading: boolean;
@@ -95,14 +101,6 @@ const musicSlice = createSlice({
          state.currentIndex =
             state.playlistSongs.findIndex((item) => item.id === action.payload.songId) || 0;
       },
-      setPlaylsitSongs: (state, action: PayloadAction<IAlbum>) => {
-         state.isPlaying = true;
-         state.playlistId = '';
-         state.playlistSongs = action.payload.songs;
-         state.title = action.payload.name;
-         state.currentIndex =
-            state.playlistSongs.findIndex((item) => item.id === action.payload.id) || 0;
-      },
       setSingleSong: (state, action: PayloadAction<ISong>) => {
          state.isPlaying = true;
          state.playlistId = '';
@@ -113,6 +111,31 @@ const musicSlice = createSlice({
          return initialState;
       },
    },
+   extraReducers(builder: ActionReducerMapBuilder<IMusicSlice>) {
+      builder.addCase(fetchAlbum.pending, (state) => {
+         state.loading = true;
+         state.isPlaying = false;
+      });
+      builder.addCase(fetchAlbum.rejected, (state) => {
+         state.loading = false;
+         state.isPlaying = false;
+      });
+
+      builder.addCase(fetchAlbum.fulfilled, (state, action: PayloadAction<IAlbum>) => {
+         state.currentIndex = 0;
+         state.isPlaying = true;
+         state.playlistId = action.payload.id;
+         state.playlistSongs = action.payload.songs;
+         state.title = action.payload.name;
+      });
+   },
+});
+
+export const fetchAlbum = createAsyncThunk('music/fetchAlbum', async (albumId: string) => {
+   console.log(albumId);
+
+   const res = await musicApi.fetchAlbumById(albumId);
+   return res.data?.metadata;
 });
 
 export const {
