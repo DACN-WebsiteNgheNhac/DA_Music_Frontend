@@ -10,8 +10,10 @@ const Line: React.FC<LineProps> = ({ type = 'horizontal', className }) => {
    return (
       <div
          className={cx(
-            'bg-border-color ',
-            type === 'horizontal' ? 'w-full h-[1px] my-[10px]' : 'h-full w-[1px] mx-[10px]',
+            'bg-border-color',
+            type === 'horizontal'
+               ? 'w-full h-[1px] my-[10px]'
+               : 'h-full min-h-[12px] w-[1px] mx-[10px]',
             className,
          )}
       />

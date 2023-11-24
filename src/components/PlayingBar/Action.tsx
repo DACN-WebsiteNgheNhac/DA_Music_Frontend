@@ -1,17 +1,21 @@
 import React from 'react';
 import cx from 'classnames';
-import { Microphone2, VolumeHigh, VolumeCross, MusicFilter, Message } from 'iconsax-react';
+import usePortal from 'react-cool-portal';
 import { useDispatch, useSelector } from 'react-redux';
 import { audioSelector, musicSelector } from '~/redux/selector';
-import { Button } from '../Commons';
-import InputRange from './InputRange';
 import { setVolume, toggleVolume } from '~/redux/slices/audioSlice';
 import { setShowPlaylist } from '~/redux/slices/musicSlice';
+import InputRange from './InputRange';
+import { Button } from '../Commons';
+import { Microphone2, VolumeHigh, VolumeCross, MusicFilter, Message } from 'iconsax-react';
+import { CommentModal } from '../Comment';
 
 const Action: React.FC = () => {
    const dispatch = useDispatch();
    const { showPlaylist } = useSelector(musicSelector);
    const { volume } = useSelector(audioSelector);
+
+   const { Portal, toggle, hide } = usePortal({ defaultShow: false });
 
    const handleChangeVolume = (values: number) => {
       const volumeValue = Math.floor(values);
@@ -28,9 +32,18 @@ const Action: React.FC = () => {
             className="fy-center"
             onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
          >
-            <Button tippyContent="Bình luận" className="mx-[2px] hover:bg-alpha-color">
+            <Button
+               onClick={toggle}
+               tippyContent="Bình luận"
+               className="mx-[2px] hover:bg-alpha-color"
+            >
                <Message size={16} />
             </Button>
+
+            <Portal>
+               <CommentModal hide={hide} />
+            </Portal>
+
             <Button tippyContent="Xem lời bài hát" className="mx-[2px] hover:bg-alpha-color">
                <Microphone2 size={16} />
             </Button>

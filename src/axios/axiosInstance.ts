@@ -2,9 +2,9 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
 const instance: AxiosInstance = axios.create({
-   baseURL: 'https://localhost:7201/api',
-   // baseURL: 'http://ghostrider5024-001-site1.atempurl.com/api',
-   timeout: 15000,
+   // baseURL: 'https://localhost:7201/api',
+   baseURL: 'http://ghostrider5024-001-site1.atempurl.com/api',
+   timeout: 10000,
    headers: {
       'Content-Type': 'application/json',
    },
