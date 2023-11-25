@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { MusicPlaylist } from 'iconsax-react';
 import { toast } from 'react-toastify';
 import { musicApi } from '~/axios';

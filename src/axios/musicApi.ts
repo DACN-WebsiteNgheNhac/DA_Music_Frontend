@@ -83,6 +83,30 @@ const musicApi = {
    ): Promise<AxiosResponse<IResponseData>> => {
       return axiosInstance.post<IResponseData>(`/playlist/add-songs/${playlistId}`, [songId]);
    },
+
+   // song
+   removeSongFromPlaylist: (
+      playlistId: string,
+      songId: string,
+   ): Promise<AxiosResponse<IResponseData>> => {
+      return axiosInstance.post<IResponseData>(`/playlist/remove-songs/${playlistId}`, [songId]);
+   },
+
+   // comment
+   fetchComment: (songId: string): Promise<AxiosResponse<IResponseData<IComment[]>>> => {
+      return axiosInstance.get<IResponseData>(`/comment/song-id/${songId}`);
+   },
+   createComment: ({
+      userId,
+      songId,
+      content,
+   }: {
+      userId: string;
+      songId: string;
+      content: string;
+   }): Promise<AxiosResponse<IResponseData<IComment>>> => {
+      return axiosInstance.post<IResponseData>(`/user/comment-song`, { userId, songId, content });
+   },
 };
 
 export default musicApi;

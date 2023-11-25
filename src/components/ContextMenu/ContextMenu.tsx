@@ -1,11 +1,15 @@
 import React from 'react';
 import Tippy from '@tippyjs/react/headless';
+import { toast } from 'react-toastify';
 
 import { BsDownload } from 'react-icons/bs';
 import { IoIosShareAlt } from 'react-icons/io';
 import { TbPlaylistAdd } from 'react-icons/tb';
 import { replaceAll } from '~/helpers';
 import SubContextMenu from './SubContextMenu';
+import { Trash } from 'iconsax-react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { musicApi } from '~/axios';
 
 interface ContextMenuProps {
    children?: React.ReactElement;
@@ -20,6 +24,10 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
    setShowPopper,
    offsetBar = false,
 }) => {
+   const location = useLocation();
+   const params = useParams();
+   const navigate = useNavigate();
+
    const handleHide = () => {
       if (setShowPopper) {
          setShowPopper(false);
@@ -42,6 +50,17 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
       link.download = `${replaceAll(songData.name)}.${fileExtension}`;
       link.click();
       console.log(link);
+   };
+
+   const handleDelete = async () => {
+      try {
+         await musicApi.removeSongFromPlaylist(params.id!, songData?.id);
+         navigate(0); // reload
+         toast.success('Đã xoá bài hát ra khỏi playlist');
+      } catch (error) {
+         console.log(error);
+         toast.error('Đã có lỗi');
+      }
    };
 
    return (
@@ -68,21 +87,35 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
                         <span className="leading-normal">Tải xuống</span>
                      </button>
                   </li>
-                  <li className="hover:bg-alpha-color relative group">
-                     <Tippy
-                        allowHTML
-                        interactive
-                        placement="right-start"
-                        render={() => <SubContextMenu data={songData} />}
-                     >
-                        <button className="fy-center w-full py-[10px] px-5 text-sm hover:text-purple-color">
-                           <span className="w-8">
-                              <TbPlaylistAdd size={18} />
-                           </span>
-                           <span className="leading-normal">Thêm vào playlist</span>
+                  {location.pathname.startsWith('/playlist') ? (
+                     <li className="hover:bg-alpha-color hover:text-purple-color">
+                        <button
+                           onClick={handleDelete}
+                           className="fy-center w-full py-[10px] px-5 text-sm"
+                        >
+                           <div className="w-8">
+                              <Trash size={16} />
+                           </div>
+                           <span className="leading-normal">Xoá khỏi playlist</span>
                         </button>
-                     </Tippy>
-                  </li>
+                     </li>
+                  ) : (
+                     <li className="hover:bg-alpha-color relative group">
+                        <Tippy
+                           allowHTML
+                           interactive
+                           placement="right-start"
+                           render={() => <SubContextMenu data={songData} />}
+                        >
+                           <button className="fy-center w-full py-[10px] px-5 text-sm hover:text-purple-color">
+                              <span className="w-8">
+                                 <TbPlaylistAdd size={18} />
+                              </span>
+                              <span className="leading-normal">Thêm vào playlist</span>
+                           </button>
+                        </Tippy>
+                     </li>
+                  )}
                   <li className="hover:bg-alpha-color hover:text-purple-color">
                      <button className="fy-center w-full py-[10px] px-5 text-sm">
                         <span className="w-8">

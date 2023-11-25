@@ -82,3 +82,15 @@ interface INewRelease {
 }
 // user type
 interface IUser {}
+
+// commebt type
+interface IComment {
+   id: string;
+   userId: string;
+   songId: string;
+   content: string;
+   createdAt?: Date | any;
+   updatedAt?: Date | any;
+   username: string;
+   imageUser: string;
+}

@@ -5,6 +5,7 @@ import {
    PayloadAction,
 } from '@reduxjs/toolkit';
 import { musicApi } from '~/axios';
+import { shuffleArray } from '~/helpers';
 
 export interface IMusicSlice {
    loading: boolean;
@@ -69,6 +70,21 @@ const musicSlice = createSlice({
       },
       setShuffle: (state) => {
          state.isShuffle = !state.isShuffle;
+         if (state.isShuffle) {
+            state.playlistSongsBefore = state.playlistSongs;
+            state.playlistSongs = shuffleArray(
+               state.playlistSongs,
+               state.playlistSongs[state.currentIndex].id,
+            );
+            state.currentIndex = 0;
+         } else {
+            state.currentIndex = state.playlistSongsBefore.findIndex(
+               (item) => item?.id === state.playlistSongs[state.currentIndex].id,
+            );
+            const tmp: ISong[] = state.playlistSongs;
+            state.playlistSongs = state.playlistSongsBefore;
+            state.playlistSongsBefore = tmp;
+         }
       },
       setShowPlaylist: (state) => {
          state.showPlaylist = !state.showPlaylist;
@@ -84,6 +100,8 @@ const musicSlice = createSlice({
          state.playlistId = action.payload.id;
          state.playlistSongs = action.payload.songs;
          state.title = action.payload.name;
+
+         shuffleLogic(state);
       },
       setNewReleaseSongs: (state, action: PayloadAction<IAlbum>) => {
          state.isPlaying = true;
@@ -92,6 +110,8 @@ const musicSlice = createSlice({
          state.title = action.payload.name;
          state.currentIndex =
             state.playlistSongs.findIndex((item) => item.id === action.payload.id) || 0;
+
+         shuffleLogic(state);
       },
       setPlaySongAndPlayCurrentSong: (state, action: PayloadAction<IReduxAlbumProps>) => {
          state.isPlaying = true;
@@ -127,6 +147,8 @@ const musicSlice = createSlice({
          state.playlistId = action.payload.id;
          state.playlistSongs = action.payload.songs;
          state.title = action.payload.name;
+
+         shuffleLogic(state);
       });
    },
 });
@@ -135,6 +157,23 @@ export const fetchAlbum = createAsyncThunk('music/fetchAlbum', async (albumId: s
    const res = await musicApi.fetchAlbumById(albumId);
    return res.data?.metadata;
 });
+
+const shuffleLogic = (state: IMusicSlice) => {
+   // shuffle logic
+   if (state.isShuffle) {
+      state.playlistSongsBefore = state.playlistSongs;
+      state.playlistSongs = shuffleArray(
+         state.playlistSongs,
+         state.playlistSongs[state.currentIndex].id,
+      );
+      state.currentIndex = 0;
+   } else {
+      state.playlistSongsBefore = shuffleArray(
+         state.playlistSongs,
+         state.playlistSongs[state.currentIndex].id,
+      );
+   }
+};
 
 export const {
    setPlayPause,

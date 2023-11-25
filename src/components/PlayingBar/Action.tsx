@@ -9,8 +9,10 @@ import InputRange from './InputRange';
 import { Button } from '../Commons';
 import { Microphone2, VolumeHigh, VolumeCross, MusicFilter, Message } from 'iconsax-react';
 import { CommentModal } from '../Comment';
+import { useLocation } from 'react-router-dom';
 
 const Action: React.FC = () => {
+   const location = useLocation();
    const dispatch = useDispatch();
    const { showPlaylist } = useSelector(musicSelector);
    const { volume } = useSelector(audioSelector);
@@ -32,17 +34,21 @@ const Action: React.FC = () => {
             className="fy-center"
             onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
          >
-            <Button
-               onClick={toggle}
-               tippyContent="Bình luận"
-               className="mx-[2px] hover:bg-alpha-color"
-            >
-               <Message size={16} />
-            </Button>
+            {!location.pathname.startsWith('/playlist') && (
+               <>
+                  <Button
+                     onClick={toggle}
+                     tippyContent="Bình luận"
+                     className="mx-[2px] hover:bg-alpha-color"
+                  >
+                     <Message size={16} />
+                  </Button>
 
-            <Portal>
-               <CommentModal hide={hide} />
-            </Portal>
+                  <Portal>
+                     <CommentModal hide={hide} />
+                  </Portal>
+               </>
+            )}
 
             <Button tippyContent="Xem lời bài hát" className="mx-[2px] hover:bg-alpha-color">
                <Microphone2 size={16} />
