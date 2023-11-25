@@ -2,9 +2,11 @@ import React from 'react';
 import cx from 'classnames';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import usePortal from 'react-cool-portal';
 
 import { Image, Button } from '~/components/Commons';
-import { setPlayPause, fetchAlbum } from '~/redux/slices/musicSlice';
+import { setPlayPause, fetchAlbum, clearPlaylistSongs } from '~/redux/slices/musicSlice';
 import { musicSelector } from '~/redux/selector';
 import { resizeImage } from '~/helpers';
 import { AppThunkDispatch } from '~/redux/store';
@@ -12,6 +14,8 @@ import { AppThunkDispatch } from '~/redux/store';
 import { IoMdClose } from 'react-icons/io';
 import { MdEdit } from 'react-icons/md';
 import { playIcon, musicWaveIcon, LoadingIcon } from '~/assets';
+import EditPlaylistModal from './EditPlaylistModal';
+import { deletePlaylist } from '~/redux/slices/userSlice';
 
 interface PlaylistCardProps {
    className?: string;
@@ -23,15 +27,30 @@ const PlaylistCard: React.FC<PlaylistCardProps> = ({ className, data }) => {
    const navigate = useNavigate();
    const { playlistId, isPlaying, loading } = useSelector(musicSelector);
 
-   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+   const { Portal, toggle, hide } = usePortal({ defaultShow: false });
+
+   const handleEdit = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
+      toggle();
+   };
+
+   const handleDelete = async (e: React.MouseEvent<HTMLElement>) => {
+      e.preventDefault();
+      try {
+         dispatch(deletePlaylist(data?.id));
+         toast.success('Xoá thành công');
+         if (data?.id === playlistId) dispatch(clearPlaylistSongs());
+      } catch (error) {
+         console.log(error);
+         toast.error('Đã có lỗi');
+      }
    };
 
    const handlePlay = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
       if (playlistId == data?.id) dispatch(setPlayPause());
       else {
-         dispatch(fetchAlbum(data.id));
+         dispatch(fetchAlbum(data?.id));
          navigate(`/playlist/${data?.id}`);
       }
    };
@@ -39,11 +58,14 @@ const PlaylistCard: React.FC<PlaylistCardProps> = ({ className, data }) => {
    return (
       <div className={cx('flex-shrink-0 min-w-[160px]', className)}>
          <Link to={`/playlist/${data?.id}`} className="relative">
-            <Image src={resizeImage(data?.image)} active={isPlaying && playlistId == data?.id}>
+            <Image
+               src={data?.image && resizeImage(data?.image)}
+               active={isPlaying && playlistId == data?.id}
+            >
                <Button
-                  onClick={handleClick}
+                  onClick={handleDelete}
                   className="w-[30px] h-[30px] hover:bg-icon-hover-color"
-                  tippyContent="Thêm vào thư viện"
+                  tippyContent="Xoá"
                >
                   <IoMdClose size={18} />
                </Button>
@@ -69,7 +91,7 @@ const PlaylistCard: React.FC<PlaylistCardProps> = ({ className, data }) => {
                )}
 
                <Button
-                  onClick={handleClick}
+                  onClick={handleEdit}
                   className="w-[30px] h-[30px] hover:bg-icon-hover-color"
                   tippyContent="Xem thêm"
                >
@@ -86,6 +108,9 @@ const PlaylistCard: React.FC<PlaylistCardProps> = ({ className, data }) => {
             </Link>
             <h3 className="line-clamp-2 text-gray-600 cursor-default">{data?.description}</h3>
          </div>
+         <Portal>
+            <EditPlaylistModal hide={hide} playlistData={data} />
+         </Portal>
       </div>
    );
 };

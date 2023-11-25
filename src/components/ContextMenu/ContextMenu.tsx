@@ -5,6 +5,7 @@ import { BsDownload } from 'react-icons/bs';
 import { IoIosShareAlt } from 'react-icons/io';
 import { TbPlaylistAdd } from 'react-icons/tb';
 import { replaceAll } from '~/helpers';
+import SubContextMenu from './SubContextMenu';
 
 interface ContextMenuProps {
    children?: React.ReactElement;
@@ -67,13 +68,20 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
                         <span className="leading-normal">Tải xuống</span>
                      </button>
                   </li>
-                  <li className="hover:bg-alpha-color hover:text-purple-color">
-                     <button className="fy-center w-full py-[10px] px-5 text-sm">
-                        <span className="w-8">
-                           <TbPlaylistAdd size={18} />
-                        </span>
-                        <span className="leading-normal">Thêm vào playlist</span>
-                     </button>
+                  <li className="hover:bg-alpha-color relative group">
+                     <Tippy
+                        allowHTML
+                        interactive
+                        placement="right-start"
+                        render={() => <SubContextMenu data={songData} />}
+                     >
+                        <button className="fy-center w-full py-[10px] px-5 text-sm hover:text-purple-color">
+                           <span className="w-8">
+                              <TbPlaylistAdd size={18} />
+                           </span>
+                           <span className="leading-normal">Thêm vào playlist</span>
+                        </button>
+                     </Tippy>
                   </li>
                   <li className="hover:bg-alpha-color hover:text-purple-color">
                      <button className="fy-center w-full py-[10px] px-5 text-sm">

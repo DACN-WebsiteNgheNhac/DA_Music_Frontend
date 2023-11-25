@@ -1,44 +1,46 @@
 import React, { useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { musicApi } from '~/axios';
+import { toast } from 'react-toastify';
 import { userSelector } from '~/redux/selector';
 import { Button } from '../Commons';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '~/redux/store';
+import { createPlaylist } from '~/redux/slices/userSlice';
 
-interface PlaylistModalProps {
+interface CreatePlaylistModalProps {
    hide: () => any;
 }
 
-const PlaylistModal: React.FC<PlaylistModalProps> = ({ hide }) => {
-   const navigate = useNavigate();
+const CreatePlaylistModal: React.FC<CreatePlaylistModalProps> = ({ hide }) => {
    const [isClose, setIsClose] = useState<boolean>(false);
    const [value, setValues] = useState({
       name: '',
       description: '',
    });
+   const dispatch = useDispatch<AppDispatch>();
 
    const { id } = useSelector(userSelector);
 
    const handleClickBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
       const { id } = e.target as HTMLDivElement;
-      if (id === 'playlist-modal' && isClose) hide();
+      if (id === 'create-playlist-modal' && isClose) hide();
    };
 
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       try {
-         await musicApi.createPlaylist(id, value.name, value.description);
+         dispatch(createPlaylist({ user: id, name: value.name, description: value.description }));
          hide();
-         navigate('/library', { replace: true });
+         toast.success('Tạo thành công');
       } catch (error) {
-         console.log(error);
+         toast.error('Đã có lỗi');
       }
    };
 
    return (
       <div
-         id="playlist-modal"
+         id="create-playlist-modal"
          onMouseDown={() => setIsClose(true)}
          onMouseUp={handleClickBackdrop}
          className="fixed inset-0 bg-overlay-color z-30 f-center"
@@ -87,4 +89,4 @@ const PlaylistModal: React.FC<PlaylistModalProps> = ({ hide }) => {
    );
 };
 
-export default PlaylistModal;
+export default CreatePlaylistModal;

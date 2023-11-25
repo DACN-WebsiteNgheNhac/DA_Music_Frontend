@@ -7,17 +7,17 @@ import { Header, Playlist } from '~/components/Drawer';
 const Drawer: React.FC = () => {
    const { showPlaylist } = useSelector(musicSelector);
 
-   const variants = {
-      open: { x: 0, display: 'block' },
-      closed: {
-         x: '100%',
-         transitionEnd: {
-            display: 'none',
-         },
-      },
-      initial: { x: 0 },
-      exit: { x: '100%' },
-   };
+   // const variants = {
+   //    open: { x: 0, display: 'block' },
+   //    closed: {
+   //       x: '100%',
+   //       transitionEnd: {
+   //          display: 'none',
+   //       },
+   //    },
+   //    initial: { x: 0 },
+   //    exit: { x: '100%' },
+   // };
 
    return (
       <AnimatePresence>

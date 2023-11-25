@@ -1,38 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import usePortal from 'react-cool-portal';
-import { musicApi } from '~/axios';
-import { PlaylistCard, PlaylistModal } from '~/components/Playlist';
+import { PlaylistCard, CreatePlaylistModal } from '~/components/Playlist';
 import { setEndLoading, setError, setStartLoading } from '~/redux/slices/appSlice';
 import { AddCircle } from 'iconsax-react';
 import { appSelector, userSelector } from '~/redux/selector';
+import { fetchPlaylistByUser } from '~/redux/slices/userSlice';
+import { AppDispatch } from '~/redux/store';
 
 const LibraryPage: React.FC = () => {
-   const dispatch = useDispatch();
-   const { id } = useSelector(userSelector);
+   const dispatch = useDispatch<AppDispatch>();
    const { loading, error } = useSelector(appSelector);
-
-   const [playlistData, setPlaylistData] = useState<IAlbum[]>([]);
+   const { playlists } = useSelector(userSelector);
 
    const { Portal, toggle, hide } = usePortal({ defaultShow: false });
 
+   const fetchPlaylistData = async () => {
+      try {
+         dispatch(setStartLoading());
+         dispatch(fetchPlaylistByUser());
+         dispatch(setEndLoading());
+      } catch (error) {
+         console.log(error);
+         dispatch(setError());
+      }
+   };
+
    useEffect(() => {
-      const fetchPlaylistData = async () => {
-         try {
-            dispatch(setStartLoading());
-            const res = await musicApi.fetchPlaylistByUser(id);
-            setPlaylistData(res.data?.metadata);
-            dispatch(setEndLoading());
-         } catch (error) {
-            console.log(error);
-            dispatch(setError());
-         }
-      };
       fetchPlaylistData();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [id]);
+   }, []);
 
-   if (!playlistData || loading) {
+   if (loading) {
       return 'Loading...';
    }
    if (error) {
@@ -56,13 +55,13 @@ const LibraryPage: React.FC = () => {
                   <h3>Tạo playlist mới</h3>
                </div>
             </button>
-            {playlistData.map((album) => (
-               <PlaylistCard key={album.id} data={album} />
+            {playlists.map((album) => (
+               <PlaylistCard key={album?.id} data={album} />
             ))}
          </div>
 
          <Portal>
-            <PlaylistModal hide={hide} />
+            <CreatePlaylistModal hide={hide} />
          </Portal>
       </div>
    );

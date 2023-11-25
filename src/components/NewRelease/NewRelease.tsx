@@ -73,7 +73,7 @@ const NewRelease: React.FC<NewReleaseProps> = ({ title, data }) => {
                   data={item}
                   albumData={
                      {
-                        id: item.id, // gán tạm để tìm index bài hát
+                        id: item?.id, // gán tạm để tìm index bài hát
                         name: 'Mới Phát Hành',
                         songs: data[tagActive],
                      } as IAlbum

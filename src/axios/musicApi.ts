@@ -5,6 +5,8 @@ const musicApi = {
    fetchHome: (): Promise<AxiosResponse<IResponseData<ISection[]>>> => {
       return axiosInstance.get<IResponseData>('/home');
    },
+
+   // search
    fetchSearchSuggestion: (query: string): Promise<AxiosResponse<IResponseData<ISection[]>>> => {
       return axiosInstance.get<IResponseData>('/search', {
          params: { query, pageNumber: 1, pageSize: 10 },
@@ -28,6 +30,8 @@ const musicApi = {
          params,
       });
    },
+
+   // album
    fetchAlbumById: (albumId: string): Promise<AxiosResponse<IResponseData<IAlbum>>> => {
       return axiosInstance.get<IResponseData>(`/album/${albumId}`);
    },
@@ -41,20 +45,43 @@ const musicApi = {
       return axiosInstance.get<IResponseData>(`/song/${songId}`);
    },
 
-   fetchPlaylistByUser: (userId: string): Promise<AxiosResponse<IResponseData<IAlbum[]>>> => {
-      return axiosInstance.get<IResponseData>(`/user/playlist/${userId}`);
+   // playlist
+   fetchPlaylistById: (playlistId: string): Promise<AxiosResponse<IResponseData<IAlbum>>> => {
+      return axiosInstance.get<IResponseData>(`/playlist/playlist-id/${playlistId}`);
    },
-
+   fetchPlaylistByUser: (userId: string): Promise<AxiosResponse<IResponseData<IAlbum[]>>> => {
+      return axiosInstance.get<IResponseData>(`/playlist/user-id/${userId}`);
+   },
    createPlaylist: (
       userId: string,
       name: string,
       description: string,
    ): Promise<AxiosResponse<IResponseData<IAlbum>>> => {
-      return axiosInstance.post<IResponseData>(`/user/playlist/create/${userId}`, {
+      return axiosInstance.post<IResponseData>(`/playlist/create/${userId}`, {
          name,
          description,
          image: 'https://photo-zmp3.zmdcdn.me/album_default.png',
       });
+   },
+   editPlaylist: (
+      playlistId: string,
+      name: string,
+      description: string,
+   ): Promise<AxiosResponse<IResponseData<IAlbum>>> => {
+      return axiosInstance.put<IResponseData>(`/playlist/update/${playlistId}`, {
+         name,
+         description,
+         image: 'https://photo-zmp3.zmdcdn.me/album_default.png',
+      });
+   },
+   deletePlaylist: (playlistId: string): Promise<AxiosResponse<IResponseData>> => {
+      return axiosInstance.delete<IResponseData>(`/playlist/delete/${playlistId}`);
+   },
+   addSongToPlaylist: (
+      playlistId: string,
+      songId: string,
+   ): Promise<AxiosResponse<IResponseData>> => {
+      return axiosInstance.post<IResponseData>(`/playlist/add-songs/${playlistId}`, [songId]);
    },
 };
 

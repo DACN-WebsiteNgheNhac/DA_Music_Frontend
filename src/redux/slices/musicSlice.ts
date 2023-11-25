@@ -132,8 +132,6 @@ const musicSlice = createSlice({
 });
 
 export const fetchAlbum = createAsyncThunk('music/fetchAlbum', async (albumId: string) => {
-   console.log(albumId);
-
    const res = await musicApi.fetchAlbumById(albumId);
    return res.data?.metadata;
 });

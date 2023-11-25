@@ -101,7 +101,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
             <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Thêm vào thư viện">
                <Heart size={15} />
             </Button>
-            <ContextMenu setShowPopper={setShowPopper} songData={currentSong}>
+            <ContextMenu setShowPopper={setShowPopper} songData={data}>
                <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Khác">
                   <More size={15} />
                </Button>

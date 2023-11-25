@@ -3,7 +3,7 @@ import { NavItem } from '~/components/Sidebar';
 import { Link } from 'react-router-dom';
 import usePortal from 'react-cool-portal';
 import { AddSquare, Home } from 'iconsax-react';
-import { PlaylistModal } from '~/components/Playlist';
+import { CreatePlaylistModal } from '~/components/Playlist';
 
 const Sidebar: React.FC = () => {
    const { Portal, toggle, hide } = usePortal({ defaultShow: false });
@@ -47,7 +47,7 @@ const Sidebar: React.FC = () => {
          </button>
 
          <Portal>
-            <PlaylistModal hide={hide} />
+            <CreatePlaylistModal hide={hide} />
          </Portal>
       </aside>
    );

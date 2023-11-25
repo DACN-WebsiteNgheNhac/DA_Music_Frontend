@@ -18,7 +18,7 @@ const PlaylistPage: React.FC = () => {
       const fetchAlbumData = async () => {
          try {
             dispatch(setStartLoading());
-            const res = await musicApi.fetchAlbumById(id!);
+            const res = await musicApi.fetchPlaylistById(id!);
             setAlbumData(res.data?.metadata);
             dispatch(setEndLoading());
          } catch (error) {
