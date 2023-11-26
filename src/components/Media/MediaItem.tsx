@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import cx from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { Heart, More } from 'iconsax-react';
+import { toast } from 'react-toastify';
 
 import { Button, Image } from '../Commons';
 import { LoadingIcon, musicWaveIcon, playIcon } from '~/assets';
 import { setPlayPause, setNewReleaseSongs, setSingleSong } from '~/redux/slices/musicSlice';
-import { currentSongSelector, musicSelector } from '~/redux/selector';
+import { currentSongSelector, favoritesSelector, musicSelector } from '~/redux/selector';
 import { durationTime } from '~/helpers';
 import { ContextMenu } from '../ContextMenu';
+import { likeSong, unLikeSong } from '~/redux/slices/userSlice';
+import { AppDispatch } from '~/redux/store';
 
 interface MediaItemProps {
    data: ISong;
@@ -25,9 +28,11 @@ const MediaItem: React.FC<MediaItemProps> = ({
    imageClasName,
    className,
 }) => {
-   const dispatch = useDispatch();
+   const dispatch = useDispatch<AppDispatch>();
    const { isPlaying, loading } = useSelector(musicSelector);
    const currentSong = useSelector(currentSongSelector);
+   const favorites = useSelector(favoritesSelector);
+   const isFavorite = favorites.includes(data?.id);
 
    const [showPopper, setShowPopper] = useState<boolean>(false);
 
@@ -39,6 +44,13 @@ const MediaItem: React.FC<MediaItemProps> = ({
       } else {
          dispatch(setSingleSong(data));
       }
+   };
+
+   const hanldeLike = () => {
+      dispatch(likeSong(data?.id)).then(() => toast.success('Đã thích bài hát'));
+   };
+   const hanldeUnLike = () => {
+      dispatch(unLikeSong(data?.id)).then(() => toast.success('Đã bỏ thích bài hát'));
    };
 
    return (
@@ -88,9 +100,23 @@ const MediaItem: React.FC<MediaItemProps> = ({
                showPopper === true ? 'flex' : 'hidden group-hover/image:flex',
             )}
          >
-            <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Thêm vào thư viện">
-               <Heart size={15} />
-            </Button>
+            {isFavorite ? (
+               <Button
+                  onClick={hanldeUnLike}
+                  className="mx-[2px] hover:bg-alpha-color text-purple-color"
+                  tippyContent="Xoá khỏi thư viện"
+               >
+                  <Heart size={15} variant="Bold" />
+               </Button>
+            ) : (
+               <Button
+                  onClick={hanldeLike}
+                  className="mx-[2px] hover:bg-alpha-color"
+                  tippyContent="Thêm vào thư viện"
+               >
+                  <Heart size={15} />
+               </Button>
+            )}
             <ContextMenu setShowPopper={setShowPopper} songData={data}>
                <Button className="mx-[2px] hover:bg-alpha-color" tippyContent="Khác">
                   <More size={15} />

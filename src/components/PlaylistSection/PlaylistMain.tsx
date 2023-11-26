@@ -6,8 +6,9 @@ import MediaItem from './MediaItem';
 
 interface PlaylistMainProps {
    data: IAlbum;
+   title?: string;
 }
-const PlaylistMain: React.FC<PlaylistMainProps> = ({ data }) => {
+const PlaylistMain: React.FC<PlaylistMainProps> = ({ data, title }) => {
    const totalDuration = useMemo(
       () => data?.songs.reduce((pre, curr) => pre + curr.songTime, 0),
       [data?.songs],
@@ -15,9 +16,15 @@ const PlaylistMain: React.FC<PlaylistMainProps> = ({ data }) => {
 
    return (
       <div className="w-full">
-         <h3 className="text-subtitle-color text-sm mb-[10px] line-clamp-3 leading-normal">
-            Lời tựa <span className="text-title-color font-medium">{data?.description}</span>
-         </h3>
+         {title ? (
+            <h3 className="text-title-color font-medium text-lg mb-[10px] line-clamp-3 leading-normal">
+               {title}
+            </h3>
+         ) : (
+            <h3 className="text-subtitle-color text-sm mb-[10px] line-clamp-3 leading-normal">
+               Lời tựa <span className="text-title-color font-medium">{data?.description}</span>
+            </h3>
+         )}
 
          <div className="mb-[10px]">
             {/* header */}

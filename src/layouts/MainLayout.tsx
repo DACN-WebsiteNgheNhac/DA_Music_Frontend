@@ -4,21 +4,26 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { CustomScrollbar } from '~/components/Commons';
 import { Header, PlayingBar, Sidebar, Audio, Drawer } from '~/layouts/commons';
 import { useSelector } from 'react-redux';
-import { musicSelector, userSelector } from '~/redux/selector';
+import { isLoginSelector, musicSelector, userSelector } from '~/redux/selector';
 import { AppDispatch } from '~/redux/store';
 import { useDispatch } from 'react-redux';
-import { fetchPlaylistByUser } from '~/redux/slices/userSlice';
+import { fetchFavorites, fetchPlaylistByUser } from '~/redux/slices/userSlice';
 
 const MainLayout = () => {
    const { playlistSongs } = useSelector(musicSelector);
    const { playlists } = useSelector(userSelector);
+   const isLogin = useSelector(isLoginSelector);
    const [isSticky, setIsSticky] = useState<boolean>(false);
    const location = useLocation();
    const dispatch = useDispatch<AppDispatch>();
 
    useEffect(() => {
-      if (playlists.length <= 0) {
-         if (location.pathname !== '/library') dispatch(fetchPlaylistByUser());
+      // kiểm tra nếu playlist rỗng và ko ở trang /library
+      if (playlists.length <= 0 && location.pathname !== '/library') {
+         dispatch(fetchPlaylistByUser());
+      }
+      if (isLogin) {
+         dispatch(fetchFavorites());
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);

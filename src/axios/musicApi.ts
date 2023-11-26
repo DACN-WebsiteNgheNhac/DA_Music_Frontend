@@ -107,6 +107,30 @@ const musicApi = {
    }): Promise<AxiosResponse<IResponseData<IComment>>> => {
       return axiosInstance.post<IResponseData>(`/user/comment-song`, { userId, songId, content });
    },
+
+   getFavoriteByUser: (userId: string): Promise<AxiosResponse<IResponseData<ISong[]>>> => {
+      return axiosInstance.get<IResponseData>(`/user/fav-song?userId=${userId}`);
+   },
+   likeSong: ({
+      userId,
+      songId,
+   }: {
+      userId: string;
+      songId: string;
+   }): Promise<AxiosResponse<IResponseData<ISong[]>>> => {
+      return axiosInstance.post<IResponseData>(`/user/fav-song?userId=${userId}&songId=${songId}`);
+   },
+   unLikeSong: ({
+      userId,
+      songId,
+   }: {
+      userId: string;
+      songId: string;
+   }): Promise<AxiosResponse<IResponseData<ISong[]>>> => {
+      return axiosInstance.delete<IResponseData>(
+         `/user/fav-song?userId=${userId}&songId=${songId}`,
+      );
+   },
 };
 
 export default musicApi;

@@ -7,11 +7,12 @@ import { AddCircle } from 'iconsax-react';
 import { appSelector, userSelector } from '~/redux/selector';
 import { fetchPlaylistByUser } from '~/redux/slices/userSlice';
 import { AppDispatch } from '~/redux/store';
+import { PlaylistMain } from '~/components/PlaylistSection';
 
 const LibraryPage: React.FC = () => {
    const dispatch = useDispatch<AppDispatch>();
    const { loading, error } = useSelector(appSelector);
-   const { playlists } = useSelector(userSelector);
+   const { playlists, favorites } = useSelector(userSelector);
 
    const { Portal, toggle, hide } = usePortal({ defaultShow: false });
 
@@ -60,6 +61,9 @@ const LibraryPage: React.FC = () => {
             ))}
          </div>
 
+         <div className="mt-4">
+            <PlaylistMain title="Các bài hát đã thích" data={{ songs: favorites } as IAlbum} />
+         </div>
          <Portal>
             <CreatePlaylistModal hide={hide} />
          </Portal>

@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from './store';
+import { getListSongId } from '~/helpers';
 
 export const appSelector = (state: RootState) => state.app;
 export const audioSelector = (state: RootState) => state.audio;
@@ -13,4 +14,14 @@ export const currentSongSelector = createSelector(
    (currentIndex, playlistSongs) => {
       return playlistSongs[currentIndex];
    },
+);
+
+export const isLoginSelector = createSelector(
+   (state: RootState) => state.user.id,
+   (id) => id?.trim().length > 0,
+);
+
+export const favoritesSelector = createSelector(
+   (state: RootState) => state.user.favorites,
+   (favorites) => getListSongId(favorites),
 );
