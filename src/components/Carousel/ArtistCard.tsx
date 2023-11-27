@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Image, Button } from '~/components/Commons';
 import { Shuffle } from 'iconsax-react';
 
@@ -10,8 +10,11 @@ interface ArtistCardProps {
 }
 
 const ArtistCard: React.FC<ArtistCardProps> = ({ className, data }) => {
+   const navigate = useNavigate();
+
    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
+      navigate(`/artist/${data?.id}`);
    };
    return (
       <div className={cx('flex-shrink-0 min-w-[160px]', className)}>

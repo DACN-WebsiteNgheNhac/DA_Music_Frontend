@@ -131,6 +131,11 @@ const musicApi = {
          `/user/fav-song?userId=${userId}&songId=${songId}`,
       );
    },
+
+   // artist
+   fetchArtist: (artistId: string): Promise<AxiosResponse<IResponseData<ISection[]>>> => {
+      return axiosInstance.get<IResponseData>(`/artist/${artistId}`);
+   },
 };
 
 export default musicApi;

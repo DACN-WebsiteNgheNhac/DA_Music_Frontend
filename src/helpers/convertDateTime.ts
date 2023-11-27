@@ -16,3 +16,17 @@ export function convertDateTime(inputStr: Date) {
 
    return resultStr;
 }
+
+export function convertDateTimeToShortDate(inputStr: Date) {
+   // Chuyển đổi chuỗi thành đối tượng Date
+   const dtObject = new Date(inputStr);
+   // Lấy thông tin ngày tháng năm
+   const day = dtObject.getDate();
+   const month = dtObject.getMonth() + 1; // Tháng bắt đầu từ 0
+   const year = dtObject.getFullYear();
+
+   // Tạo chuỗi kết quả
+   const resultStr = `${day}/${month}/${year}`;
+
+   return resultStr;
+}

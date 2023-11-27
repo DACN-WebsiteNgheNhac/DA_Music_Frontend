@@ -27,7 +27,7 @@ interface ISection {
    sectionType: SectionType;
    viewType: string;
    search: string;
-   items: IAlbum[] | IArtist[] | ISong[] | INewRelease;
+   items: IAlbum[] | IArtist[] | ISong[] | INewRelease | IArtist;
 }
 // album type
 interface IAlbum {
@@ -64,14 +64,18 @@ interface IArtist {
    id: string;
    name: string;
    artistName: string;
-   gender: Gender;
+   gender: string;
    birthDay?: Date;
    debutDate?: Date;
    description: string;
    image: string;
    national: string;
    tag: string;
-   createdAt: Date;
+   artistMusicVideos?: Date;
+   artistSongs?: Date;
+   createdAt?: Date;
+   updatedAt: Date;
+   deletedAt?: Date;
 }
 
 // release type
