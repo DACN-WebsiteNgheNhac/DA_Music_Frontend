@@ -20,7 +20,7 @@ const TableSearchSong: React.FC<TableSearchSongProps> = ({ title, data, showMore
          />
          <ul className="grid grid-cols-2 gap-x-6">
             {data?.map((song) => (
-               <li key={song.id} className="border-b border-[rgb(0 0 0 / 5%)]">
+               <li key={song?.id} className="border-b border-[rgb(0 0 0 / 5%)]">
                   <MediaItem
                      data={song}
                      imageClasName="w-10 h-10"

@@ -34,8 +34,6 @@ const ArtistPage: React.FC = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
-   console.log(artistData);
-
    if (artistData.length <= 0 || loading) {
       return 'Loading...';
    }
@@ -44,15 +42,15 @@ const ArtistPage: React.FC = () => {
    }
 
    return (
-      <div>
+      <div className="mb-10">
          {artistData.map((item, index) => {
-            switch (item.sectionType) {
+            switch (item?.sectionType) {
                case 'artist':
                   return (
-                     <>
-                        <ArtistHero data={item.items as IArtist} key={index} />
+                     <div key={index}>
+                        <ArtistHero data={item.items as IArtist} />
                         <Line className="mt-8" />
-                     </>
+                     </div>
                   );
                case 'album':
                   if ((item.items as IAlbum[]).length <= 0) return null;
