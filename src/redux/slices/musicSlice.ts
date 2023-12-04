@@ -94,13 +94,13 @@ const musicSlice = createSlice({
             (item: ISong) => item.id === action.payload,
          );
          state.isPlaying = true;
+         shuffleLogic(state);
       },
       setPlaylistSongs: (state, action: PayloadAction<IAlbum>) => {
          state.isPlaying = true;
          state.playlistId = action.payload.id;
          state.playlistSongs = action.payload.songs;
          state.title = action.payload.name;
-
          shuffleLogic(state);
       },
       setNewReleaseSongs: (state, action: PayloadAction<IAlbum>) => {
@@ -120,12 +120,14 @@ const musicSlice = createSlice({
          state.title = action.payload.name;
          state.currentIndex =
             state.playlistSongs.findIndex((item) => item.id === action.payload.songId) || 0;
+         shuffleLogic(state);
       },
       setSingleSong: (state, action: PayloadAction<ISong>) => {
          state.isPlaying = true;
          state.playlistId = '';
          state.currentIndex = 0;
          state.playlistSongs = [action.payload];
+         shuffleLogic(state);
       },
       clearPlaylistSongs: () => {
          return initialState;
