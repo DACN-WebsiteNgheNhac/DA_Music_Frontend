@@ -1,33 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { musicApi } from '~/axios';
 import { Carousel } from '~/components/Carousel';
 import { NewRelease } from '~/components/NewRelease';
 import { appSelector } from '~/redux/selector';
-import { setEndLoading, setError, setStartLoading } from '~/redux/slices/appSlice';
+import { fetchHome } from '~/redux/slices/appSlice';
+import { AppDispatch } from '~/redux/store';
 
 const HomePage = () => {
-   const dispatch = useDispatch();
-   const { loading, error } = useSelector(appSelector);
-   const [homeData, setHomeData] = useState<ISection[]>([]);
+   const dispatch = useDispatch<AppDispatch>();
+   const { home, loading, error } = useSelector(appSelector);
 
    useEffect(() => {
-      const fetchHomeData = async () => {
-         try {
-            dispatch(setStartLoading());
-            const res = await musicApi.fetchHome();
-            setHomeData(res.data?.metadata);
-            dispatch(setEndLoading());
-         } catch (error) {
-            console.log(error);
-            dispatch(setError());
-         }
-      };
-      fetchHomeData();
+      if (home.length <= 0) dispatch(fetchHome());
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
-   if (homeData.length <= 0 || loading) {
+   if (home.length <= 0 || loading) {
       return 'Loading...';
    }
    if (error) {
@@ -36,7 +24,7 @@ const HomePage = () => {
 
    return (
       <div className="pb-10">
-         {homeData
+         {home
             .slice(0)
             .reverse()
             .map((item: ISection, index) => {

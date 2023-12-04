@@ -17,7 +17,7 @@ const initialState: IUserSlide = {
    name: 'Thắng Trần',
    gender: 'Nam',
    image: 'https://s120-ava-talk-zmp3.zmdcdn.me/c/7/e/a/2/120/b90e2b957b2f78662e163c0e45b4c853.jpg',
-   birthDay: null,
+   birthDay: new Date(),
    playlists: [],
    favorites: [],
 };

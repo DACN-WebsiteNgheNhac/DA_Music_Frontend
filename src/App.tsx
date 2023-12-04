@@ -15,6 +15,7 @@ import {
    LibraryPage,
    PlaylistPage,
    ArtistPage,
+   ProfilePage,
 } from '~/pages';
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
                <Route path="/library" element={<LibraryPage />} />
                <Route path="/playlist/:id" element={<PlaylistPage />} />
                <Route path="/artist/:id" element={<ArtistPage />} />
+               <Route path="/profile" element={<ProfilePage />} />
                <Route path="*" element={<HomePage />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />

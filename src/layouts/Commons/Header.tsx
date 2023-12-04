@@ -1,10 +1,11 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight, Setting2 } from 'iconsax-react';
+import { ArrowLeft, ArrowRight, Logout, Profile, Setting2 } from 'iconsax-react';
 import SearchBox from '../../components/SearchBox/SearchBox';
-import { CircleButton } from '~/components/Commons';
+import { Button, Line } from '~/components/Commons';
 import cx from 'classnames';
 import { useHistoryStack } from '~/hooks';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Tippy from '@tippyjs/react/headless';
 
 interface HeaderProps {
    isSticky: boolean;
@@ -54,20 +55,53 @@ const Header: React.FC<HeaderProps> = ({ isSticky }) => {
          </div>
 
          <div className="fy-center gap-3">
-            <CircleButton tippyContent="Cài đặt" className="hover:brightness-75">
+            <Button
+               tippyContent="Cài đặt"
+               className="!w-10 !h-10 bg-alpha-color hover:brightness-75"
+            >
                <Setting2 size="22" />
-            </CircleButton>
-            <CircleButton className="hover:brightness-75">
-               <div className="p-[2px] bg-gradient-to-r from-green-400 to-blue-500 rounded-full overflow-hidden">
-                  <div className="rounded-full overflow-hidden">
-                     <img
-                        className="w-full h-full object-cover"
-                        src="https://s120-ava-talk-zmp3.zmdcdn.me/c/7/e/a/2/120/b90e2b957b2f78662e163c0e45b4c853.jpg"
-                        alt=""
-                     />
+            </Button>
+            <Tippy
+               interactive
+               trigger="click"
+               placement="bottom-end"
+               zIndex={10}
+               render={(attrs) => (
+                  <div {...attrs}>
+                     <ul className="py-2 shadow-menu-context bg-primary-color rounded-lg w-60">
+                        <li className="hover:bg-alpha-color hover:text-purple-color">
+                           <Link to="/profile" className="fy-center w-full py-[10px] px-5 text-sm">
+                              <div className="w-8">
+                                 <Profile size="18" />
+                              </div>
+                              <span className="leading-normal">Cá nhân</span>
+                           </Link>
+                        </li>
+                        <Line />
+                        <li className="hover:bg-alpha-color hover:text-purple-color">
+                           <button className="fy-center w-full py-[10px] px-5 text-sm">
+                              <div className="w-8">
+                                 <Logout size="18" />
+                              </div>
+                              <span className="leading-normal">Đăng xuất</span>
+                           </button>
+                        </li>
+                     </ul>
                   </div>
-               </div>
-            </CircleButton>
+               )}
+            >
+               <Button className="!w-10 !h-10 hover:brightness-75">
+                  <div className="p-[2px] bg-gradient-to-r from-green-400 to-blue-500 rounded-full overflow-hidden">
+                     <div className="rounded-full overflow-hidden">
+                        <img
+                           className="w-full h-full object-cover"
+                           src="https://s120-ava-talk-zmp3.zmdcdn.me/c/7/e/a/2/120/b90e2b957b2f78662e163c0e45b4c853.jpg"
+                           alt=""
+                        />
+                     </div>
+                  </div>
+               </Button>
+            </Tippy>
          </div>
       </section>
    );

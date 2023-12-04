@@ -7,3 +7,4 @@ export { default as SongPage } from '~/pages/SongPage';
 export { default as LibraryPage } from '~/pages/LibraryPage';
 export { default as PlaylistPage } from '~/pages/PlaylistPage';
 export { default as ArtistPage } from '~/pages/ArtistPage';
+export { default as ProfilePage } from '~/pages/ProfilePage';
