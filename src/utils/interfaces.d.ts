@@ -98,3 +98,8 @@ interface IComment {
    username: string;
    imageUser: string;
 }
+
+interface ITab {
+   id: number;
+   label: string;
+}

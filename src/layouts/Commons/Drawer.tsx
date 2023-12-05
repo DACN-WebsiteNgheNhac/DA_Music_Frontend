@@ -1,23 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { musicSelector } from '~/redux/selector';
 import { Header, Playlist } from '~/components/Drawer';
 
+const TAGS: ITab[] = [
+   {
+      id: 1,
+      label: 'Danh sách phát',
+   },
+   {
+      id: 2,
+      label: 'Nghe gần đây',
+   },
+];
+
 const Drawer: React.FC = () => {
    const { showPlaylist } = useSelector(musicSelector);
-
-   // const variants = {
-   //    open: { x: 0, display: 'block' },
-   //    closed: {
-   //       x: '100%',
-   //       transitionEnd: {
-   //          display: 'none',
-   //       },
-   //    },
-   //    initial: { x: 0 },
-   //    exit: { x: '100%' },
-   // };
+   const [activeTab, setActiveTab] = useState<number>(TAGS[0].id);
 
    return (
       <AnimatePresence>
@@ -31,8 +31,8 @@ const Drawer: React.FC = () => {
                className="fixed top-0 right-0 bg-primary-color shadow-drawer z-30"
             >
                <div className="w-[330px] h-drawer flex flex-col">
-                  <Header />
-                  <Playlist />
+                  <Header tabs={TAGS} activeTab={activeTab} setActiveTab={setActiveTab} />
+                  <Playlist tab={activeTab} />
                </div>
             </motion.div>
          )}

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { audioSelector, currentSongSelector, musicSelector } from '~/redux/selector';
 import { resetAudio, setCurrentTime, setDuration } from '~/redux/slices/audioSlice';
-import { nextSong, setLoading, setPlayPause } from '~/redux/slices/musicSlice';
+import { nextSong, setHistory, setLoading, setPlayPause } from '~/redux/slices/musicSlice';
 
 const Audio: React.FC = () => {
    const audioRef = useRef<HTMLAudioElement>(null);
@@ -22,6 +22,7 @@ const Audio: React.FC = () => {
    const handleLoadedMetadata = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
       dispatch(setDuration(e.currentTarget.duration));
       dispatch(setLoading(false));
+      dispatch(setHistory(currentSong));
    };
 
    const handleTimeUpdate = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {

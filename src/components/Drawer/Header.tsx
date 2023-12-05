@@ -4,29 +4,17 @@ import { motion } from 'framer-motion';
 import { Button } from '../Commons';
 import { Clock, More } from 'iconsax-react';
 
-interface ITab {
-   id: number;
-   label: string;
+interface HeaderProps {
+   tabs: ITab[];
+   activeTab: number;
+   setActiveTab: (id: number) => void;
 }
 
-const TAGS: ITab[] = [
-   {
-      id: 1,
-      label: 'Danh sách phát',
-   },
-   {
-      id: 2,
-      label: 'Nghe gần đây',
-   },
-];
-
-const Header: React.FC = () => {
-   const [activeTab, setActiveTab] = useState<number>(TAGS[0].id);
-
+const Header: React.FC<HeaderProps> = ({ tabs, activeTab, setActiveTab }) => {
    return (
       <div className="fx-between py-[14px] px-2">
          <motion.div className="flex flex-1 w-fit p-[3px] bg-alpha-color rounded-full">
-            {TAGS.map((tab) => (
+            {tabs.map((tab) => (
                <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}

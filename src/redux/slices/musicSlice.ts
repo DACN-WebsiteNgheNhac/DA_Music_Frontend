@@ -17,6 +17,7 @@ export interface IMusicSlice {
    playlistId: string | null;
    playlistSongs: ISong[];
    playlistSongsBefore: ISong[];
+   history: ISong[];
    title: string;
 }
 
@@ -30,6 +31,7 @@ const initialState: IMusicSlice = {
    playlistId: '',
    playlistSongs: [],
    playlistSongsBefore: [],
+   history: [],
    title: '',
 };
 
@@ -132,7 +134,17 @@ const musicSlice = createSlice({
       clearPlaylistSongs: () => {
          return initialState;
       },
+      setHistory: (state, action: PayloadAction<ISong>) => {
+         const foundIdx = state.history.findIndex((el) => el.id === action.payload.id);
+         if (foundIdx !== -1) {
+            state.history.splice(foundIdx, 1);
+            state.history.unshift(action.payload);
+         } else {
+            state.history.unshift(action.payload);
+         }
+      },
    },
+
    extraReducers(builder: ActionReducerMapBuilder<IMusicSlice>) {
       builder.addCase(fetchAlbum.pending, (state) => {
          state.loading = true;
@@ -184,10 +196,11 @@ export const {
    nextSong,
    prevSong,
    setLoading,
+   setHistory,
+   setSingleSong,
    setShowPlaylist,
    setPlaylistSongs,
    setPlaySongWithId,
-   setSingleSong,
    clearPlaylistSongs,
    setNewReleaseSongs,
    setPlaySongAndPlayCurrentSong,
