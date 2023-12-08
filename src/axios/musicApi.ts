@@ -170,6 +170,10 @@ const musicApi = {
    login: (username: string, password: string): Promise<AxiosResponse<IResponseData<IUser>>> => {
       return axiosInstance.put<IResponseData>(`/user/login`, { username, password });
    },
+
+   register: (payload: IRegister): Promise<AxiosResponse<IResponseData<IUser>>> => {
+      return axiosInstance.put<IResponseData>(`/user/register`, payload);
+   },
 };
 
 export default musicApi;

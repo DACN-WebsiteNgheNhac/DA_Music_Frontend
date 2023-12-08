@@ -1,7 +1,8 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { musicApi } from '~/axios';
 import { RootState } from '../store';
 import { toast } from 'react-toastify';
+import { TOAST_MESSAGE } from '~/utils';
 
 export interface IUserSlide extends IUser {
    id: string;
@@ -35,18 +36,6 @@ const initialState: IUserSlide = {
    loading: false,
 };
 
-// const initialState: IUserSlide = {
-//    id: 'U001',
-//    name: 'Thắng Trần',
-//    gender: 'Nam',
-//    image: 'https://s120-ava-talk-zmp3.zmdcdn.me/c/7/e/a/2/120/b90e2b957b2f78662e163c0e45b4c853.jpg',
-//    birthDay: new Date(),
-//    playlists: [],
-//    favorites: [],
-//    roleId: '',
-//    roleName: '',
-// };
-
 const userSlice = createSlice({
    name: 'user',
    initialState,
@@ -64,26 +53,28 @@ const userSlice = createSlice({
             state.favorites = action.payload;
          });
 
+      builder.addCase(login.fulfilled, (state, action: PayloadAction<IUser>) => {
+         state.id = action.payload.id || '';
+         state.name = action.payload.name || '';
+         state.gender = action.payload.gender || '';
+         state.image = action.payload.image || '';
+         state.birthDay = action.payload.birthDay || '';
+         state.roleId = action.payload.roleId || '';
+         state.roleName = action.payload.roleName || '';
+         state.username = action.payload.username || '';
+         state.password = action.payload.password || '';
+         state.createdAt = action.payload.createdAt || '';
+
+         state.loading = false;
+      });
+
+      // addMatcher using before addCase
       builder
-         .addCase(login.pending, (state) => {
+         .addMatcher(isAnyOf(login.pending, register.pending), (state) => {
             state.loading = true;
          })
-         .addCase(login.fulfilled, (state, action: PayloadAction<IUser>) => {
+         .addMatcher(isAnyOf(login.rejected, register.rejected), (state) => {
             state.loading = false;
-            state.id = action.payload.id || '';
-            state.name = action.payload.name || '';
-            state.gender = action.payload.gender || '';
-            state.image = action.payload.image || '';
-            state.birthDay = action.payload.birthDay || '';
-            state.roleId = action.payload.roleId || '';
-            state.roleName = action.payload.roleName || '';
-            state.username = action.payload.username || '';
-            state.password = action.payload.password || '';
-            state.createdAt = action.payload.createdAt || '';
-         })
-         .addCase(login.rejected, (state, action) => {
-            state.loading = false;
-            console.error(action.error);
          });
    },
 });
@@ -93,14 +84,29 @@ export const login = createAsyncThunk(
    async ({ username, password }: ILogin, { rejectWithValue }) => {
       try {
          const res = await musicApi.login(username, password);
-         toast.success('Đăng nhập thành công');
+         toast.success(TOAST_MESSAGE.loginSuccess);
          return res?.data?.metadata;
       } catch (error) {
-         toast.error('Tài khoản hoặc mật khẩu không đúng');
+         toast.error(TOAST_MESSAGE.loginFail);
          return rejectWithValue('Đăng nhập thất bại');
       }
    },
 );
+
+export const register = createAsyncThunk(
+   'user/register',
+   async (payload: IRegister, { rejectWithValue }) => {
+      try {
+         const res = await musicApi.register(payload);
+         toast.success(TOAST_MESSAGE.registerSuccess);
+         return res?.data?.metadata;
+      } catch (error) {
+         toast.error(TOAST_MESSAGE.registerFail);
+         return rejectWithValue('Đăng ký thất bại');
+      }
+   },
+);
+
 export const fetchPlaylistByUser = createAsyncThunk(
    'user/fetchPlaylist',
    async (_, { getState }) => {
@@ -109,6 +115,7 @@ export const fetchPlaylistByUser = createAsyncThunk(
       return res.data?.metadata;
    },
 );
+
 export const createPlaylist = createAsyncThunk(
    'user/createPlaylist',
    async (
@@ -120,6 +127,7 @@ export const createPlaylist = createAsyncThunk(
       return res.data?.metadata;
    },
 );
+
 export const editPlaylist = createAsyncThunk(
    'user/editPlaylist',
    async (
@@ -139,6 +147,7 @@ export const editPlaylist = createAsyncThunk(
       return res.data?.metadata;
    },
 );
+
 export const deletePlaylist = createAsyncThunk(
    'user/deletePlaylist',
    async (playlistId: string, { dispatch }) => {
@@ -163,6 +172,7 @@ export const likeSong = createAsyncThunk(
       return res.data.metadata;
    },
 );
+
 export const unLikeSong = createAsyncThunk(
    'user/unLikeSong',
    async (songId: string, { getState, dispatch }) => {

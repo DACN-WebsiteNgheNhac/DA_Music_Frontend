@@ -1,12 +1,26 @@
 import React from 'react';
-import { NavItem } from '~/components/Sidebar';
 import { Link } from 'react-router-dom';
 import usePortal from 'react-cool-portal';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
 import { AddSquare, Home } from 'iconsax-react';
+import { NavItem } from '~/components/Sidebar';
 import { CreatePlaylistModal } from '~/components/Playlist';
+import { TOAST_MESSAGE } from '~/utils';
+import { isLoginSelector } from '~/redux/selector';
 
 const Sidebar: React.FC = () => {
    const { Portal, toggle, hide } = usePortal({ defaultShow: false });
+   const isLogin = useSelector(isLoginSelector);
+
+   const handleToggleModal = () => {
+      if (isLogin) {
+         toggle();
+      } else {
+         toast.warning(TOAST_MESSAGE.loginRequired);
+      }
+   };
 
    return (
       <aside className="w-sidebar h-full bg-sidebar-color flex flex-col">
@@ -27,9 +41,6 @@ const Sidebar: React.FC = () => {
                <NavItem to="/top-listen" Icon={Home}>
                   Bảng xếp hạng
                </NavItem>
-               <NavItem to="/album" Icon={Home}>
-                  Album
-               </NavItem>
                <NavItem to="/library" Icon={Home}>
                   Thư viện
                </NavItem>
@@ -37,7 +48,7 @@ const Sidebar: React.FC = () => {
          </div>
 
          <button
-            onClick={toggle}
+            onClick={handleToggleModal}
             className="h-[54px] fy-center px-5 border-t border-border-color text-navigation-color text-sm font-medium hover:text-hover-color"
          >
             <span className="w-[36px] text-[#c6c6c6]">

@@ -121,3 +121,11 @@ interface ILogin {
    username: string;
    password: string;
 }
+
+interface IRegister {
+   username: string;
+   password: string;
+   name: string;
+   gender: string;
+   birthDay: Date | string;
+}

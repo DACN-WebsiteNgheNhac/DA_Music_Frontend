@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { userSelector } from '~/redux/selector';
+import { isLoginSelector, userSelector } from '~/redux/selector';
 import { login } from '~/redux/slices/userSlice';
 import { AppDispatch } from '~/redux/store';
 
-interface LoginFormProps {}
+interface LoginFormProps {
+   onClose: () => void;
+   toggleForm: () => void;
+}
 
-const LoginForm: React.FC<LoginFormProps> = () => {
+const LoginForm: React.FC<LoginFormProps> = ({ onClose, toggleForm }) => {
    const dispatch = useDispatch<AppDispatch>();
    const { loading } = useSelector(userSelector);
+   const isLogin = useSelector(isLoginSelector);
 
    const [values, setValues] = useState<ILogin>({
       username: '',
       password: '',
    });
 
-   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      try {
-         dispatch(login(values));
-      } catch (error) {
-         console.log(error);
-      }
+      dispatch(login(values));
+      if (isLogin) onClose();
    };
 
    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,9 +101,9 @@ const LoginForm: React.FC<LoginFormProps> = () => {
          </form>
          <div className="mt-6 text-center text-sm text-slate-600">
             Chưa có tài khoản?
-            <a href="/signup" className="font-medium text-[#4285f4]">
+            <span onClick={toggleForm} className="cursor-pointer font-medium text-[#4285f4]">
                Đăng ký
-            </a>
+            </span>
          </div>
       </>
    );

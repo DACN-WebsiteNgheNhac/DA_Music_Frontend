@@ -6,10 +6,16 @@ import { toast } from 'react-toastify';
 
 import { Button, Image } from '../Commons';
 import { LoadingIcon, musicWaveIcon, playIcon } from '~/assets';
-import { currentSongSelector, favoritesSelector, musicSelector } from '~/redux/selector';
+import {
+   currentSongSelector,
+   favoritesSelector,
+   isLoginSelector,
+   musicSelector,
+} from '~/redux/selector';
 import { setPlayPause, setPlaySongWithId } from '~/redux/slices/musicSlice';
 import { likeSong, unLikeSong } from '~/redux/slices/userSlice';
 import { AppDispatch } from '~/redux/store';
+import { TOAST_MESSAGE } from '~/utils';
 
 interface MediaItemProps {
    data: ISong;
@@ -20,6 +26,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, isListening }) => {
    const dispatch = useDispatch<AppDispatch>();
    const { isPlaying, loading } = useSelector(musicSelector);
    const currentSong = useSelector(currentSongSelector);
+   const isLogin = useSelector(isLoginSelector);
 
    const songRef = useRef<HTMLDivElement>(null);
 
@@ -45,10 +52,18 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, isListening }) => {
    }, [currentSong?.id, data?.id]);
 
    const hanldeLike = () => {
-      dispatch(likeSong(data?.id)).then(() => toast.success('Đã thích bài hát'));
+      if (isLogin) {
+         dispatch(likeSong(data?.id)).then(() => toast.success(TOAST_MESSAGE.likeSong));
+      } else {
+         toast.warning(TOAST_MESSAGE.loginRequired);
+      }
    };
    const hanldeUnLike = () => {
-      dispatch(unLikeSong(data?.id)).then(() => toast.success('Đã bỏ thích bài hát'));
+      if (isLogin) {
+         dispatch(unLikeSong(data?.id)).then(() => toast.success(TOAST_MESSAGE.unlikeSong));
+      } else {
+         toast.warning(TOAST_MESSAGE.loginRequired);
+      }
    };
 
    return (

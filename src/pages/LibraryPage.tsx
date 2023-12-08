@@ -4,19 +4,25 @@ import usePortal from 'react-cool-portal';
 import { PlaylistCard, CreatePlaylistModal } from '~/components/Playlist';
 import { setEndLoading, setError, setStartLoading } from '~/redux/slices/appSlice';
 import { AddCircle } from 'iconsax-react';
-import { appSelector, userSelector } from '~/redux/selector';
+import { appSelector, isLoginSelector, userSelector } from '~/redux/selector';
 import { fetchPlaylistByUser } from '~/redux/slices/userSlice';
 import { AppDispatch } from '~/redux/store';
 import { PlaylistMain } from '~/components/PlaylistSection';
+import { Navigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { TOAST_MESSAGE } from '~/utils';
 
 const LibraryPage: React.FC = () => {
    const dispatch = useDispatch<AppDispatch>();
    const { loading, error } = useSelector(appSelector);
    const { playlists, favorites } = useSelector(userSelector);
+   const isLogin = useSelector(isLoginSelector);
 
    const { Portal, toggle, hide } = usePortal({ defaultShow: false });
 
    const fetchPlaylistData = async () => {
+      if (!isLogin) return;
+
       try {
          dispatch(setStartLoading());
          dispatch(fetchPlaylistByUser());
@@ -30,7 +36,12 @@ const LibraryPage: React.FC = () => {
    useEffect(() => {
       fetchPlaylistData();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
+   }, [isLogin]);
+
+   if (!isLogin) {
+      toast.warning(TOAST_MESSAGE.loginRequired);
+      return <Navigate to="/" />;
+   }
 
    if (loading) {
       return 'Loading...';

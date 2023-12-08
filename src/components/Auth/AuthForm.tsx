@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
 interface AuthFormProps {
    onClose: () => void;
@@ -7,10 +8,15 @@ interface AuthFormProps {
 
 const AuthForm: React.FC<AuthFormProps> = ({ onClose }) => {
    const [isClose, setIsClose] = useState<boolean>(false);
+   const [activeForm, setActiveForm] = useState<'login' | 'register'>('login');
 
    const handleClickBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
       const { id } = e.target as HTMLDivElement;
       if (id === 'auth-popup' && isClose) onClose();
+   };
+
+   const handleToggleForm = () => {
+      setActiveForm(activeForm === 'login' ? 'register' : 'login');
    };
 
    return (
@@ -50,7 +56,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ onClose }) => {
                   <h3 className="text-2xl mb-0.5 font-medium" />
                   <p className="mb-4 text-sm font-normal text-gray-800" />
 
-                  <LoginForm />
+                  {activeForm === 'login' ? (
+                     <LoginForm onClose={onClose} toggleForm={handleToggleForm} />
+                  ) : (
+                     <RegisterForm toggleForm={handleToggleForm} />
+                  )}
                </div>
             </div>
          </div>

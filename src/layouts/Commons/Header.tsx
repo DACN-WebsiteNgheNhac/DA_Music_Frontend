@@ -129,18 +129,16 @@ const Header: React.FC<HeaderProps> = ({ isSticky }) => {
                )}
             >
                <Button className="!w-10 !h-10 hover:brightness-75">
-                  <div className="p-[2px] bg-gradient-to-r from-green-400 to-blue-500 rounded-full overflow-hidden">
-                     <div className="rounded-full overflow-hidden">
-                        <img
-                           className="w-full h-full object-cover"
-                           src={
-                              image.length > 0
-                                 ? image
-                                 : 'https://dff.vn/uploads/avatar/2022/05/06/default-avatar-1651810836.png'
-                           }
-                           alt=""
-                        />
-                     </div>
+                  <div className="w-full h-full rounded-full overflow-hidden">
+                     <img
+                        className="w-full h-full object-cover"
+                        src={
+                           image.length > 0
+                              ? image
+                              : 'https://dff.vn/uploads/avatar/2022/05/06/default-avatar-1651810836.png'
+                        }
+                        alt=""
+                     />
                   </div>
                </Button>
             </Tippy>
