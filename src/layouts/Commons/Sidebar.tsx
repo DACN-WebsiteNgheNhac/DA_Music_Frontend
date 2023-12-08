@@ -21,14 +21,14 @@ const Sidebar: React.FC = () => {
                <NavItem to="/" Icon={Home}>
                   Trang chủ
                </NavItem>
-               <NavItem to="/artist" Icon={Home}>
-                  Nghệ sỹ
+               <NavItem to="/top-download" Icon={Home}>
+                  Top download
+               </NavItem>
+               <NavItem to="/top-listen" Icon={Home}>
+                  Bảng xếp hạng
                </NavItem>
                <NavItem to="/album" Icon={Home}>
                   Album
-               </NavItem>
-               <NavItem to="/radio" Icon={Home}>
-                  Radio
                </NavItem>
                <NavItem to="/library" Icon={Home}>
                   Thư viện

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { musicApi } from '~/axios';
 import { audioSelector, currentSongSelector, musicSelector } from '~/redux/selector';
 import { resetAudio, setCurrentTime, setDuration } from '~/redux/slices/audioSlice';
 import { nextSong, setHistory, setLoading, setPlayPause } from '~/redux/slices/musicSlice';
@@ -19,10 +20,13 @@ const Audio: React.FC = () => {
    };
 
    // loaded
-   const handleLoadedMetadata = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
+   const handleLoadedMetadata = async (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
       dispatch(setDuration(e.currentTarget.duration));
       dispatch(setLoading(false));
       dispatch(setHistory(currentSong));
+
+      // update listening count
+      if (currentSong) await musicApi.updateListens(currentSong?.id);
    };
 
    const handleTimeUpdate = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {

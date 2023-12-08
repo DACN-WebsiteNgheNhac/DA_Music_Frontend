@@ -19,14 +19,13 @@ const MainLayout = () => {
 
    useEffect(() => {
       // kiểm tra nếu playlist rỗng và ko ở trang /library
-      if (playlists.length <= 0 && location.pathname !== '/library') {
+      if (isLogin && playlists.length <= 0 && location.pathname !== '/library') {
          dispatch(fetchPlaylistByUser());
       }
       if (isLogin) {
          dispatch(fetchFavorites());
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
+   }, [dispatch, isLogin, location.pathname, playlists.length]);
 
    const handleScroll = (e: React.MouseEvent<HTMLElement>) => {
       const scrollTop = e.currentTarget.scrollTop;

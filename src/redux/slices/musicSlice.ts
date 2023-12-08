@@ -146,24 +146,24 @@ const musicSlice = createSlice({
    },
 
    extraReducers(builder: ActionReducerMapBuilder<IMusicSlice>) {
-      builder.addCase(fetchAlbum.pending, (state) => {
-         state.loading = true;
-         state.isPlaying = false;
-      });
-      builder.addCase(fetchAlbum.rejected, (state) => {
-         state.loading = false;
-         state.isPlaying = false;
-      });
+      builder
+         .addCase(fetchAlbum.pending, (state) => {
+            state.loading = true;
+            state.isPlaying = false;
+         })
+         .addCase(fetchAlbum.rejected, (state) => {
+            state.loading = false;
+            state.isPlaying = false;
+         })
+         .addCase(fetchAlbum.fulfilled, (state, action: PayloadAction<IAlbum>) => {
+            state.currentIndex = 0;
+            state.isPlaying = true;
+            state.playlistId = action.payload.id;
+            state.playlistSongs = action.payload.songs;
+            state.title = action.payload.name;
 
-      builder.addCase(fetchAlbum.fulfilled, (state, action: PayloadAction<IAlbum>) => {
-         state.currentIndex = 0;
-         state.isPlaying = true;
-         state.playlistId = action.payload.id;
-         state.playlistSongs = action.payload.songs;
-         state.title = action.payload.name;
-
-         shuffleLogic(state);
-      });
+            shuffleLogic(state);
+         });
    },
 });
 

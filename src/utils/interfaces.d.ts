@@ -85,7 +85,18 @@ interface INewRelease {
    other: ISong[];
 }
 // user type
-interface IUser {}
+interface IUser {
+   id: string;
+   name: string;
+   birthDay: string;
+   gender: string;
+   image: string;
+   username: string;
+   password: string;
+   createdAt: Date | string;
+   roleId: string;
+   roleName: string;
+}
 
 // commebt type
 interface IComment {
@@ -102,4 +113,11 @@ interface IComment {
 interface ITab {
    id: number;
    label: string;
+}
+
+// login & register
+
+interface ILogin {
+   username: string;
+   password: string;
 }

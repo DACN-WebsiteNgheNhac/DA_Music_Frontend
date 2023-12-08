@@ -136,6 +136,40 @@ const musicApi = {
    fetchArtist: (artistId: string): Promise<AxiosResponse<IResponseData<ISection[]>>> => {
       return axiosInstance.get<IResponseData>(`/artist/${artistId}`);
    },
+
+   fetchTopDownload: (
+      pageNumber?: number,
+      pageSize?: number,
+   ): Promise<AxiosResponse<IResponseData<ISong[]>>> => {
+      return axiosInstance.get<IResponseData>(`/song/top-downloads`, {
+         params: {
+            pageNumber: pageNumber || -1,
+            pageSize: pageSize || -1,
+         },
+      });
+   },
+   fetchTopListens: (
+      pageNumber?: number,
+      pageSize?: number,
+   ): Promise<AxiosResponse<IResponseData<ISong[]>>> => {
+      return axiosInstance.get<IResponseData>(`/song/top-listens`, {
+         params: {
+            pageNumber: pageNumber || -1,
+            pageSize: pageSize || -1,
+         },
+      });
+   },
+
+   updateListens: (songId: string): Promise<AxiosResponse<IResponseData<ISong>>> => {
+      return axiosInstance.put<IResponseData>(`/song/listens/${songId}`);
+   },
+   updateDownload: (songId: string): Promise<AxiosResponse<IResponseData<ISong>>> => {
+      return axiosInstance.put<IResponseData>(`/song/downloads/${songId}`);
+   },
+
+   login: (username: string, password: string): Promise<AxiosResponse<IResponseData<IUser>>> => {
+      return axiosInstance.put<IResponseData>(`/user/login`, { username, password });
+   },
 };
 
 export default musicApi;

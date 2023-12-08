@@ -24,9 +24,10 @@ interface MediaItemProps {
    albumData?: IAlbum;
    imageClasName?: string;
    className?: string;
+   index?: number;
 }
 
-const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
+const MediaItem: React.FC<MediaItemProps> = ({ data, albumData, index }) => {
    const dispatch = useDispatch<AppDispatch>();
    const { isPlaying, loading } = useSelector(musicSelector);
    const currentSong = useSelector(currentSongSelector);
@@ -64,9 +65,20 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, albumData }) => {
          )}
       >
          <div className="fy-center w-1/2 mr-[10px]">
-            <span className="w-[14px] f-center mr-[10px] text-subtitle-color">
-               <SlMusicToneAlt size={10} />
-            </span>
+            {index ? (
+               <span
+                  className={cx(
+                     'w-14 mr-2 font-roboto text-3xl text-center leading-none font-black text-transparent',
+                     index <= 3 ? `is-top-${index}` : 'is-top opacity-70',
+                  )}
+               >
+                  {index}
+               </span>
+            ) : (
+               <span className="w-[14px] f-center mr-[10px] text-subtitle-color">
+                  <SlMusicToneAlt size={10} />
+               </span>
+            )}
 
             <Image
                scale={false}

@@ -6,7 +6,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 const userPersistConfig = {
    key: 'user',
    storage,
-   blacklist: ['playlists', 'favorites'],
+   blacklist: ['playlists', 'favorites', 'loading'],
 };
 
 const musicPersistConfig = {

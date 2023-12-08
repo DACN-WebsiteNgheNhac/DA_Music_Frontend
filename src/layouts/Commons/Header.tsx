@@ -6,6 +6,12 @@ import cx from 'classnames';
 import { useHistoryStack } from '~/hooks';
 import { Link, useNavigate } from 'react-router-dom';
 import Tippy from '@tippyjs/react/headless';
+import { useDispatch } from 'react-redux';
+import { logout } from '~/redux/slices/userSlice';
+import { useSelector } from 'react-redux';
+import { isLoginSelector, userSelector } from '~/redux/selector';
+import usePortal from 'react-cool-portal';
+import { AuthForm } from '~/components/Auth';
 
 interface HeaderProps {
    isSticky: boolean;
@@ -14,6 +20,11 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ isSticky }) => {
    const navigate = useNavigate();
    const { stack, active, setActive } = useHistoryStack();
+   const dispatch = useDispatch();
+   const isLogin = useSelector(isLoginSelector);
+   const { image } = useSelector(userSelector);
+
+   const { Portal, toggle, hide } = usePortal({ defaultShow: false });
 
    const handleGoBack = () => {
       if (active > 0) {
@@ -69,23 +80,50 @@ const Header: React.FC<HeaderProps> = ({ isSticky }) => {
                render={(attrs) => (
                   <div {...attrs}>
                      <ul className="py-2 shadow-menu-context bg-primary-color rounded-lg w-60">
-                        <li className="hover:bg-alpha-color hover:text-purple-color">
-                           <Link to="/profile" className="fy-center w-full py-[10px] px-5 text-sm">
-                              <div className="w-8">
-                                 <Profile size="18" />
-                              </div>
-                              <span className="leading-normal">Cá nhân</span>
-                           </Link>
-                        </li>
-                        <Line />
-                        <li className="hover:bg-alpha-color hover:text-purple-color">
-                           <button className="fy-center w-full py-[10px] px-5 text-sm">
-                              <div className="w-8">
-                                 <Logout size="18" />
-                              </div>
-                              <span className="leading-normal">Đăng xuất</span>
-                           </button>
-                        </li>
+                        {!isLogin ? (
+                           <>
+                              <li className="hover:bg-alpha-color hover:text-purple-color">
+                                 <button
+                                    onClick={toggle}
+                                    className="fy-center w-full py-[10px] px-5 text-sm"
+                                 >
+                                    <div className="w-8">
+                                       <Profile size="18" />
+                                    </div>
+                                    <span className="leading-normal">Đăng nhập</span>
+                                 </button>
+                              </li>
+                              <Portal>
+                                 <AuthForm onClose={hide} />
+                              </Portal>
+                           </>
+                        ) : (
+                           <>
+                              <li className="hover:bg-alpha-color hover:text-purple-color">
+                                 <Link
+                                    to="/profile"
+                                    className="fy-center w-full py-[10px] px-5 text-sm"
+                                 >
+                                    <div className="w-8">
+                                       <Profile size="18" />
+                                    </div>
+                                    <span className="leading-normal">Cá nhân</span>
+                                 </Link>
+                              </li>
+                              <Line />
+                              <li className="hover:bg-alpha-color hover:text-purple-color">
+                                 <button
+                                    onClick={() => dispatch(logout())}
+                                    className="fy-center w-full py-[10px] px-5 text-sm"
+                                 >
+                                    <div className="w-8">
+                                       <Logout size="18" />
+                                    </div>
+                                    <span className="leading-normal">Đăng xuất</span>
+                                 </button>
+                              </li>
+                           </>
+                        )}
                      </ul>
                   </div>
                )}
@@ -95,7 +133,11 @@ const Header: React.FC<HeaderProps> = ({ isSticky }) => {
                      <div className="rounded-full overflow-hidden">
                         <img
                            className="w-full h-full object-cover"
-                           src="https://s120-ava-talk-zmp3.zmdcdn.me/c/7/e/a/2/120/b90e2b957b2f78662e163c0e45b4c853.jpg"
+                           src={
+                              image.length > 0
+                                 ? image
+                                 : 'https://dff.vn/uploads/avatar/2022/05/06/default-avatar-1651810836.png'
+                           }
                            alt=""
                         />
                      </div>

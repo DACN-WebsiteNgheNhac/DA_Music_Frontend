@@ -5,6 +5,7 @@ export default {
       extend: {
          fontFamily: {
             inter: ['Inter', 'sans-serif'],
+            roboto: ['Roboto', 'sans-serif'],
          },
          colors: {
             'primary-color': 'var(--primary-color)',
@@ -39,6 +40,7 @@ export default {
                '0 1px 0 rgba(0,0,0,0.3),0 1px 6px rgba(0,0,0,0.3),inset 0 1px 1px hsla(0,0%,100%,0.3)',
             tab: '0 1px 3px 0 rgba(0,0,0,.07)',
             'menu-context': '0 2px 5px rgba(0,0,0,0.3)',
+            button: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
          },
          spacing: {
             header: '70px',

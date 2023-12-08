@@ -1,41 +1,106 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { musicApi } from '~/axios';
 import { RootState } from '../store';
+import { toast } from 'react-toastify';
 
-export interface IUserSlide {
+export interface IUserSlide extends IUser {
    id: string;
    name: string;
+   birthDay: string;
    gender: string;
    image: string;
-   birthDay: Date | null;
+   username: string;
+   password: string;
+   createdAt: Date | string;
+   roleId: string;
+   roleName: string;
    playlists: IAlbum[];
    favorites: ISong[];
+   loading: boolean;
 }
 
 const initialState: IUserSlide = {
-   id: 'U001',
-   name: 'Thắng Trần',
-   gender: 'Nam',
-   image: 'https://s120-ava-talk-zmp3.zmdcdn.me/c/7/e/a/2/120/b90e2b957b2f78662e163c0e45b4c853.jpg',
-   birthDay: new Date(),
+   id: '',
+   name: '',
+   gender: '',
+   image: '',
+   birthDay: '',
+   roleId: '',
+   roleName: '',
+   username: '',
+   password: '',
+   createdAt: '',
    playlists: [],
    favorites: [],
+   loading: false,
 };
+
+// const initialState: IUserSlide = {
+//    id: 'U001',
+//    name: 'Thắng Trần',
+//    gender: 'Nam',
+//    image: 'https://s120-ava-talk-zmp3.zmdcdn.me/c/7/e/a/2/120/b90e2b957b2f78662e163c0e45b4c853.jpg',
+//    birthDay: new Date(),
+//    playlists: [],
+//    favorites: [],
+//    roleId: '',
+//    roleName: '',
+// };
 
 const userSlice = createSlice({
    name: 'user',
    initialState,
-   reducers: {},
+   reducers: {
+      logout: () => {
+         return initialState;
+      },
+   },
    extraReducers: (builder) => {
-      builder.addCase(fetchPlaylistByUser.fulfilled, (state, action: PayloadAction<IAlbum[]>) => {
-         state.playlists = action.payload;
-      });
-      builder.addCase(fetchFavorites.fulfilled, (state, action: PayloadAction<ISong[]>) => {
-         state.favorites = action.payload;
-      });
+      builder
+         .addCase(fetchPlaylistByUser.fulfilled, (state, action: PayloadAction<IAlbum[]>) => {
+            state.playlists = action.payload;
+         })
+         .addCase(fetchFavorites.fulfilled, (state, action: PayloadAction<ISong[]>) => {
+            state.favorites = action.payload;
+         });
+
+      builder
+         .addCase(login.pending, (state) => {
+            state.loading = true;
+         })
+         .addCase(login.fulfilled, (state, action: PayloadAction<IUser>) => {
+            state.loading = false;
+            state.id = action.payload.id || '';
+            state.name = action.payload.name || '';
+            state.gender = action.payload.gender || '';
+            state.image = action.payload.image || '';
+            state.birthDay = action.payload.birthDay || '';
+            state.roleId = action.payload.roleId || '';
+            state.roleName = action.payload.roleName || '';
+            state.username = action.payload.username || '';
+            state.password = action.payload.password || '';
+            state.createdAt = action.payload.createdAt || '';
+         })
+         .addCase(login.rejected, (state, action) => {
+            state.loading = false;
+            console.error(action.error);
+         });
    },
 });
 
+export const login = createAsyncThunk(
+   'user/login',
+   async ({ username, password }: ILogin, { rejectWithValue }) => {
+      try {
+         const res = await musicApi.login(username, password);
+         toast.success('Đăng nhập thành công');
+         return res?.data?.metadata;
+      } catch (error) {
+         toast.error('Tài khoản hoặc mật khẩu không đúng');
+         return rejectWithValue('Đăng nhập thất bại');
+      }
+   },
+);
 export const fetchPlaylistByUser = createAsyncThunk(
    'user/fetchPlaylist',
    async (_, { getState }) => {
@@ -107,5 +172,7 @@ export const unLikeSong = createAsyncThunk(
       return res.data.metadata;
    },
 );
+
+export const { logout } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -40,7 +40,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
       }
    };
 
-   const downloadFile = () => {
+   const downloadFile = async () => {
       const url = `http://api.mp3.zing.vn/api/streaming/audio/${songData?.tag}/320`;
       const link = document.createElement('a');
       link.href = url;
@@ -49,7 +49,9 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
       const fileExtension = 'mp3';
       link.download = `${replaceAll(songData.name)}.${fileExtension}`;
       link.click();
-      console.log(link);
+
+      // update download count
+      await musicApi.updateDownload(songData?.id);
    };
 
    const handleDelete = async () => {

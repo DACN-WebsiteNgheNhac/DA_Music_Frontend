@@ -8,14 +8,14 @@ import { MainLayout } from '~/layouts';
 import {
    AlbumPage,
    HomePage,
-   LoginPage,
    SongPage,
-   RegisterPage,
    SearchPage,
    LibraryPage,
    PlaylistPage,
    ArtistPage,
    ProfilePage,
+   TopDownloadPage,
+   TopListenPage,
 } from '~/pages';
 
 const App = () => {
@@ -26,7 +26,8 @@ const App = () => {
             <Route path="/" element={<MainLayout />}>
                <Route path="/" element={<HomePage />} />
                <Route path="/search/:slug" element={<SearchPage />} />
-               <Route path="/artist" element={<HomePage />} />
+               <Route path="/top-download" element={<TopDownloadPage />} />
+               <Route path="/top-listen" element={<TopListenPage />} />
                <Route path="/album/:id" element={<AlbumPage />} />
                <Route path="/song/:id" element={<SongPage />} />
                <Route path="/library" element={<LibraryPage />} />
@@ -35,8 +36,6 @@ const App = () => {
                <Route path="/profile" element={<ProfilePage />} />
                <Route path="*" element={<HomePage />} />
             </Route>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
          </Routes>
       </>
    );
