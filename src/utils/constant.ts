@@ -5,7 +5,7 @@ export const TOAST_MESSAGE = {
    loginFail: 'Tài khoản hoặc mật khẩu không đúng',
    // register
    registerSuccess: 'Đăng ký thành công',
-   registerFail: 'Đăng ký thất bại',
+   registerFail: 'Tài khoản đã tồn tại',
 
    // like/unlike
    likeSong: 'Đã thích bài hát',

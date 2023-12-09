@@ -128,4 +128,5 @@ interface IRegister {
    name: string;
    gender: string;
    birthDay: Date | string;
+   onToggleForm?: () => void;
 }

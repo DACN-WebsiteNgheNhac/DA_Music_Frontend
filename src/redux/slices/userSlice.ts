@@ -97,8 +97,11 @@ export const register = createAsyncThunk(
    'user/register',
    async (payload: IRegister, { rejectWithValue }) => {
       try {
-         const res = await musicApi.register(payload);
+         const { onToggleForm, ...values } = payload;
+         const res = await musicApi.register(values);
          toast.success(TOAST_MESSAGE.registerSuccess);
+
+         if (onToggleForm) onToggleForm();
          return res?.data?.metadata;
       } catch (error) {
          toast.error(TOAST_MESSAGE.registerFail);

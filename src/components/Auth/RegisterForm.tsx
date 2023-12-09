@@ -23,8 +23,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ toggleForm }) => {
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      dispatch(register(values));
-      toggleForm();
+      dispatch(register({ ...values, onToggleForm: toggleForm }));
    };
 
    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
