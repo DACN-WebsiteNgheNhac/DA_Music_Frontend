@@ -9,6 +9,7 @@ import { NavItem } from '~/components/Sidebar';
 import { CreatePlaylistModal } from '~/components/Playlist';
 import { TOAST_MESSAGE } from '~/utils';
 import { isLoginSelector } from '~/redux/selector';
+import { logo } from '~/assets';
 
 const Sidebar: React.FC = () => {
    const { Portal, toggle, hide } = usePortal({ defaultShow: false });
@@ -26,7 +27,7 @@ const Sidebar: React.FC = () => {
       <aside className="w-sidebar h-full bg-sidebar-color flex flex-col">
          <Link to="/" className="h-header fy-center pl-5">
             <div className="w-10 h-10">
-               <img src="/images/electron-vite.animate.svg" alt="" className="w-full h-full" />
+               <img src={logo} alt="" className="w-full h-full" />
             </div>
             <span className="ml-2 font-bold text-sidebar-popup-color">VMusic</span>
          </Link>
