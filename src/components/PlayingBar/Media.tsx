@@ -28,7 +28,7 @@ const Media: React.FC = () => {
                   <Link to="/">{currentSong?.name}</Link>
                </Tippy>
             </h3>
-            {currentSong?.tag.length <= 0 ? (
+            {currentSong?.tag?.length <= 0 ? (
                <span className="text-xs leading-normal text-subtitle-color mt-[1px] line-clamp-1">
                   {currentSong?.description}
                </span>

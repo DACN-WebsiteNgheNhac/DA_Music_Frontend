@@ -18,7 +18,7 @@ export const currentSongSelector = createSelector(
 
 export const isLoginSelector = createSelector(
    (state: RootState) => state.user.id,
-   (id) => id?.trim().length > 0,
+   (id) => id?.trim()?.length > 0,
 );
 
 export const favoritesSelector = createSelector(

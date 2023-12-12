@@ -55,12 +55,15 @@ const Image: React.FC<ImageProps> = ({ children, active = false, src }) => {
                initial={false}
                animate={active ? 'start' : 'end'}
                variants={variantBorderRadius}
-               className={cx('absolute inset-0 overflow-hidden shadow-media bg-alpha-color')}
+               className={cx(
+                  'absolute inset-0 overflow-hidden shadow-media bg-alpha-color w-full h-full',
+               )}
             >
                <motion.div
                   initial={active}
                   animate={active ? 'start' : 'end'}
                   variants={variantRotate}
+                  className="w-full h-full"
                >
                   <img
                      className={cx(
