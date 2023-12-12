@@ -78,7 +78,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
          onShow={handleShow}
          render={(attrs) => (
             <div {...attrs}>
-               <ul className="py-[10px] shadow-menu-context bg-primary-color rounded-lg w-[250px]">
+               <ul className="py-[10px] shadow-menu-context bg-primary-color rounded-lg w-[250px] text-title-color">
                   <li className="hover:bg-alpha-color hover:text-purple-color">
                      <button
                         onClick={downloadFile}
