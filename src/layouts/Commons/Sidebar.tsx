@@ -4,7 +4,7 @@ import usePortal from 'react-cool-portal';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import { AddSquare, Home } from 'iconsax-react';
+import { AddSquare, Home, PlayCircle } from 'iconsax-react';
 import { NavItem } from '~/components/Sidebar';
 import { CreatePlaylistModal } from '~/components/Playlist';
 import { TOAST_MESSAGE } from '~/utils';
@@ -41,9 +41,31 @@ const Sidebar: React.FC = () => {
                <NavItem to="/top-listen" Icon={Home}>
                   Bảng xếp hạng
                </NavItem>
-               <NavItem to="/library" Icon={Home}>
-                  Thư viện
-               </NavItem>
+               {isLogin ? (
+                  <NavItem to="/library" Icon={Home}>
+                     Thư viện
+                  </NavItem>
+               ) : (
+                  <li className="text-navigation-color group">
+                     <button
+                        onClick={() => toast.warning(TOAST_MESSAGE.loginRequired)}
+                        className={
+                           'fy-center w-full h-12 pr-5 pl-4 cursor-pointer text-sm font-medium border-l-4 transition ease-in-out capitalize hover:text-hover-color'
+                        }
+                     >
+                        {
+                           <span className="w-9">
+                              <Home size={20} />
+                           </span>
+                        }
+                        <span>Bảng xếp hạng</span>
+                        <PlayCircle
+                           size="18"
+                           className="ml-auto hidden text-purple-color group-hover:inline-block"
+                        />
+                     </button>
+                  </li>
+               )}
             </div>
          </div>
 

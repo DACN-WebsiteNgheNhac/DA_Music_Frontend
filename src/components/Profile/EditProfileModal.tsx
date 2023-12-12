@@ -83,6 +83,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ hide }) => {
                            setValues({ ...value, name: e.target.value })
                         }
                         type="text"
+                        required
                         placeholder="Nhập họ tên"
                         className="h-9 w-full border border-border-color px-3 text-sm rounded-full bg-alpha-color"
                      />
@@ -92,9 +93,20 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ hide }) => {
                            setValues({ ...value, description: e.target.value })
                         }
                         type="date"
+                        required
                         placeholder="Nhập mô tả"
                         className="h-9 w-full border border-border-color px-3 text-sm rounded-full bg-alpha-color"
                      />
+                     <select
+                        name="gender"
+                        value={gender}
+                        className="h-9 w-full border border-border-color px-3 text-sm rounded-full bg-alpha-color outline-none"
+                        required
+                        placeholder="Giới tính"
+                     >
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                     </select>
                      <button
                         type="submit"
                         disabled={

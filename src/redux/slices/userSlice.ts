@@ -7,7 +7,7 @@ import { TOAST_MESSAGE } from '~/utils';
 export interface IUserSlide extends IUser {
    id: string;
    name: string;
-   birthDay: string;
+   birthDay: string | Date;
    gender: string;
    image: string;
    username: string;
@@ -65,6 +65,10 @@ const userSlice = createSlice({
          state.password = action.payload.password || '';
          state.createdAt = action.payload.createdAt || '';
 
+         state.loading = false;
+      });
+
+      builder.addCase(register.fulfilled, (state) => {
          state.loading = false;
       });
 

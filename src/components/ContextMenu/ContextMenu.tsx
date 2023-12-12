@@ -10,6 +10,7 @@ import SubContextMenu from './SubContextMenu';
 import { Trash } from 'iconsax-react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { musicApi } from '~/axios';
+import ShareContextMenu from './ShareContextMenu';
 
 interface ContextMenuProps {
    children?: React.ReactElement;
@@ -119,12 +120,19 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
                      </li>
                   )}
                   <li className="hover:bg-alpha-color hover:text-purple-color">
-                     <button className="fy-center w-full py-[10px] px-5 text-sm">
-                        <span className="w-8">
-                           <IoIosShareAlt size={18} />
-                        </span>
-                        <span className="leading-normal">Chia sẻ</span>
-                     </button>
+                     <Tippy
+                        allowHTML
+                        interactive
+                        placement="right-start"
+                        render={() => <ShareContextMenu data={songData} />}
+                     >
+                        <button className="fy-center w-full py-[10px] px-5 text-sm">
+                           <span className="w-8">
+                              <IoIosShareAlt size={18} />
+                           </span>
+                           <span className="leading-normal">Chia sẻ</span>
+                        </button>
+                     </Tippy>
                   </li>
                </ul>
             </div>

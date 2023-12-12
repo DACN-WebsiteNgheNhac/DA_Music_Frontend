@@ -21,7 +21,7 @@ import {
 const App = () => {
    return (
       <>
-         <ToastContainer />
+         <ToastContainer position="bottom-left" autoClose={1000} className="toast-position" />
          <Routes>
             <Route path="/" element={<MainLayout />}>
                <Route path="/" element={<HomePage />} />

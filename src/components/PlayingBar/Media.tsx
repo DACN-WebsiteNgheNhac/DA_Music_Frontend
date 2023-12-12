@@ -3,6 +3,7 @@ import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { currentSongSelector } from '~/redux/selector';
+import Tippy from '@tippyjs/react';
 
 import { Heart, More } from 'iconsax-react';
 import { Button, Image } from '../Commons';
@@ -23,11 +24,19 @@ const Media: React.FC = () => {
 
          <div className="ml-[10px] pr-[10px]">
             <h3 className="text-sm leading-[1.36] font-medium line-clamp-1 hover:text-purple-color">
-               <Link to="/">{currentSong?.name}</Link>
+               <Tippy delay={1000} content={currentSong?.name}>
+                  <Link to="/">{currentSong?.name}</Link>
+               </Tippy>
             </h3>
-            <span className="text-xs leading-normal text-subtitle-color mt-[1px] line-clamp-1">
-               {currentSong?.description}
-            </span>
+            {currentSong?.tag.length <= 0 ? (
+               <span className="text-xs leading-normal text-subtitle-color mt-[1px] line-clamp-1">
+                  {currentSong?.description}
+               </span>
+            ) : (
+               <span className="text-xs leading-normal italic text-subtitle-color mt-[1px] line-clamp-1">
+                  Bản quyền thuộc zing-mp3
+               </span>
+            )}
          </div>
 
          <div className="fy-center ml-[10px]">

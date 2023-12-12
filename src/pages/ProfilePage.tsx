@@ -6,12 +6,21 @@ import { Line } from '~/components/Commons';
 import { EditProfileModal } from '~/components/Profile';
 import { PlaylistMain } from '~/components/PlaylistSection';
 import { convertShortDate } from '~/helpers';
-import { userSelector } from '~/redux/selector';
+import { isLoginSelector, userSelector } from '~/redux/selector';
+import { Navigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { TOAST_MESSAGE } from '~/utils';
 
 const ProfilePage: React.FC = () => {
-   const { id, birthDay, favorites, gender, image, name, playlists } = useSelector(userSelector);
+   const { birthDay, favorites, gender, image, name } = useSelector(userSelector);
+   const isLogin = useSelector(isLoginSelector);
 
    const { Portal, toggle, hide } = usePortal({ defaultShow: false });
+
+   if (!isLogin) {
+      toast.warning(TOAST_MESSAGE.loginRequired);
+      return <Navigate to="/" />;
+   }
 
    return (
       <div className="my-10">
@@ -26,7 +35,7 @@ const ProfilePage: React.FC = () => {
          <div className="flex items-center px-8 relative">
             <div className="absolute bottom-0">
                <div className="w-44 h-44 p-1 bg-white rounded-full overflow-hidden shadow-media">
-                  <div className="rounded-full overflow-hidden">
+                  <div className="w-full h-full rounded-full overflow-hidden">
                      <img className="w-full h-full object-cover" src={image} alt="" />
                   </div>
                </div>
@@ -36,7 +45,7 @@ const ProfilePage: React.FC = () => {
             <div className="flex-1 mt-8 mb-4">
                <h1 className="text-3xl font-bold">{name}</h1>
                <div className="mt-1 text-sm text-subtitle-color">
-                  {gender} - {convertShortDate(birthDay!)}
+                  {gender} {birthDay && '- ' + convertShortDate(birthDay! as Date)}
                </div>
             </div>
             <div className="items-end">

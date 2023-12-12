@@ -30,6 +30,11 @@ const SubContextMenu: React.FC<SubContextMenuProps> = ({ data }) => {
    return (
       <ul className="py-[10px] shadow-menu-context bg-primary-color rounded-lg w-[250px]">
          <h3 className="text-sm px-5 font-medium mb-2">Playlist của bạn</h3>
+         {playlists.length <= 0 && (
+            <span className="py-[10px] px-5 text-xs leading-normal italic text-subtitle-color mt-[1px] line-clamp-1">
+               Chưa có playlist nào
+            </span>
+         )}
          {playlists.map((item) => (
             <li className="hover:bg-alpha-color hover:text-purple-color" key={item?.id}>
                <button

@@ -12,6 +12,7 @@ li {
    list-style: none;
    outline: none;
 }
+section,
 a {
    outline: none;
 }
@@ -42,6 +43,10 @@ body *::-webkit-scrollbar {
    }
    .fx-between {
       @apply flex items-center justify-between;
+   }
+
+   .toast-position {
+      @apply lg:bottom-[8em];
    }
 }
 

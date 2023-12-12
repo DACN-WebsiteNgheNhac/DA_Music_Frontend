@@ -1,20 +1,22 @@
 import React from 'react';
 import cx from 'classnames';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, To, useLocation } from 'react-router-dom';
 import { PlayCircle } from 'iconsax-react';
 
 interface NavItemProps {
    children?: React.ReactNode;
-   to: string;
+   to: To;
    Icon: React.ElementType;
+   onClick?: (e: React.MouseEvent) => void;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ children, to, Icon }) => {
+const NavItem: React.FC<NavItemProps> = ({ children, to, Icon, onClick = () => {} }) => {
    const { pathname } = useLocation();
    return (
       <li className="text-navigation-color group">
          <NavLink
             to={to}
+            onClick={onClick}
             className={({ isActive }: { isActive: boolean }): string =>
                cx(
                   'fy-center w-full h-12 pr-5 pl-4 cursor-pointer text-sm font-medium border-l-4 transition ease-in-out capitalize',

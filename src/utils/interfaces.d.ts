@@ -88,7 +88,7 @@ interface INewRelease {
 interface IUser {
    id: string;
    name: string;
-   birthDay: string;
+   birthDay: string | Date;
    gender: string;
    image: string;
    username: string;
