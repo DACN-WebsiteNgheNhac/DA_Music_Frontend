@@ -48,9 +48,11 @@ const userSlice = createSlice({
       builder
          .addCase(fetchPlaylistByUser.fulfilled, (state, action: PayloadAction<IAlbum[]>) => {
             state.playlists = action.payload;
+            state.loading = false;
          })
          .addCase(fetchFavorites.fulfilled, (state, action: PayloadAction<ISong[]>) => {
             state.favorites = action.payload;
+            state.loading = false;
          });
 
       builder.addCase(login.fulfilled, (state, action: PayloadAction<IUser>) => {
@@ -74,12 +76,28 @@ const userSlice = createSlice({
 
       // addMatcher using before addCase
       builder
-         .addMatcher(isAnyOf(login.pending, register.pending), (state) => {
-            state.loading = true;
-         })
-         .addMatcher(isAnyOf(login.rejected, register.rejected), (state) => {
-            state.loading = false;
-         });
+         .addMatcher(
+            isAnyOf(
+               login.pending,
+               register.pending,
+               fetchPlaylistByUser.pending,
+               fetchFavorites.pending,
+            ),
+            (state) => {
+               state.loading = true;
+            },
+         )
+         .addMatcher(
+            isAnyOf(
+               login.rejected,
+               register.rejected,
+               fetchPlaylistByUser.rejected,
+               fetchFavorites.rejected,
+            ),
+            (state) => {
+               state.loading = false;
+            },
+         );
    },
 });
 
