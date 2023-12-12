@@ -7,11 +7,15 @@ interface ShareContextMenuProps {
 }
 
 const ShareContextMenu: React.FC<ShareContextMenuProps> = ({ data }) => {
+   const baseUrl = window?.location?.origin?.toString();
+
+   console.log('baseUrl: ', baseUrl);
+
    return (
       <ul className="py-[10px] shadow-menu-context bg-primary-color rounded-lg w-[250px]">
          <li className="hover:bg-alpha-color hover:text-purple-color">
             <FacebookShareButton
-               url={`http://localhost:5173/song/${data?.id}`}
+               url={`${baseUrl}/song/${data?.id}`}
                hashtag="#vmusic"
                className="w-full"
             >
