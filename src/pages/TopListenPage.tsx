@@ -8,6 +8,7 @@ import { appSelector } from '~/redux/selector';
 import { setEndLoading, setError, setStartLoading } from '~/redux/slices/appSlice';
 import { RiPlayMiniFill } from 'react-icons/ri';
 import { setPlaylistSongs } from '~/redux/slices/musicSlice';
+import { SongRankingLoading } from '~/components/LoadingSkeleton';
 
 const TopListenPage: React.FC = () => {
    const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const TopListenPage: React.FC = () => {
    };
 
    if (loading) {
-      return 'Loading...';
+      return <SongRankingLoading />;
    }
    if (error) {
       return 'Error...';

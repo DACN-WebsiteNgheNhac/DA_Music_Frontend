@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'tippy.js/dist/tippy.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 import { MainLayout } from '~/layouts';
 import {
@@ -17,6 +18,7 @@ import {
    TopDownloadPage,
    TopListenPage,
 } from '~/pages';
+import { SearchLoading } from './components/LoadingSkeleton';
 
 const App = () => {
    return (
@@ -34,6 +36,7 @@ const App = () => {
                <Route path="/playlist/:id" element={<PlaylistPage />} />
                <Route path="/artist/:id" element={<ArtistPage />} />
                <Route path="/profile" element={<ProfilePage />} />
+               <Route path="/loading" element={<SearchLoading />} />
                <Route path="*" element={<HomePage />} />
             </Route>
          </Routes>

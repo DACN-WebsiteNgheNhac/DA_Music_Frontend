@@ -58,7 +58,7 @@ const Sidebar: React.FC = () => {
                               <Home size={20} />
                            </span>
                         }
-                        <span>Bảng xếp hạng</span>
+                        <span>Thư viện</span>
                         <PlayCircle
                            size="18"
                            className="ml-auto hidden text-purple-color group-hover:inline-block"

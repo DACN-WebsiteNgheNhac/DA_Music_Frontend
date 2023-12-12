@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { musicApi } from '~/axios';
 import Carousel from '~/components/Carousel/Carousel';
+import { SearchLoading } from '~/components/LoadingSkeleton';
 import { TableSearchSong } from '~/components/TableSong';
 import { TabItem, Tabs } from '~/components/Tabs';
 import { appSelector } from '~/redux/selector';
@@ -35,7 +36,7 @@ const SearchPage: React.FC = () => {
    }, [searchQuery, typeQuery]);
 
    if (loading) {
-      return 'Loading...';
+      return <SearchLoading />;
    }
    if (error) {
       return 'Error...';

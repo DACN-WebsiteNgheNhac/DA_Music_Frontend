@@ -11,6 +11,9 @@ import { PlaylistMain } from '~/components/PlaylistSection';
 import { Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { TOAST_MESSAGE } from '~/utils';
+import { RiPlayMiniFill } from 'react-icons/ri';
+import { setPlaylistSongs } from '~/redux/slices/musicSlice';
+import { LibraryLoading } from '~/components/LoadingSkeleton';
 
 const LibraryPage: React.FC = () => {
    const dispatch = useDispatch<AppDispatch>();
@@ -33,6 +36,15 @@ const LibraryPage: React.FC = () => {
       }
    };
 
+   const handlePlayAll = () => {
+      const album = {
+         id: '',
+         name: '',
+         songs: favorites,
+      } as IAlbum;
+      dispatch(setPlaylistSongs(album));
+   };
+
    useEffect(() => {
       fetchPlaylistData();
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +56,7 @@ const LibraryPage: React.FC = () => {
    }
 
    if (loading) {
-      return 'Loading...';
+      return <LibraryLoading />;
    }
    if (error) {
       return 'Error...';
@@ -59,7 +71,15 @@ const LibraryPage: React.FC = () => {
                </h3>
             </div>
          </nav>
-
+         <h1 className="mb-7 fy-center text-4xl leading-normal font-bold mt-2">
+            Thư viện
+            <button
+               onClick={handlePlayAll}
+               className="rounded-full w-10 h-10 f-center bg-primary-color shadow-button ml-3"
+            >
+               <RiPlayMiniFill size={26} />
+            </button>
+         </h1>
          <div className="grid grid-cols-5 gap-7">
             <button onClick={toggle} className="relative h-0 pb-[100%]">
                <div className="absolute inset-0 f-center flex-col gap-2 border border-border-color rounded text-purple-color cursor-pointer">
