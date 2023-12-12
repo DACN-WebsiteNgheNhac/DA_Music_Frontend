@@ -131,8 +131,11 @@ const musicSlice = createSlice({
          state.playlistSongs = [action.payload];
          shuffleLogic(state);
       },
-      clearPlaylistSongs: () => {
-         return initialState;
+      clearPlaylistSongs: (state) => {
+         return { ...initialState, history: state.history };
+      },
+      clearHistory: (state) => {
+         state.history = [];
       },
       setHistory: (state, action: PayloadAction<ISong>) => {
          const foundIdx = state.history.findIndex((el) => el.id === action.payload.id);
@@ -190,13 +193,14 @@ const shuffleLogic = (state: IMusicSlice) => {
 };
 
 export const {
-   setPlayPause,
    setLoop,
-   setShuffle,
    nextSong,
    prevSong,
    setLoading,
+   setShuffle,
    setHistory,
+   setPlayPause,
+   clearHistory,
    setSingleSong,
    setShowPlaylist,
    setPlaylistSongs,

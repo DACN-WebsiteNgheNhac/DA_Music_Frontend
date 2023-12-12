@@ -19,10 +19,10 @@ import { TOAST_MESSAGE } from '~/utils';
 
 interface MediaItemProps {
    data: ISong;
-   isListening: boolean;
+   wasListened?: boolean;
 }
 
-const MediaItem: React.FC<MediaItemProps> = ({ data, isListening }) => {
+const MediaItem: React.FC<MediaItemProps> = ({ data, wasListened }) => {
    const dispatch = useDispatch<AppDispatch>();
    const { isPlaying, loading } = useSelector(musicSelector);
    const currentSong = useSelector(currentSongSelector);
@@ -74,7 +74,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, isListening }) => {
             currentSong?.id == data?.id
                ? 'bg-progressbar-active text-primary-color'
                : 'hover:bg-alpha-color',
-            isListening && 'opacity-50 hover:opacity-100',
+            wasListened && 'opacity-50 hover:opacity-100',
          )}
       >
          <Image
