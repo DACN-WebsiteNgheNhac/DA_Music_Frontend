@@ -1,7 +1,7 @@
 import React from 'react';
 import { SectionTitle } from '../Commons';
 import { MediaItem } from '../Media';
-import { To, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 interface TableSearchSongProps {
    title?: string;

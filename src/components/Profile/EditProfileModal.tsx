@@ -21,7 +21,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ hide }) => {
    });
    const dispatch = useDispatch<AppDispatch>();
 
-   const { id, birthDay, favorites, gender, image, name, playlists } = useSelector(userSelector);
+   const { id, gender, image } = useSelector(userSelector);
 
    const handleClickBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
       const { id } = e.target as HTMLDivElement;
