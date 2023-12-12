@@ -12,6 +12,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import SearchList from './SearchList';
 import { AppThunkDispatch } from '~/redux/store';
+import { setHistory } from '~/redux/slices/searchSlice';
 
 interface SearchBoxProps {}
 
@@ -31,6 +32,7 @@ const SearchBox: React.FC<SearchBoxProps> = () => {
       if (value.trim().length <= 0) return;
       navigate(`/search/all?query=${value}`);
       setIsFocus(false);
+      dispatch(setHistory(value));
    };
 
    useEffect(() => {

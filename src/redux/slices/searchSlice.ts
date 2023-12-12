@@ -10,12 +10,14 @@ export interface ISearchSlide {
    loading: boolean;
    value: string;
    result: ISection[];
+   history: string[];
 }
 
 const initialState: ISearchSlide = {
    loading: false,
    value: '',
    result: [],
+   history: [],
 };
 
 const searchSlice = createSlice({
@@ -29,6 +31,12 @@ const searchSlice = createSlice({
          state.loading = false;
          state.value = '';
          state.result = [];
+      },
+      clearHistory: (state) => {
+         state.history = [];
+      },
+      setHistory: (state, action: PayloadAction<string>) => {
+         state.history.push(action.payload);
       },
    },
    extraReducers: (builder: ActionReducerMapBuilder<ISearchSlide>) => {
@@ -51,6 +59,6 @@ export const fetchSearch = createAsyncThunk('search/fetchSearch', async (payload
    return res.data?.metadata;
 });
 
-export const { setValue, clearSearch } = searchSlice.actions;
+export const { setValue, clearSearch, clearHistory, setHistory } = searchSlice.actions;
 
 export default searchSlice.reducer;
