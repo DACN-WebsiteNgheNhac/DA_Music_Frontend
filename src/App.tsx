@@ -18,7 +18,6 @@ import {
    TopDownloadPage,
    TopListenPage,
 } from '~/pages';
-import { SearchLoading } from './components/LoadingSkeleton';
 
 const App = () => {
    return (
@@ -36,7 +35,6 @@ const App = () => {
                <Route path="/playlist/:id" element={<PlaylistPage />} />
                <Route path="/artist/:id" element={<ArtistPage />} />
                <Route path="/profile" element={<ProfilePage />} />
-               <Route path="/loading" element={<SearchLoading />} />
                <Route path="*" element={<HomePage />} />
             </Route>
          </Routes>

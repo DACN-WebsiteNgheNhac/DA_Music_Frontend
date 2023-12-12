@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { musicApi } from '~/axios';
+import { AlbumLoading } from '~/components/LoadingSkeleton';
 import { PlaylistHeader, PlaylistMain } from '~/components/PlaylistSection';
 import { appSelector } from '~/redux/selector';
 import { setEndLoading, setError, setStartLoading } from '~/redux/slices/appSlice';
@@ -31,7 +32,7 @@ const PlaylistPage: React.FC = () => {
    }, [id]);
 
    if (!albumData || loading) {
-      return 'Loading...';
+      return <AlbumLoading />;
    }
    if (error) {
       return 'Error...';
