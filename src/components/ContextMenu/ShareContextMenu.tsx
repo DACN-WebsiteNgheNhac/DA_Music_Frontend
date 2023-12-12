@@ -7,7 +7,7 @@ interface ShareContextMenuProps {
 }
 
 const ShareContextMenu: React.FC<ShareContextMenuProps> = ({ data }) => {
-   const baseUrl = import.meta.env.VITE_BASE_URL || window?.location?.origin?.toString();
+   const baseUrl = import.meta?.env?.VITE_BASE_URL || window?.location?.origin?.toString();
 
    return (
       <ul className="py-[10px] shadow-menu-context bg-primary-color rounded-lg w-[250px]">
