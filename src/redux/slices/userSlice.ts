@@ -18,6 +18,7 @@ export interface IUserSlide extends IUser {
    playlists: IAlbum[];
    favorites: ISong[];
    loading: boolean;
+   updateLoading: boolean;
 }
 
 const initialState: IUserSlide = {
@@ -34,6 +35,7 @@ const initialState: IUserSlide = {
    playlists: [],
    favorites: [],
    loading: false,
+   updateLoading: false,
 };
 
 const userSlice = createSlice({
@@ -73,6 +75,22 @@ const userSlice = createSlice({
       builder.addCase(register.fulfilled, (state) => {
          state.loading = false;
       });
+
+      builder
+         .addCase(updateProfile.fulfilled, (state, action: PayloadAction<IUser>) => {
+            state.name = action.payload.name;
+            state.image = action.payload.image;
+            state.birthDay = action.payload.birthDay;
+            state.gender = action.payload.gender;
+
+            state.updateLoading = false;
+         })
+         .addCase(updateProfile.pending, (state) => {
+            state.updateLoading = true;
+         })
+         .addCase(updateProfile.rejected, (state) => {
+            state.updateLoading = false;
+         });
 
       // addMatcher using before addCase
       builder
@@ -205,6 +223,14 @@ export const unLikeSong = createAsyncThunk(
       const res = await musicApi.unLikeSong({ userId: state.user.id, songId });
       dispatch(fetchFavorites());
       return res.data.metadata;
+   },
+);
+
+export const updateProfile = createAsyncThunk(
+   'user/updateProfile',
+   async (payload: IProfileUpdate) => {
+      const res = await musicApi.updateProfile(payload);
+      return res?.data?.metadata;
    },
 );
 
