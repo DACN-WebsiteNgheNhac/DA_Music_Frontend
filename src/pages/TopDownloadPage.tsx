@@ -19,7 +19,7 @@ const TopDownloadPage: React.FC = () => {
       const fetchTopDownload = async () => {
          try {
             dispatch(setStartLoading());
-            const res = await musicApi.fetchTopDownload();
+            const res = await musicApi.fetchTopDownload(1, 100);
             setSongs(res?.data?.metadata);
             dispatch(setEndLoading());
          } catch (error) {

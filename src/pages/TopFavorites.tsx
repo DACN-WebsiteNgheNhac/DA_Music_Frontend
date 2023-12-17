@@ -19,7 +19,7 @@ const TopFavorites: React.FC = () => {
       const fetchTopDownload = async () => {
          try {
             dispatch(setStartLoading());
-            const res = await musicApi.fetchTopFavorites();
+            const res = await musicApi.fetchTopFavorites(1, 100);
             setSongs(res?.data?.metadata);
             dispatch(setEndLoading());
          } catch (error) {
