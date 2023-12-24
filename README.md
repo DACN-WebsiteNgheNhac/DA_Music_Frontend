@@ -1,27 +1,57 @@
-# React + TypeScript + Vite
+# Vmusic
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Online music listening website.
 
-Currently, two official plugins are available:
+## Live demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Official Website: [https://vmusic-three.vercel.app](https://vmusic-three.vercel.app)
 
-## Expanding the ESLint configuration
+## Main technology used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+-  react, typescript, tailwind
+-  redux toolkit, redux persist
+-  axios
 
-- Configure the top-level `parserOptions` property like this:
+## Features
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+-  Home
+   -  Get new releases
+   -  Get top album
+   -  Get top artist
+   -  Categories
+-  Search
+   -  Voice search
+   -  Suggestion
+-  Artist
+-  Album
+-  Single song
+-  Playlist
+-  Music Player
+   -  History
+   -  Current playlist
+-  User
+   -  Profile user (preview and edit)
+   -  Create playlist
+   -  Like song
+-  More
+   -  Download
+   -  Share on Facebook
+   -  Add to playlist
+   -  Comment
+   -  Lyrics
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Installation
+
+-  Clone the project
+-  Run `npm run dev`
+
+## Previews
+
+![Home page](https://res.cloudinary.com/thangtrn01/image/upload/v1703406613/PreviewVmusic/home_cigwik.png)
+![Music player](https://res.cloudinary.com/thangtrn01/image/upload/v1703406613/PreviewVmusic/music-playler_m4s4at.png)
+![Search box](https://res.cloudinary.com/thangtrn01/image/upload/v1703406614/PreviewVmusic/search_l1hklq.png)
+![Search page](https://res.cloudinary.com/thangtrn01/image/upload/v1703406613/PreviewVmusic/search-page_ikbqbd.png)
+![Album page](https://res.cloudinary.com/thangtrn01/image/upload/v1703406613/PreviewVmusic/album_euamji.png)
+![Top download page](https://res.cloudinary.com/thangtrn01/image/upload/v1703406613/PreviewVmusic/top-download_gd17mh.png)
+![Library page](https://res.cloudinary.com/thangtrn01/image/upload/v1703406611/PreviewVmusic/library_un1q8r.png)
+![Profile page](https://res.cloudinary.com/thangtrn01/image/upload/v1703406612/PreviewVmusic/profile_ko2trj.png)
